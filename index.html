@@ -1788,162 +1788,311 @@ function deleteStrategy(i){
    FLASHCARDS DATA
 ══════════════════════════════════════════ */
 const cards = [
-  {name:'Doji',cat:'Neutral',signal:'Market indecision — buyers and sellers are equal. Often signals a reversal when appearing after a trend.',
-   tips:'Wait for confirmation candle. Most powerful after extended moves.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="60" y1="15" x2="60" y2="40" stroke="#FBBF24" stroke-width="2"/>
-     <rect x="40" y="40" width="40" height="3" rx="1" fill="#FBBF24"/>
-     <line x1="60" y1="43" x2="60" y2="80" stroke="#FBBF24" stroke-width="2"/>
-     <text x="60" y="95" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="JetBrains Mono">DOJI</text>
-   </svg>`},
-  {name:'Hammer',cat:'Bullish',signal:'Strong bullish reversal at bottom of downtrend. Long lower shadow shows buyers rejected lower prices.',
-   tips:'Most reliable when at key support. Volume should increase. Upper shadow minimal.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="60" y1="15" x2="60" y2="25" stroke="#34D399" stroke-width="2"/>
-     <rect x="45" y="25" width="30" height="25" rx="2" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="1.5"/>
-     <line x1="60" y1="50" x2="60" y2="85" stroke="#34D399" stroke-width="2"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="JetBrains Mono">HAMMER</text>
-   </svg>`},
-  {name:'Shooting Star',cat:'Bearish',signal:'Bearish reversal at top of uptrend. Long upper shadow shows sellers rejected higher prices.',
-   tips:'Most powerful at resistance. Confirmation with bearish candle next. Small body.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="60" y1="15" x2="60" y2="50" stroke="#F87171" stroke-width="2"/>
-     <rect x="45" y="50" width="30" height="25" rx="2" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="1.5"/>
-     <line x1="60" y1="75" x2="60" y2="83" stroke="#F87171" stroke-width="2"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="JetBrains Mono">SHOOTING STAR</text>
-   </svg>`},
-  {name:'Bullish Engulfing',cat:'Bullish',signal:'Large bullish candle completely engulfs previous bearish candle. Strong reversal signal after downtrend.',
-   tips:'Second candle must fully engulf first. Higher volume on bullish candle confirms.',timeframes:['4H','1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="40" y="35" width="20" height="30" rx="2" fill="#F87171" fill-opacity="0.4" stroke="#F87171" stroke-width="1.5"/>
-     <rect x="60" y="20" width="25" height="55" rx="2" fill="#34D399" fill-opacity="0.4" stroke="#34D399" stroke-width="1.5"/>
-     <text x="60" y="95" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">BULL ENGULFING</text>
-   </svg>`},
-  {name:'Bearish Engulfing',cat:'Bearish',signal:'Large bearish candle completely engulfs previous bullish candle. Strong reversal signal after uptrend.',
-   tips:'Must appear after uptrend. Volume confirmation critical. Watch for gap-down open.',timeframes:['4H','1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="40" y="35" width="20" height="30" rx="2" fill="#34D399" fill-opacity="0.4" stroke="#34D399" stroke-width="1.5"/>
-     <rect x="60" y="20" width="25" height="55" rx="2" fill="#F87171" fill-opacity="0.4" stroke="#F87171" stroke-width="1.5"/>
-     <text x="60" y="95" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">BEAR ENGULFING</text>
-   </svg>`},
-  {name:'Morning Star',cat:'Bullish',signal:'3-candle reversal: big bear, small doji/spinner, big bull. Signals end of downtrend.',
-   tips:'Middle candle gaps down from first. Third candle closes >50% into first. Needs volume.',timeframes:['1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="20" y="25" width="22" height="45" rx="2" fill="#F87171" fill-opacity="0.4" stroke="#F87171" stroke-width="1.5"/>
-     <rect x="52" y="52" width="16" height="15" rx="2" fill="#FBBF24" fill-opacity="0.4" stroke="#FBBF24" stroke-width="1.5"/>
-     <rect x="78" y="30" width="22" height="40" rx="2" fill="#34D399" fill-opacity="0.4" stroke="#34D399" stroke-width="1.5"/>
-     <text x="60" y="95" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">MORNING STAR</text>
-   </svg>`},
-  {name:'Evening Star',cat:'Bearish',signal:'3-candle top reversal: big bull, small doji/spinner, big bear. End of uptrend signal.',
-   tips:'Most reliable at key resistance. Third candle should close >50% into first candle.',timeframes:['1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="20" y="30" width="22" height="40" rx="2" fill="#34D399" fill-opacity="0.4" stroke="#34D399" stroke-width="1.5"/>
-     <rect x="52" y="20" width="16" height="15" rx="2" fill="#FBBF24" fill-opacity="0.4" stroke="#FBBF24" stroke-width="1.5"/>
-     <rect x="78" y="25" width="22" height="45" rx="2" fill="#F87171" fill-opacity="0.4" stroke="#F87171" stroke-width="1.5"/>
-     <text x="60" y="95" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">EVENING STAR</text>
-   </svg>`},
-  {name:'Head & Shoulders',cat:'Bearish',signal:'Classic top reversal. Three peaks with middle highest. Neckline break confirms distribution.',
-   tips:'Target = head height projected below neckline. Volume declines on each peak.',timeframes:['4H','1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <polyline points="5,80 25,55 40,65 60,25 80,65 95,55 115,80" stroke="#F87171" stroke-width="2" fill="none"/>
-     <line x1="5" y1="67" x2="115" y2="67" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="JetBrains Mono">HEAD & SHOULDERS</text>
-   </svg>`},
-  {name:'Double Top',cat:'Bearish',signal:'Two equal peaks with pullback between. Failed second rally shows exhaustion of buyers.',
-   tips:'Confirmed on neckline break with volume. Target = distance from tops to neckline.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <polyline points="10,80 30,30 50,55 70,30 90,80" stroke="#F87171" stroke-width="2" fill="none"/>
-     <line x1="10" y1="57" x2="110" y2="57" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
-     <circle cx="30" cy="30" r="4" fill="#F87171" opacity="0.7"/>
-     <circle cx="70" cy="30" r="4" fill="#F87171" opacity="0.7"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">DOUBLE TOP</text>
-   </svg>`},
-  {name:'Double Bottom',cat:'Bullish',signal:'Two equal lows with bounce between. Failed second decline shows exhaustion of sellers.',
-   tips:'Volume higher on second bottom. Neckline break with volume confirms. Strong reversal.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <polyline points="10,20 30,70 50,40 70,70 90,20" stroke="#34D399" stroke-width="2" fill="none"/>
-     <line x1="10" y1="42" x2="110" y2="42" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
-     <circle cx="30" cy="70" r="4" fill="#34D399" opacity="0.7"/>
-     <circle cx="70" cy="70" r="4" fill="#34D399" opacity="0.7"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">DOUBLE BOTTOM</text>
-   </svg>`},
-  {name:'Bull Flag',cat:'Bullish',signal:'Strong impulse up (pole) followed by tight parallel channel down (flag). Trend continuation.',
-   tips:'Flag should retrace 30-50% of pole. Low volume on flag, high on breakout.',timeframes:['15m','1H','4H'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="30" y1="85" x2="60" y2="25" stroke="#34D399" stroke-width="2.5"/>
-     <line x1="60" y1="25" x2="100" y2="45" stroke="#34D399" stroke-width="1.5" stroke-dasharray="3,2"/>
-     <line x1="60" y1="38" x2="100" y2="58" stroke="#34D399" stroke-width="1.5" stroke-dasharray="3,2"/>
-     <polyline points="60,25 70,30 80,38 90,35 100,45" stroke="#34D399" stroke-width="1.5" fill="none" opacity="0.8"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">BULL FLAG</text>
-   </svg>`},
-  {name:'Bear Flag',cat:'Bearish',signal:'Sharp drop (pole) followed by tight parallel channel up (flag). Bearish continuation.',
-   tips:'Continuation of downtrend. Low volume on flag, expansion on breakdown.',timeframes:['15m','1H','4H'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="30" y1="15" x2="60" y2="70" stroke="#F87171" stroke-width="2.5"/>
-     <line x1="60" y1="50" x2="100" y2="30" stroke="#F87171" stroke-width="1.5" stroke-dasharray="3,2"/>
-     <line x1="60" y1="62" x2="100" y2="42" stroke="#F87171" stroke-width="1.5" stroke-dasharray="3,2"/>
-     <polyline points="60,70 70,60 80,55 90,50 100,42" stroke="#F87171" stroke-width="1.5" fill="none" opacity="0.8"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">BEAR FLAG</text>
-   </svg>`},
-  {name:'Ascending Triangle',cat:'Bullish',signal:'Flat resistance with rising support. Buyers applying pressure. High probability breakout up.',
-   tips:'Volume should decrease as triangle forms, spike on breakout. Target = triangle height.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="15" y1="30" x2="100" y2="30" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,3"/>
-     <line x1="15" y1="80" x2="100" y2="30" stroke="#34D399" stroke-width="2"/>
-     <polyline points="15,80 30,65 45,75 60,55 75,65 90,50 100,30" stroke="#6366F1" stroke-width="1.5" fill="none"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="JetBrains Mono">ASCENDING TRIANGLE</text>
-   </svg>`},
-  {name:'Cup & Handle',cat:'Bullish',signal:'Rounded bottom (cup) + small consolidation (handle). Bullish continuation after base.',
-   tips:'Cup should be U-shaped not V-shaped. Handle retraces 30-50% of cup. Enter on handle breakout.',timeframes:['1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <path d="M10,25 Q55,75 100,25" stroke="#34D399" stroke-width="2" fill="none"/>
-     <path d="M100,25 Q108,38 105,20" stroke="#34D399" stroke-width="1.5" fill="none" stroke-dasharray="3,2"/>
-     <line x1="10" y1="25" x2="115" y2="25" stroke="#34D399" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">CUP & HANDLE</text>
-   </svg>`},
-  {name:'Wedge (Rising)',cat:'Bearish',signal:'Both lines converging upward. Weakening bullish momentum. Often reverses downward.',
-   tips:'Volume should decline as wedge forms. Breakdown below lower trendline is the signal.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="15" y1="75" x2="100" y2="20" stroke="#F87171" stroke-width="2"/>
-     <line x1="15" y1="85" x2="100" y2="42" stroke="#F87171" stroke-width="2"/>
-     <polyline points="15,85 30,72 45,78 60,62 75,68 90,50 100,42" stroke="#FBBF24" stroke-width="1.5" fill="none" opacity="0.8"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">RISING WEDGE</text>
-   </svg>`},
-  {name:'Inverse H&S',cat:'Bullish',signal:'Bottom reversal pattern. Three troughs with middle lowest. Neckline break confirms accumulation.',
-   tips:'Target = head depth projected above neckline. Volume rises on breakout.',timeframes:['4H','1D','1W'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <polyline points="5,20 25,50 40,38 60,80 80,38 95,50 115,20" stroke="#34D399" stroke-width="2" fill="none"/>
-     <line x1="5" y1="37" x2="115" y2="37" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="JetBrains Mono">INVERSE H&S</text>
-   </svg>`},
-  {name:'Symmetrical Triangle',cat:'Neutral',signal:'Converging trendlines. Compression before big move. Direction determined by breakout side.',
-   tips:'Volume should shrink as triangle compresses. Big volume breakout determines direction.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <line x1="10" y1="20" x2="100" y2="50" stroke="#FBBF24" stroke-width="1.5"/>
-     <line x1="10" y1="80" x2="100" y2="50" stroke="#FBBF24" stroke-width="1.5"/>
-     <polyline points="10,20 30,30 50,25 70,35 90,45 100,50" stroke="#6366F1" stroke-width="1.5" fill="none" opacity="0.8"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="JetBrains Mono">SYMM. TRIANGLE</text>
-   </svg>`},
-  {name:'Marubozu',cat:'Bullish',signal:'Full body candle with no shadows. Complete buyer/seller dominance throughout the session.',
-   tips:'Bullish = strong buy pressure. Bearish = strong sell pressure. No hesitation in price.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="45" y="15" width="30" height="65" rx="2" fill="#34D399" fill-opacity="0.5" stroke="#34D399" stroke-width="2"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">MARUBOZU</text>
-   </svg>`},
-  {name:'Dragonfly Doji',cat:'Bullish',signal:'Open, close, and high all near same level. Long lower shadow. Buyers fully rejected sellers.',
-   tips:'Very bullish after downtrend. Confirm with next green candle and volume.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="48" y="20" width="24" height="4" rx="2" fill="#34D399"/>
-     <line x1="60" y1="24" x2="60" y2="82" stroke="#34D399" stroke-width="2"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">DRAGONFLY DOJI</text>
-   </svg>`},
-  {name:'Gravestone Doji',cat:'Bearish',signal:'Open, close, and low all near same level. Long upper shadow. Sellers fully rejected buyers.',
-   tips:'Very bearish after uptrend. Confirm with next red candle. Watch at resistance.',timeframes:['1H','4H','1D'],
-   svg:`<svg viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="48" y="72" width="24" height="4" rx="2" fill="#F87171"/>
-     <line x1="60" y1="18" x2="60" y2="72" stroke="#F87171" stroke-width="2"/>
-     <text x="60" y="97" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="JetBrains Mono">GRAVESTONE DOJI</text>
-   </svg>`}
+  // ══ SINGLE CANDLE ══
+  {name:'Doji',cat:'Neutral',
+   signal:'Opening and closing prices are virtually equal, forming a cross. Signals indecision between buyers and sellers. After a trend, it warns of potential reversal.',
+   tips:'Requires next-candle confirmation. Most powerful after extended moves. High volume doji = stronger signal.',
+   timeframes:['15m','1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="32" width="16" height="36" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="38" y1="22" x2="38" y2="32" stroke="#F87171" stroke-width="1.5"/><line x1="38" y1="68" x2="38" y2="78" stroke="#F87171" stroke-width="1.5"/><rect x="62" y="48" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="70" y1="38" x2="70" y2="48" stroke="#F87171" stroke-width="1.5"/><line x1="70" y1="80" x2="70" y2="92" stroke="#F87171" stroke-width="1.5"/><line x1="100" y1="42" x2="100" y2="112" stroke="#FBBF24" stroke-width="2"/><rect x="88" y="75" width="24" height="4" rx="2" fill="#FBBF24"/></svg>`},
+
+  {name:'Hammer',cat:'Bullish',
+   signal:'Small body at top, long lower wick (2x+ body). At bottom of downtrend. Buyers rejected lower prices and pushed back up to near the open.',
+   tips:'Green body stronger. Confirm with next candle above the high. Volume should increase. Most powerful at major support levels.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="22" width="16" height="38" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="33" y1="14" x2="33" y2="22" stroke="#F87171" stroke-width="1.5"/><line x1="33" y1="60" x2="33" y2="72" stroke="#F87171" stroke-width="1.5"/><rect x="56" y="42" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="64" y1="34" x2="64" y2="42" stroke="#F87171" stroke-width="1.5"/><line x1="64" y1="74" x2="64" y2="88" stroke="#F87171" stroke-width="1.5"/><rect x="88" y="66" width="22" height="18" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="99" y1="62" x2="99" y2="66" stroke="#34D399" stroke-width="1.5"/><line x1="99" y1="84" x2="99" y2="128" stroke="#34D399" stroke-width="2.5"/><rect x="126" y="44" width="16" height="32" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="36" x2="134" y2="44" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="76" x2="134" y2="82" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Shooting Star',cat:'Bearish',
+   signal:'Small body at bottom, long upper wick (2x+ body). At top of uptrend. Sellers rejected higher prices and pushed back down to near the open.',
+   tips:'Red body = stronger signal. Bearish confirmation candle needed next. Most powerful at resistance zones.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="72" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="33" y1="62" x2="33" y2="72" stroke="#34D399" stroke-width="1.5"/><line x1="33" y1="108" x2="33" y2="118" stroke="#34D399" stroke-width="1.5"/><rect x="57" y="52" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="65" y1="42" x2="65" y2="52" stroke="#34D399" stroke-width="1.5"/><line x1="65" y1="88" x2="65" y2="98" stroke="#34D399" stroke-width="1.5"/><rect x="88" y="88" width="22" height="18" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="99" y1="88" x2="99" y2="44" stroke="#F87171" stroke-width="2.5"/><line x1="99" y1="106" x2="99" y2="110" stroke="#F87171" stroke-width="1.5"/><rect x="126" y="62" width="16" height="38" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="134" y1="52" x2="134" y2="62" stroke="#F87171" stroke-width="1.5"/><line x1="134" y1="100" x2="134" y2="112" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Hanging Man',cat:'Bearish',
+   signal:'Same shape as hammer — small body at top with long lower wick — but forms at the TOP of an uptrend. Sellers appeared during the session. Bears gaining strength.',
+   tips:'Context is everything — same shape as hammer but opposite meaning. Red body = stronger. Needs bearish confirmation next candle.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="88" width="16" height="30" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="28" y1="78" x2="28" y2="88" stroke="#34D399" stroke-width="1.5"/><line x1="28" y1="118" x2="28" y2="128" stroke="#34D399" stroke-width="1.5"/><rect x="48" y="62" width="16" height="30" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="56" y1="52" x2="56" y2="62" stroke="#34D399" stroke-width="1.5"/><line x1="56" y1="92" x2="56" y2="104" stroke="#34D399" stroke-width="1.5"/><rect x="78" y="44" width="16" height="28" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="86" y1="34" x2="86" y2="44" stroke="#34D399" stroke-width="1.5"/><line x1="86" y1="72" x2="86" y2="84" stroke="#34D399" stroke-width="1.5"/><rect x="108" y="40" width="22" height="18" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="119" y1="36" x2="119" y2="40" stroke="#F87171" stroke-width="1.5"/><line x1="119" y1="58" x2="119" y2="102" stroke="#F87171" stroke-width="2.5"/><rect x="146" y="54" width="16" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="154" y1="46" x2="154" y2="54" stroke="#F87171" stroke-width="1.5"/><line x1="154" y1="88" x2="154" y2="98" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Inverted Hammer',cat:'Bullish',
+   signal:'Small body at bottom with long upper wick. Forms at BOTTOM of downtrend. Buyers attempted to push higher — sellers rejected but the attempt signals potential reversal.',
+   tips:'Needs strong bullish confirmation next candle. Green body = stronger. Gap down before = even more bullish.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="25" y="28" width="16" height="36" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="33" y1="20" x2="33" y2="28" stroke="#F87171" stroke-width="1.5"/><line x1="33" y1="64" x2="33" y2="74" stroke="#F87171" stroke-width="1.5"/><rect x="57" y="46" width="16" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="65" y1="38" x2="65" y2="46" stroke="#F87171" stroke-width="1.5"/><line x1="65" y1="80" x2="65" y2="90" stroke="#F87171" stroke-width="1.5"/><rect x="88" y="86" width="22" height="18" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="99" y1="86" x2="99" y2="42" stroke="#34D399" stroke-width="2.5"/><line x1="99" y1="104" x2="99" y2="108" stroke="#34D399" stroke-width="1.5"/><rect x="126" y="60" width="16" height="38" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="50" x2="134" y2="60" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="98" x2="134" y2="104" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Spinning Top',cat:'Neutral',
+   signal:'Small body in center with equal upper and lower wicks. Neither buyers nor sellers are in control. Signals indecision and possible pause or reversal in trend.',
+   tips:'Most significant after a strong trend move. Less meaningful inside consolidation. Needs follow-through candle to confirm direction.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="32" width="16" height="34" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="38" y1="22" x2="38" y2="32" stroke="#34D399" stroke-width="1.5"/><line x1="38" y1="66" x2="38" y2="78" stroke="#34D399" stroke-width="1.5"/><rect x="60" y="42" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="68" y1="32" x2="68" y2="42" stroke="#F87171" stroke-width="1.5"/><line x1="68" y1="74" x2="68" y2="86" stroke="#F87171" stroke-width="1.5"/><rect x="90" y="62" width="22" height="14" rx="1" fill="#FBBF24" fill-opacity="0.3" stroke="#FBBF24" stroke-width="2"/><line x1="101" y1="38" x2="101" y2="62" stroke="#FBBF24" stroke-width="2"/><line x1="101" y1="76" x2="101" y2="100" stroke="#FBBF24" stroke-width="2"/></svg>`},
+
+  {name:'Marubozu',cat:'Bullish',
+   signal:'Full body candle with NO wicks — opens at the low and closes at the high. Complete buyer dominance throughout the entire session with no hesitation.',
+   tips:'One of the strongest single-candle signals. Bearish marubozu = sellers in complete control. Confirms strong momentum at breakouts.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="40" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="38" y1="32" x2="38" y2="40" stroke="#F87171" stroke-width="1.5"/><line x1="38" y1="72" x2="38" y2="82" stroke="#F87171" stroke-width="1.5"/><rect x="58" y="50" width="16" height="28" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="66" y1="44" x2="66" y2="50" stroke="#F87171" stroke-width="1.5"/><line x1="66" y1="78" x2="66" y2="86" stroke="#F87171" stroke-width="1.5"/><rect x="88" y="28" width="24" height="88" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2.5"/><rect x="126" y="18" width="16" height="52" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="12" x2="134" y2="18" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="70" x2="134" y2="78" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Dragonfly Doji',cat:'Bullish',
+   signal:'Open, high, and close are all at the TOP. Long lower shadow — sellers drove price far down but buyers completely rejected it and closed at the high.',
+   tips:'Very bullish after a downtrend at key support. Confirm with next candle closing higher with increased volume.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="38" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="30" x2="36" y2="38" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="70" x2="36" y2="82" stroke="#F87171" stroke-width="1.5"/><rect x="58" y="52" width="16" height="28" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="66" y1="44" x2="66" y2="52" stroke="#F87171" stroke-width="1.5"/><line x1="66" y1="80" x2="66" y2="92" stroke="#F87171" stroke-width="1.5"/><rect x="88" y="44" width="24" height="5" rx="2" fill="#34D399"/><line x1="100" y1="49" x2="100" y2="122" stroke="#34D399" stroke-width="2.5"/><line x1="100" y1="40" x2="100" y2="44" stroke="#34D399" stroke-width="1.5"/><rect x="126" y="30" width="16" height="38" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="22" x2="134" y2="30" stroke="#34D399" stroke-width="1.5"/><line x1="134" y1="68" x2="134" y2="76" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Gravestone Doji',cat:'Bearish',
+   signal:'Open, low, and close are all at the BOTTOM. Long upper shadow — buyers pushed price far up but sellers completely crushed the rally back to the open.',
+   tips:'Very bearish after an uptrend at resistance. Confirm with bearish candle next. Most powerful at prior major highs.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="62" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="52" x2="36" y2="62" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="98" x2="36" y2="108" stroke="#34D399" stroke-width="1.5"/><rect x="58" y="46" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="66" y1="36" x2="66" y2="46" stroke="#34D399" stroke-width="1.5"/><line x1="66" y1="82" x2="66" y2="92" stroke="#34D399" stroke-width="1.5"/><rect x="88" y="98" width="24" height="5" rx="2" fill="#F87171"/><line x1="100" y1="26" x2="100" y2="98" stroke="#F87171" stroke-width="2.5"/><line x1="100" y1="103" x2="100" y2="107" stroke="#F87171" stroke-width="1.5"/><rect x="126" y="58" width="16" height="38" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="134" y1="48" x2="134" y2="58" stroke="#F87171" stroke-width="1.5"/><line x1="134" y1="96" x2="134" y2="108" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  // ══ TWO-CANDLE PATTERNS ══
+  {name:'Bullish Engulfing',cat:'Bullish',
+   signal:'Large green candle completely engulfs the previous red candle — opens below and closes above it. Strong demand reversal signal after a downtrend.',
+   tips:'Green candle must FULLY engulf the prior red body. Higher volume on green = confirmation. Most reliable after extended downtrend at support.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="28" width="16" height="36" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="30" y1="20" x2="30" y2="28" stroke="#F87171" stroke-width="1.5"/><line x1="30" y1="64" x2="30" y2="74" stroke="#F87171" stroke-width="1.5"/><rect x="50" y="44" width="16" height="32" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="58" y1="36" x2="58" y2="44" stroke="#F87171" stroke-width="1.5"/><line x1="58" y1="76" x2="58" y2="86" stroke="#F87171" stroke-width="1.5"/><rect x="80" y="58" width="20" height="24" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="90" y1="52" x2="90" y2="58" stroke="#F87171" stroke-width="1.5"/><line x1="90" y1="82" x2="90" y2="90" stroke="#F87171" stroke-width="1.5"/><rect x="108" y="38" width="26" height="60" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2.5"/><line x1="121" y1="28" x2="121" y2="38" stroke="#34D399" stroke-width="1.5"/><line x1="121" y1="98" x2="121" y2="108" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Bearish Engulfing',cat:'Bearish',
+   signal:'Large red candle completely engulfs the previous green candle — opens above and closes below it. Strong supply reversal signal after an uptrend.',
+   tips:'Red candle must FULLY engulf prior green body. Higher volume = stronger signal. Most reliable at resistance after extended rally.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="72" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="30" y1="62" x2="30" y2="72" stroke="#34D399" stroke-width="1.5"/><line x1="30" y1="108" x2="30" y2="118" stroke="#34D399" stroke-width="1.5"/><rect x="50" y="56" width="16" height="34" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="58" y1="46" x2="58" y2="56" stroke="#34D399" stroke-width="1.5"/><line x1="58" y1="90" x2="58" y2="100" stroke="#34D399" stroke-width="1.5"/><rect x="80" y="62" width="20" height="26" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="90" y1="54" x2="90" y2="62" stroke="#34D399" stroke-width="1.5"/><line x1="90" y1="88" x2="90" y2="96" stroke="#34D399" stroke-width="1.5"/><rect x="108" y="40" width="26" height="60" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2.5"/><line x1="121" y1="30" x2="121" y2="40" stroke="#F87171" stroke-width="1.5"/><line x1="121" y1="100" x2="121" y2="110" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Piercing Line',cat:'Bullish',
+   signal:'After a red candle, a green candle opens BELOW the prior low but closes ABOVE the 50% midpoint of the red candle. Strong reversal — buyers overwhelmed sellers.',
+   tips:'The deeper the green closes into the red body (>50%), the stronger. Add volume confirmation. Most effective at support after downtrend.',
+   timeframes:['4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="38" width="24" height="56" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="52" y1="28" x2="52" y2="38" stroke="#F87171" stroke-width="1.5"/><line x1="52" y1="94" x2="52" y2="106" stroke="#F87171" stroke-width="1.5"/><line x1="35" y1="66" x2="140" y2="66" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3,3"/><rect x="96" y="34" width="24" height="66" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="108" y1="24" x2="108" y2="34" stroke="#34D399" stroke-width="1.5"/><line x1="108" y1="100" x2="108" y2="112" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Dark Cloud Cover',cat:'Bearish',
+   signal:'After a green candle, a red candle opens ABOVE the prior high but closes BELOW the 50% midpoint of the green candle. Sellers overwhelmed buyers after a gap up.',
+   tips:'The deeper the close into the green (>50%), the stronger. Most reliable at resistance after an uptrend.',
+   timeframes:['4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="56" width="24" height="56" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="52" y1="46" x2="52" y2="56" stroke="#34D399" stroke-width="1.5"/><line x1="52" y1="112" x2="52" y2="122" stroke="#34D399" stroke-width="1.5"/><line x1="35" y1="84" x2="140" y2="84" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3,3"/><rect x="96" y="44" width="24" height="60" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="108" y1="34" x2="108" y2="44" stroke="#F87171" stroke-width="1.5"/><line x1="108" y1="104" x2="108" y2="116" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Bullish Harami',cat:'Bullish',
+   signal:'Small green candle is completely contained inside the body of the previous large red candle. Selling momentum is slowing — bears losing control.',
+   tips:'Smaller inside candle = stronger signal. Needs confirmation from next candle. Less powerful than engulfing but still significant.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="30" width="16" height="38" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="22" x2="36" y2="30" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="68" x2="36" y2="76" stroke="#F87171" stroke-width="1.5"/><rect x="64" y="22" width="22" height="72" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="75" y1="14" x2="75" y2="22" stroke="#F87171" stroke-width="1.5"/><line x1="75" y1="94" x2="75" y2="104" stroke="#F87171" stroke-width="1.5"/><rect x="98" y="44" width="22" height="28" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="109" y1="38" x2="109" y2="44" stroke="#34D399" stroke-width="1.5"/><line x1="109" y1="72" x2="109" y2="78" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Bearish Harami',cat:'Bearish',
+   signal:'Small red candle is completely contained inside the body of the previous large green candle. Buying momentum is slowing — bulls losing control.',
+   tips:'Confirmation important — wait for next bearish candle. Most reliable at tops of extended rallies.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="60" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="52" x2="36" y2="60" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="96" x2="36" y2="104" stroke="#34D399" stroke-width="1.5"/><rect x="64" y="44" width="22" height="72" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="75" y1="36" x2="75" y2="44" stroke="#34D399" stroke-width="1.5"/><line x1="75" y1="116" x2="75" y2="124" stroke="#34D399" stroke-width="1.5"/><rect x="98" y="62" width="22" height="28" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="109" y1="56" x2="109" y2="62" stroke="#F87171" stroke-width="1.5"/><line x1="109" y1="90" x2="109" y2="96" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Tweezer Tops',cat:'Bearish',
+   signal:'Two or more candles with equal HIGHS after an uptrend. The market tested resistance twice and failed. Strong supply zone — buyers exhausted.',
+   tips:'Equal highs = equal stops for longs = liquidity pool. Second candle should be red. Most powerful at prior major resistance.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="78" width="16" height="36" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="68" x2="36" y2="78" stroke="#34D399" stroke-width="1.5"/><line x1="36" y1="114" x2="36" y2="122" stroke="#34D399" stroke-width="1.5"/><rect x="56" y="58" width="16" height="38" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="64" y1="48" x2="64" y2="58" stroke="#34D399" stroke-width="1.5"/><line x1="64" y1="96" x2="64" y2="106" stroke="#34D399" stroke-width="1.5"/><rect x="86" y="38" width="20" height="34" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="96" y1="28" x2="96" y2="38" stroke="#34D399" stroke-width="1.5"/><line x1="96" y1="72" x2="96" y2="82" stroke="#34D399" stroke-width="1.5"/><rect x="114" y="38" width="20" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="124" y1="28" x2="124" y2="38" stroke="#F87171" stroke-width="1.5"/><line x1="124" y1="72" x2="124" y2="82" stroke="#F87171" stroke-width="1.5"/><line x1="70" y1="28" x2="148" y2="28" stroke="#F87171" stroke-width="2" stroke-dasharray="4,3"/></svg>`},
+
+  {name:'Tweezer Bottoms',cat:'Bullish',
+   signal:'Two or more candles with equal LOWS after a downtrend. The market tested support twice and buyers defended it each time. Strong demand zone.',
+   tips:'Equal lows = equal stops for shorts = buy-side liquidity. Second candle should be green. Most powerful at prior major support.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="36" width="16" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="28" x2="36" y2="36" stroke="#F87171" stroke-width="1.5"/><line x1="36" y1="70" x2="36" y2="80" stroke="#F87171" stroke-width="1.5"/><rect x="56" y="52" width="16" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="64" y1="44" x2="64" y2="52" stroke="#F87171" stroke-width="1.5"/><line x1="64" y1="86" x2="64" y2="96" stroke="#F87171" stroke-width="1.5"/><rect x="86" y="68" width="20" height="34" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="96" y1="58" x2="96" y2="68" stroke="#F87171" stroke-width="1.5"/><line x1="96" y1="102" x2="96" y2="112" stroke="#F87171" stroke-width="1.5"/><rect x="114" y="68" width="20" height="34" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="124" y1="58" x2="124" y2="68" stroke="#34D399" stroke-width="1.5"/><line x1="124" y1="102" x2="124" y2="112" stroke="#34D399" stroke-width="1.5"/><line x1="70" y1="112" x2="148" y2="112" stroke="#34D399" stroke-width="2" stroke-dasharray="4,3"/></svg>`},
+
+  // ══ THREE-CANDLE PATTERNS ══
+  {name:'Morning Star',cat:'Bullish',
+   signal:'Three-candle bottom reversal: large red, small-bodied candle (indecision), large green that closes more than 50% into the first candle. End of the downtrend.',
+   tips:'Middle candle gaps down (or small body). Green candle must close >50% into first red candle. High volume on third candle is critical.',
+   timeframes:['1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="24" width="22" height="56" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="29" y1="16" x2="29" y2="24" stroke="#F87171" stroke-width="1.5"/><line x1="29" y1="80" x2="29" y2="92" stroke="#F87171" stroke-width="1.5"/><rect x="82" y="82" width="18" height="16" rx="1" fill="#FBBF24" fill-opacity="0.3" stroke="#FBBF24" stroke-width="1.5"/><line x1="91" y1="74" x2="91" y2="82" stroke="#FBBF24" stroke-width="1.5"/><line x1="91" y1="98" x2="91" y2="108" stroke="#FBBF24" stroke-width="1.5"/><rect x="120" y="28" width="22" height="60" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="131" y1="20" x2="131" y2="28" stroke="#34D399" stroke-width="1.5"/><line x1="131" y1="88" x2="131" y2="96" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Evening Star',cat:'Bearish',
+   signal:'Three-candle top reversal: large green, small-bodied candle (indecision), large red that closes more than 50% into the first candle. End of the uptrend.',
+   tips:'Middle candle gaps up. Red candle must close >50% into first green candle. Volume highest on third candle.',
+   timeframes:['1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="70" width="22" height="58" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="29" y1="62" x2="29" y2="70" stroke="#34D399" stroke-width="1.5"/><line x1="29" y1="128" x2="29" y2="136" stroke="#34D399" stroke-width="1.5"/><rect x="82" y="46" width="18" height="16" rx="1" fill="#FBBF24" fill-opacity="0.3" stroke="#FBBF24" stroke-width="1.5"/><line x1="91" y1="38" x2="91" y2="46" stroke="#FBBF24" stroke-width="1.5"/><line x1="91" y1="62" x2="91" y2="70" stroke="#FBBF24" stroke-width="1.5"/><rect x="120" y="60" width="22" height="60" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="131" y1="52" x2="131" y2="60" stroke="#F87171" stroke-width="1.5"/><line x1="131" y1="120" x2="131" y2="128" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Three White Soldiers',cat:'Bullish',
+   signal:'Three consecutive long green candles, each opening within the previous body and closing near its high. Powerful momentum signal — buyers in full control.',
+   tips:'Most reliable after consolidation at key support. Small upper wicks = healthiest version. Wicks growing longer = momentum fading.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="82" width="22" height="48" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="39" y1="74" x2="39" y2="82" stroke="#34D399" stroke-width="1.5"/><line x1="39" y1="130" x2="39" y2="136" stroke="#34D399" stroke-width="1.5"/><rect x="62" y="52" width="22" height="52" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="73" y1="44" x2="73" y2="52" stroke="#34D399" stroke-width="1.5"/><line x1="73" y1="104" x2="73" y2="110" stroke="#34D399" stroke-width="1.5"/><rect x="96" y="20" width="22" height="56" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="107" y1="12" x2="107" y2="20" stroke="#34D399" stroke-width="1.5"/><line x1="107" y1="76" x2="107" y2="82" stroke="#34D399" stroke-width="1.5"/></svg>`},
+
+  {name:'Three Black Crows',cat:'Bearish',
+   signal:'Three consecutive long red candles, each opening within the previous body and closing near its low. Strong selling momentum — bears in full control for three sessions.',
+   tips:'Most reliable at resistance after extended uptrend. Small lower wicks = healthiest pattern. This IS the signal — no confirmation needed.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="28" y="20" width="22" height="48" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="39" y1="14" x2="39" y2="20" stroke="#F87171" stroke-width="1.5"/><line x1="39" y1="68" x2="39" y2="74" stroke="#F87171" stroke-width="1.5"/><rect x="62" y="46" width="22" height="52" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="73" y1="40" x2="73" y2="46" stroke="#F87171" stroke-width="1.5"/><line x1="73" y1="98" x2="73" y2="106" stroke="#F87171" stroke-width="1.5"/><rect x="96" y="76" width="22" height="56" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="107" y1="68" x2="107" y2="76" stroke="#F87171" stroke-width="1.5"/><line x1="107" y1="132" x2="107" y2="138" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  // ══ CHART PATTERNS ══
+  {name:'Head & Shoulders',cat:'Bearish',
+   signal:'Three peaks — left shoulder, higher head, equal right shoulder. Confirmed when price breaks the neckline. Classic top reversal.',
+   tips:'Target = neckline minus head height. Volume decreases on each peak. Short on neckline break or retest.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10,118 32,74 50,90 80,26 110,90 130,74 155,118" stroke="#F87171" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="92" x2="168" y2="92" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="32" cy="74" r="3.5" fill="#F87171" opacity="0.8"/><circle cx="80" cy="26" r="3.5" fill="#F87171"/><circle cx="130" cy="74" r="3.5" fill="#F87171" opacity="0.8"/></svg>`},
+
+  {name:'Inverse H&S',cat:'Bullish',
+   signal:'Three troughs — left shoulder, lower head, equal right shoulder. Confirmed on neckline breakout. Classic bottom reversal — shift from bearish to bullish.',
+   tips:'Target = neckline + head depth. Volume rises on right shoulder. Enter on neckline break or retest. Very high-reliability.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10,32 32,76 50,60 80,124 110,60 130,76 155,32" stroke="#34D399" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="58" x2="168" y2="58" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="32" cy="76" r="3.5" fill="#34D399" opacity="0.8"/><circle cx="80" cy="124" r="3.5" fill="#34D399"/><circle cx="130" cy="76" r="3.5" fill="#34D399" opacity="0.8"/></svg>`},
+
+  {name:'Double Top',cat:'Bearish',
+   signal:'Two peaks at approximately the same price level. Second rally fails to make a new high. Confirmed on neckline break below the trough between peaks.',
+   tips:'Target = peak-to-neckline distance projected down. Volume lower on second peak. Neckline break is the entry trigger.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="15,120 55,28 90,78 130,28 168,120" stroke="#F87171" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="15" y1="78" x2="175" y2="78" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="55" cy="28" r="4" fill="#F87171"/><circle cx="130" cy="28" r="4" fill="#F87171"/></svg>`},
+
+  {name:'Double Bottom',cat:'Bullish',
+   signal:'Two troughs at approximately the same price level. Second decline holds support. Confirmed on neckline breakout above the peak between troughs.',
+   tips:'Target = trough-to-neckline distance projected up. Volume higher on second bottom. Enter on neckline break or pullback.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="15,28 55,122 90,72 130,122 168,28" stroke="#34D399" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="15" y1="72" x2="175" y2="72" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="55" cy="122" r="4" fill="#34D399"/><circle cx="130" cy="122" r="4" fill="#34D399"/></svg>`},
+
+  {name:'Triple Top',cat:'Bearish',
+   signal:'Three approximately equal peaks. Market tested resistance three times and failed. Very strong supply zone. Confirmed on neckline break.',
+   tips:'Stronger than double top — three failures confirms very strong resistance. Target = pattern height below neckline.',
+   timeframes:['4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10,120 28,32 48,82 80,32 112,82 140,32 160,120" stroke="#F87171" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="82" x2="175" y2="82" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="28" cy="32" r="3.5" fill="#F87171"/><circle cx="80" cy="32" r="3.5" fill="#F87171"/><circle cx="140" cy="32" r="3.5" fill="#F87171"/></svg>`},
+
+  {name:'Triple Bottom',cat:'Bullish',
+   signal:'Three approximately equal troughs. Market tested support three times and bounced. Very strong demand zone. Confirmed on neckline breakout.',
+   tips:'Target = pattern height above neckline. Three successful tests = very strong support. Breakout often with major volume expansion.',
+   timeframes:['4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="10,28 28,118 48,68 80,118 112,68 140,118 160,28" stroke="#34D399" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="10" y1="68" x2="175" y2="68" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="5,3"/><circle cx="28" cy="118" r="3.5" fill="#34D399"/><circle cx="80" cy="118" r="3.5" fill="#34D399"/><circle cx="140" cy="118" r="3.5" fill="#34D399"/></svg>`},
+
+  {name:'Bull Flag',cat:'Bullish',
+   signal:'Strong upward pole followed by a tight downward-sloping channel. Trend pauses then resumes. Continuation pattern.',
+   tips:'Flag retraces 30–50% of pole max. Volume drops during flag, spikes on breakout. Target = pole height added to breakout point.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="28" y1="132" x2="72" y2="26" stroke="#34D399" stroke-width="3"/><line x1="72" y1="26" x2="138" y2="52" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="72" y1="46" x2="138" y2="72" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,2"/><polyline points="72,26 86,32 100,42 114,48 128,52" stroke="#34D399" stroke-width="2" fill="none"/><line x1="138" y1="52" x2="178" y2="12" stroke="#34D399" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/></svg>`},
+
+  {name:'Bear Flag',cat:'Bearish',
+   signal:'Strong downward pole followed by tight upward-sloping channel. Selling pressure resumes after brief relief rally. Continuation pattern.',
+   tips:'Flag retraces 30–50% of pole. Volume contracts in flag, expands on breakdown. Target = pole height below breakdown.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="28" y1="18" x2="72" y2="124" stroke="#F87171" stroke-width="3"/><line x1="72" y1="124" x2="138" y2="96" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="72" y1="104" x2="138" y2="76" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,2"/><polyline points="72,124 86,114 100,106 114,102 128,96" stroke="#F87171" stroke-width="2" fill="none"/><line x1="138" y1="96" x2="178" y2="136" stroke="#F87171" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/></svg>`},
+
+  {name:'Bullish Pennant',cat:'Bullish',
+   signal:'Strong upward pole followed by small symmetrical triangle. Tighter consolidation than flag — resolves quickly. Bullish continuation.',
+   tips:'Volume dries up during pennant then explodes on breakout. Target = pole height. Breakout in final third of triangle.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="132" x2="72" y2="28" stroke="#34D399" stroke-width="3"/><line x1="72" y1="28" x2="130" y2="48" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="72" y1="56" x2="130" y2="48" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="130" y1="48" x2="175" y2="12" stroke="#34D399" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/></svg>`},
+
+  {name:'Bearish Pennant',cat:'Bearish',
+   signal:'Strong downward pole followed by small symmetrical triangle. Short-sellers pause, trap late buyers, then resume downtrend.',
+   tips:'Volume lowest at apex. Breakdown with volume = high confidence continuation. Target = pole height below breakdown.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="22" y1="18" x2="72" y2="122" stroke="#F87171" stroke-width="3"/><line x1="72" y1="122" x2="130" y2="100" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="72" y1="94" x2="130" y2="100" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,2"/><line x1="130" y1="100" x2="175" y2="138" stroke="#F87171" stroke-width="2" stroke-dasharray="4,2" opacity="0.6"/></svg>`},
+
+  {name:'Ascending Triangle',cat:'Bullish',
+   signal:'Flat resistance at top, rising support line. Buyers making higher lows — increasingly aggressive. Typically resolves with bullish breakout.',
+   tips:'Volume decreases as it compresses, spikes on breakout. Target = triangle height. More than 3 touches = stronger signal.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="38" x2="155" y2="38" stroke="#F87171" stroke-width="2" stroke-dasharray="5,3"/><line x1="15" y1="120" x2="155" y2="38" stroke="#34D399" stroke-width="2"/><polyline points="15,120 30,100 50,90 70,76 90,64 110,52 130,44 155,38" stroke="#6366F1" stroke-width="1.5" fill="none"/><line x1="155" y1="38" x2="185" y2="14" stroke="#34D399" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Descending Triangle',cat:'Bearish',
+   signal:'Flat support at bottom, declining resistance line. Sellers making lower highs — increasingly aggressive. Typically resolves with bearish breakdown.',
+   tips:'Target = triangle height below breakdown. Bearish bias. Volume confirmation on breakdown critical.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="120" x2="155" y2="120" stroke="#34D399" stroke-width="2" stroke-dasharray="5,3"/><line x1="15" y1="30" x2="155" y2="120" stroke="#F87171" stroke-width="2"/><polyline points="15,30 30,50 50,62 70,76 90,88 110,100 130,110 155,120" stroke="#6366F1" stroke-width="1.5" fill="none"/><line x1="155" y1="120" x2="185" y2="140" stroke="#F87171" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Symmetrical Triangle',cat:'Neutral',
+   signal:'Two converging trendlines — declining resistance and rising support. Compression before a big move. Direction determined by which side breaks first.',
+   tips:'Volume shrinks to apex. Breakout at 60–75% of triangle. Trade the breakout direction with volume. Prior trend gives directional bias.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="22" x2="132" y2="74" stroke="#FBBF24" stroke-width="2"/><line x1="15" y1="126" x2="132" y2="74" stroke="#FBBF24" stroke-width="2"/><polyline points="15,22 28,34 42,28 58,42 74,38 92,50 110,58 128,70 132,74" stroke="#6366F1" stroke-width="1.5" fill="none"/><line x1="132" y1="74" x2="175" y2="42" stroke="#34D399" stroke-width="2" stroke-dasharray="4,2" opacity="0.7"/><line x1="132" y1="74" x2="175" y2="106" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.4"/></svg>`},
+
+  {name:'Cup & Handle',cat:'Bullish',
+   signal:'Rounded U-shaped bottom (cup) followed by short downward drift (handle). Gradual base building then final shakeout before breakout.',
+   tips:'Cup should be U-shaped not V-shaped. Handle retraces 30–50% of cup. Enter on handle breakout. Target = cup depth added to rim.',
+   timeframes:['1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14,30 Q90,125 166,30" stroke="#34D399" stroke-width="2.5" fill="none"/><line x1="14" y1="30" x2="166" y2="30" stroke="#94A3B8" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/><path d="M148,30 Q160,52 156,20" stroke="#34D399" stroke-width="2" fill="none"/><line x1="156" y1="20" x2="185" y2="20" stroke="#34D399" stroke-width="2" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Rising Wedge',cat:'Bearish',
+   signal:'Both support and resistance lines slope upward and converge. Weakening bullish momentum. Breaks down hard when support gives way.',
+   tips:'Volume declines as wedge forms. Watch for bearish RSI divergence. Break below lower trendline is the entry. Target = start of wedge.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="124" x2="148" y2="26" stroke="#F87171" stroke-width="2"/><line x1="15" y1="138" x2="148" y2="62" stroke="#F87171" stroke-width="2"/><polyline points="15,138 28,120 44,112 60,98 76,88 94,76 112,66 130,56 148,50" stroke="#FBBF24" stroke-width="1.5" fill="none"/><line x1="148" y1="62" x2="178" y2="120" stroke="#F87171" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Falling Wedge',cat:'Bullish',
+   signal:'Both support and resistance lines slope downward and converge. Weakening bearish momentum. Breaks upward when resistance gives way.',
+   tips:'Volume contracts as wedge forms. RSI often shows bullish divergence. Enter on breakout above upper trendline. Target = top of wedge.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="26" x2="148" y2="124" stroke="#34D399" stroke-width="2"/><line x1="15" y1="14" x2="148" y2="88" stroke="#34D399" stroke-width="2"/><polyline points="15,14 28,30 44,36 60,52 76,58 94,72 112,80 130,94 148,102" stroke="#FBBF24" stroke-width="1.5" fill="none"/><line x1="148" y1="88" x2="178" y2="28" stroke="#34D399" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Rectangle / Box',cat:'Neutral',
+   signal:'Price consolidates between two horizontal parallel support and resistance lines. Continuation when it breaks in the direction of prior trend.',
+   tips:'Trade the breakout. Target = height of the rectangle. False breakouts common — wait for candle close outside the range.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="44" x2="158" y2="44" stroke="#6366F1" stroke-width="2" stroke-dasharray="5,3"/><line x1="18" y1="106" x2="158" y2="106" stroke="#6366F1" stroke-width="2" stroke-dasharray="5,3"/><rect x="18" y="44" width="140" height="62" fill="#6366F1" fill-opacity="0.06"/><polyline points="18,75 36,60 54,90 72,54 90,100 108,62 126,88 142,50 158,75" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="158" y1="75" x2="188" y2="26" stroke="#34D399" stroke-width="2.5" stroke-dasharray="4,2" opacity="0.7"/></svg>`},
+
+  {name:'Broadening Formation',cat:'Bearish',
+   signal:'Trendlines diverge — each swing is bigger than the last. Increasing volatility and uncertainty. Often appears at market tops. Typically breaks bearish.',
+   tips:'5 touch points (alternating high/low). Short the 5th touch. Most reliable on daily/weekly. Rare but powerful.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="15" y1="55" x2="168" y2="16" stroke="#F87171" stroke-width="2"/><line x1="15" y1="90" x2="168" y2="136" stroke="#F87171" stroke-width="2"/><polyline points="15,55 32,80 54,34 86,110 120,24 155,128" stroke="#FBBF24" stroke-width="1.5" fill="none"/></svg>`},
+
+  // ══ ICT / SMC CONCEPTS ══
+  {name:'Fair Value Gap',cat:'Neutral',
+   signal:'3-candle imbalance: Candle 3 low does not overlap Candle 1 high (bullish FVG). A price inefficiency. Markets tend to return to fill these gaps.',
+   tips:'Enter at 50% of the FVG zone. Stop below FVG (for longs). Most powerful on first retest. Combine with OB for precision entry.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="24" y="82" width="22" height="44" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="35" y1="72" x2="35" y2="82" stroke="#F87171" stroke-width="1.5"/><line x1="35" y1="126" x2="35" y2="134" stroke="#F87171" stroke-width="1.5"/><rect x="60" y="28" width="22" height="56" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="2"/><line x1="71" y1="18" x2="71" y2="28" stroke="#34D399" stroke-width="1.5"/><line x1="71" y1="84" x2="71" y2="92" stroke="#34D399" stroke-width="1.5"/><rect x="96" y="12" width="22" height="42" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="107" y1="8" x2="107" y2="12" stroke="#34D399" stroke-width="1.5"/><line x1="107" y1="54" x2="107" y2="62" stroke="#34D399" stroke-width="1.5"/><rect x="60" y="54" width="58" height="28" rx="2" fill="#6366F1" fill-opacity="0.18" stroke="#6366F1" stroke-width="1.5" stroke-dasharray="4,3"/><rect x="132" y="54" width="22" height="30" rx="1" fill="#F87171" fill-opacity="0.12" stroke="#F87171" stroke-width="1.5" stroke-dasharray="2,2"/><line x1="143" y1="46" x2="143" y2="54" stroke="#F87171" stroke-width="1.5"/><line x1="143" y1="84" x2="143" y2="92" stroke="#F87171" stroke-width="1.5"/></svg>`},
+
+  {name:'Bullish Order Block',cat:'Bullish',
+   signal:'The LAST bearish candle before a bullish impulse that broke structure. Smart money buy orders live here. Price tends to return and bounce.',
+   tips:'Mark high-to-low of last red candle before impulse. Wait for retracement into zone. Pristine OB (untouched) = strongest. Combine with FVG.',
+   timeframes:['15m','1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="58" width="18" height="28" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="25" y1="50" x2="25" y2="58" stroke="#F87171" stroke-width="1.5"/><line x1="25" y1="86" x2="25" y2="96" stroke="#F87171" stroke-width="1.5"/><rect x="44" y="70" width="18" height="24" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><line x1="53" y1="64" x2="53" y2="70" stroke="#F87171" stroke-width="1.5"/><line x1="53" y1="94" x2="53" y2="102" stroke="#F87171" stroke-width="1.5"/><rect x="72" y="78" width="20" height="22" rx="1" fill="#F87171" fill-opacity="0.3" stroke="#F87171" stroke-width="2"/><line x1="82" y1="72" x2="82" y2="78" stroke="#F87171" stroke-width="1.5"/><line x1="82" y1="100" x2="82" y2="108" stroke="#F87171" stroke-width="1.5"/><rect x="72" y="78" width="80" height="22" rx="2" fill="#34D399" fill-opacity="0.08" stroke="#34D399" stroke-width="1.5" stroke-dasharray="5,3"/><polyline points="100,100 112,78 126,56 140,36 154,20 166,10" stroke="#34D399" stroke-width="3" fill="none"/></svg>`},
+
+  {name:'Bearish Order Block',cat:'Bearish',
+   signal:'The LAST bullish candle before a bearish impulse that broke structure. Smart money sell orders live here. Price tends to return and reject.',
+   tips:'Mark low-to-high of last green candle before impulse. Enter short on retest. Stop above OB high. Bearish FVG inside OB = highest confluence.',
+   timeframes:['15m','1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="64" width="18" height="26" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="25" y1="56" x2="25" y2="64" stroke="#34D399" stroke-width="1.5"/><line x1="25" y1="90" x2="25" y2="98" stroke="#34D399" stroke-width="1.5"/><rect x="44" y="50" width="18" height="28" rx="1" fill="#34D399" fill-opacity="0.2" stroke="#34D399" stroke-width="1.5"/><line x1="53" y1="42" x2="53" y2="50" stroke="#34D399" stroke-width="1.5"/><line x1="53" y1="78" x2="53" y2="88" stroke="#34D399" stroke-width="1.5"/><rect x="72" y="42" width="20" height="24" rx="1" fill="#34D399" fill-opacity="0.3" stroke="#34D399" stroke-width="2"/><line x1="82" y1="36" x2="82" y2="42" stroke="#34D399" stroke-width="1.5"/><line x1="82" y1="66" x2="82" y2="74" stroke="#34D399" stroke-width="1.5"/><rect x="72" y="42" width="80" height="24" rx="2" fill="#F87171" fill-opacity="0.08" stroke="#F87171" stroke-width="1.5" stroke-dasharray="5,3"/><polyline points="100,66 112,88 126,108 140,124 154,136 166,144" stroke="#F87171" stroke-width="3" fill="none"/></svg>`},
+
+  {name:'Break of Structure',cat:'Bullish',
+   signal:'Price breaks above a significant swing high (bullish trend). BOS confirms trend continuation. Each BOS = new higher high = smart money defending the trend.',
+   tips:'BOS alone is not an entry — wait for pullback to OB/FVG after BOS. Mark BOS levels as future support.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="14,130 38,92 58,110 88,60 114,80 148,26 170,38" stroke="#34D399" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="14" y1="60" x2="108" y2="60" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4,3"/><line x1="108" y1="60" x2="175" y2="60" stroke="#34D399" stroke-width="2" stroke-dasharray="4,3"/><circle cx="88" cy="60" r="4" fill="#34D399"/><text x="114" y="55" fill="#34D399" font-size="10" font-family="monospace" font-weight="bold">BOS</text></svg>`},
+
+  {name:'Change of Character',cat:'Bearish',
+   signal:'Price breaks BELOW a significant swing low in a previously bullish trend. CHoCH is the FIRST warning of potential reversal — smart money shifting bearish.',
+   tips:'One CHoCH = warning, not confirmation. Two CHoCH + bearish BOS = confirmed reversal. Enter short after bearish OB forms post-CHoCH.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="14,118 36,80 56,98 82,46 104,66 122,86 146,118 168,130" stroke="#F87171" stroke-width="2.5" fill="none" stroke-linejoin="round"/><line x1="14" y1="90" x2="114" y2="90" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="4,3"/><line x1="114" y1="90" x2="175" y2="90" stroke="#F87171" stroke-width="2" stroke-dasharray="4,3"/><circle cx="122" cy="90" r="4" fill="#F87171"/><text x="128" y="85" fill="#F87171" font-size="9" font-family="monospace" font-weight="bold">CHoCH</text></svg>`},
+
+  {name:'Liquidity Sweep',cat:'Bearish',
+   signal:'Price spikes above key equal highs triggering stop losses, then quickly reverses. Smart money used retail stops as liquidity to fill their short orders.',
+   tips:'Confirmation = candle CLOSES back below swept level. Enter on close of reversal candle. Stop above the wick. Sweep + OB = highest quality entry.',
+   timeframes:['15m','1H','4H'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="14,102 36,80 58,92 84,58 110,74 134,58 156,58" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="50" y1="58" x2="178" y2="58" stroke="#F87171" stroke-width="1.5" stroke-dasharray="5,3"/><line x1="156" y1="58" x2="156" y2="18" stroke="#F87171" stroke-width="2.5"/><rect x="146" y="52" width="20" height="12" rx="1" fill="#F87171" fill-opacity="0.2" stroke="#F87171" stroke-width="1.5"/><polyline points="156,64 150,82 140,108 128,128" stroke="#34D399" stroke-width="2.5" fill="none"/><circle cx="156" cy="18" r="3.5" fill="#F87171"/></svg>`},
+
+  {name:'Premium & Discount',cat:'Neutral',
+   signal:'ICT: price above 50% equilibrium is Premium (expensive — sell). Price below 50% is Discount (cheap — buy). Always buy in discount, sell in premium.',
+   tips:'50% level = equilibrium = most important Fibonacci level. Combine with OBs and FVGs for precision. Never buy in premium or sell in discount.',
+   timeframes:['15m','1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="142" height="52" rx="2" fill="#F87171" fill-opacity="0.07"/><rect x="14" y="82" width="142" height="52" rx="2" fill="#34D399" fill-opacity="0.07"/><line x1="14" y1="16" x2="156" y2="16" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,3"/><line x1="14" y1="68" x2="156" y2="68" stroke="#FBBF24" stroke-width="2.5"/><line x1="14" y1="134" x2="156" y2="134" stroke="#34D399" stroke-width="1.5" stroke-dasharray="4,3"/><text x="20" y="34" fill="#F87171" font-size="10" font-family="monospace">PREMIUM</text><text x="20" y="46" fill="#F87171" font-size="8.5" font-family="monospace">Sell Zone</text><text x="20" y="98" fill="#34D399" font-size="10" font-family="monospace">DISCOUNT</text><text x="20" y="110" fill="#34D399" font-size="8.5" font-family="monospace">Buy Zone</text><text x="122" y="64" fill="#FBBF24" font-size="9" font-family="monospace">EQ 50%</text></svg>`},
+
+  // ══ INDICATOR PATTERNS ══
+  {name:'Golden Cross',cat:'Bullish',
+   signal:'The 50-period EMA crosses ABOVE the 200-period EMA. Long-term bullish signal. Signals macro shift — institutional algorithms often trade this.',
+   tips:'Most reliable on daily/weekly. Buy the retest of EMA 50 after cross — don\'t chase. Fake crosses happen in choppy markets. Confirm with volume.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14,116 Q58,106 100,70 Q142,36 186,18" stroke="#34D399" stroke-width="2.5" fill="none"/><path d="M14,130 Q58,122 100,96 Q142,78 186,68" stroke="#94A3B8" stroke-width="2" fill="none" opacity="0.7"/><circle cx="102" cy="82" r="5.5" fill="#FBBF24" stroke="#0D1117" stroke-width="2"/><line x1="102" y1="88" x2="102" y2="145" stroke="#FBBF24" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/><text x="18" y="22" fill="#34D399" font-size="9" font-family="monospace">EMA 50</text><text x="18" y="142" fill="#94A3B8" font-size="9" font-family="monospace">EMA 200</text></svg>`},
+
+  {name:'Death Cross',cat:'Bearish',
+   signal:'The 50-period EMA crosses BELOW the 200-period EMA. Long-term bearish signal. Macro momentum shifts down — often triggers algorithmic selling.',
+   tips:'Most impactful on daily/weekly. Often dead cat bounce after — short the retest of EMA 50 from below. Confirm with declining volume on bounces.',
+   timeframes:['4H','1D','1W'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14,26 Q58,36 100,72 Q142,110 186,130" stroke="#F87171" stroke-width="2.5" fill="none"/><path d="M14,16 Q58,20 100,44 Q142,64 186,68" stroke="#94A3B8" stroke-width="2" fill="none" opacity="0.7"/><circle cx="102" cy="74" r="5.5" fill="#FBBF24" stroke="#0D1117" stroke-width="2"/><line x1="102" y1="68" x2="102" y2="8" stroke="#FBBF24" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/><text x="18" y="138" fill="#F87171" font-size="9" font-family="monospace">EMA 50</text><text x="18" y="18" fill="#94A3B8" font-size="9" font-family="monospace">EMA 200</text></svg>`},
+
+  {name:'Bullish Divergence',cat:'Bullish',
+   signal:'Price makes a LOWER LOW but RSI/MACD makes a HIGHER LOW. Bearish momentum weakening even as price falls. Reversal approaching.',
+   tips:'Most powerful on 4H and daily at key support. Confirm with bullish candle or OB. Hidden bullish divergence = trend continuation.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="14,46 42,68 68,36 100,88 132,54" stroke="#F87171" stroke-width="2" fill="none"/><line x1="14" y1="108" x2="186" y2="108" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/><polyline points="14,126 42,122 68,130 100,116 132,124" stroke="#34D399" stroke-width="2" fill="none"/><circle cx="68" cy="36" r="3" fill="#F87171"/><circle cx="100" cy="88" r="3" fill="#F87171"/><circle cx="68" cy="130" r="3" fill="#34D399"/><circle cx="100" cy="116" r="3" fill="#34D399"/><line x1="68" y1="36" x2="100" y2="88" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.6"/><line x1="68" y1="130" x2="100" y2="116" stroke="#34D399" stroke-width="2" stroke-dasharray="4,3"/><text x="14" y="106" fill="#94A3B8" font-size="8" font-family="monospace">RSI</text></svg>`},
+
+  {name:'Bearish Divergence',cat:'Bearish',
+   signal:'Price makes a HIGHER HIGH but RSI/MACD makes a LOWER HIGH. Bullish momentum weakening even as price rises. Distribution phase — reversal likely.',
+   tips:'Most reliable on 4H/daily at key resistance or after extended rally. Hidden bearish divergence = continuation of downtrend.',
+   timeframes:['1H','4H','1D'],
+   svg:`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg"><polyline points="14,100 42,74 68,108 100,52 132,94" stroke="#F87171" stroke-width="2" fill="none"/><line x1="14" y1="118" x2="186" y2="118" stroke="#94A3B8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/><polyline points="14,135 42,128 68,138 100,124 132,132" stroke="#F87171" stroke-width="2" fill="none"/><circle cx="68" cy="108" r="3" fill="#F87171"/><circle cx="100" cy="52" r="3" fill="#F87171"/><circle cx="68" cy="138" r="3" fill="#F87171"/><circle cx="100" cy="124" r="3" fill="#F87171"/><line x1="68" y1="108" x2="100" y2="52" stroke="#F87171" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.7"/><line x1="68" y1="138" x2="100" y2="124" stroke="#34D399" stroke-width="2" stroke-dasharray="4,3"/><text x="14" y="116" fill="#94A3B8" font-size="8" font-family="monospace">RSI</text></svg>`}
 ];
 
 /* ══════════════════════════════════════════
