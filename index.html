@@ -406,7 +406,8 @@ textarea{resize:vertical;min-height:60px;}
 .fc-pattern-cat.bullish{background:var(--green-dim);color:var(--green);}
 .fc-pattern-cat.bearish{background:var(--red-dim);color:var(--red);}
 .fc-pattern-cat.neutral{background:var(--amber-dim);color:var(--amber);}
-.fc-svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;max-height:160px;}
+.fc-svg-wrap{flex:1;display:flex;align-items:center;justify-content:center;max-height:160px;min-height:120px;}
+.fc-svg-wrap svg{width:160px;height:130px;display:block;}
 .fc-hint{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px;}
 
 .fc-back{
@@ -730,6 +731,8 @@ textarea{resize:vertical;min-height:60px;}
         <div class="vault-cat" onclick="switchCat(this,'DCA')"><span class="vault-cat-icon">🔄</span> DCA</div>
         <div class="vault-cat" onclick="switchCat(this,'Options')"><span class="vault-cat-icon">📐</span> Options</div>
         <div class="vault-cat" onclick="switchCat(this,'On-Chain')"><span class="vault-cat-icon">🔗</span> On-Chain</div>
+        <div class="vault-cat" onclick="switchCat(this,'ICT / SMC')"><span class="vault-cat-icon">🧠</span> ICT / SMC</div>
+        <div class="vault-cat" onclick="switchCat(this,'Fundamentals')"><span class="vault-cat-icon">📚</span> Fundamentals</div>
       </div>
       <div class="vault-main" id="vault-main">
         <div class="vault-header">
@@ -1511,7 +1514,21 @@ const defaultStrategies = {
      exit:['Target 1:2 R:R','Exit if EMA 8 crosses back','Trail stop to EMA 8 on trend'],
      risk:'Skip if EMAs are flat/tangled. Only trade clear ribbon.',
      pros:['Trend confirmation','Multiple entries','Clear stop'],
-     cons:['Late in trends','Whipsaws in chop']}
+     cons:['Late in trends','Whipsaws in chop']},
+
+    {icon:'🕐',name:'London/NY Open Scalp',when:'First 15-30 minutes of London open (3am EST) or NY open (9:30am EST). Highest volume and volatility windows of the day.',
+     entry:['1. Mark the Asian session high and low before London open','2. At 3am EST watch for a sweep of either Asian range extreme','3. After sweep + rejection candle, enter in opposite direction','4. Alternatively: trade the first clean breakout of Asian range with volume','5. Stop: 0.2-0.3% beyond the swept level','6. Target: opposite Asian range extreme'],
+     exit:['Exit at opposite session range extreme','Hard time exit: close all by 5am EST (London) or 11am EST (NY)','No overnight holds on scalps'],
+     risk:'Skip the trade if there is a major news event at open (check investing.com). Avoid trading the first 5 minutes — let price stabilize.',
+     pros:['Most liquid time of day','Predictable sweep-and-reverse behavior','Fast moves = quick profits','Tight stops available'],
+     cons:['Must be awake at specific hours','Slippage higher at open','News can destroy the setup instantly']},
+
+    {icon:'🔄',name:'VWAP Reclaim Scalp',when:'Intraday trend. Price has fallen below VWAP and is attempting to reclaim it, or vice versa. Best on 5m/15m during active sessions.',
+     entry:['1. Wait for price to close BELOW VWAP (short setup) or ABOVE VWAP (long setup)','2. Watch for price to return and test VWAP from below (for shorts) or above (for longs)','3. Look for a rejection candle at VWAP — pin bar, shooting star, or engulfing','4. Enter on the close of the rejection candle','5. Stop: close above/below VWAP by 0.2%'],
+     exit:['Target 1:1.5 R:R minimum','Scale at VWAP ± 1 standard deviation bands','Exit before end of session (VWAP resets daily)'],
+     risk:'VWAP is most reliable on high-volume assets (BTC, ETH, SOL). Ignore VWAP scalps on low-cap coins with thin order books.',
+     pros:['Objective institutional level','Works on any liquid asset','Clear entry and stop placement','Matches institutional order flow'],
+     cons:['VWAP resets daily — loses meaning after close','Only reliable on high-volume assets','Can whipsaw around VWAP in choppy conditions']}
   ],
   Swing:[
     {icon:'🌊',name:'Swing Breakout',when:'Consolidation of 5-15 days. Decreasing volume during base, increasing on breakout.',
@@ -1525,7 +1542,21 @@ const defaultStrategies = {
      exit:['Target previous high first','Trail stop to 21 EMA','Exit on weekly close below 50 EMA'],
      risk:'Only take 1st or 2nd pullback. Avoid if EMA has been broken multiple times.',
      pros:['High probability','Trend continuation','Clear levels'],
-     cons:['Can miss fast movers','EMA can lag']}
+     cons:['Can miss fast movers','EMA can lag']},
+
+    {icon:'💧',name:'Weekly Liquidity Sweep Swing',when:'On the weekly or daily chart, price sweeps a major previous high/low (buy-side or sell-side liquidity) and shows clear rejection. Best setup for 3-10 day holds.',
+     entry:['1. Mark all significant weekly highs and lows — these are liquidity targets','2. Watch for price to push through a key level (sweep) with a long wick','3. Wait for daily candle to CLOSE back below the swept level','4. Enter on the next daily open or 4H retest of the swept level','5. Stop: 1-2% beyond the wick extreme','6. Target: opposite liquidity pool (weekly low if swept weekly high)'],
+     exit:['Scale 1/3 at 2R, 1/3 at 4R, let 1/3 run','Trailing stop after 2R hit','Exit fully on opposing daily BOS','Mandatory exit if weekly candle closes through stop'],
+     risk:'Only trade the FIRST sweep of a major level. Second sweeps are less reliable. Avoid trading sweeps into strong macro resistance (e.g. BTC all-time highs).',
+     pros:['Massive R:R (often 1:5 to 1:10)','Weekly levels are highly respected','Low time commitment — check once daily','Aligns with how institutions hunt liquidity'],
+     cons:['Patience required — can take days to develop','Position sizing critical (wider stops needed)','Can have multiple sweeps before real reversal']},
+
+    {icon:'📈',name:'HTF Order Block Swing',when:'4H or Daily chart shows a clear Order Block (last bearish candle before a bullish impulse that broke structure). Price is now pulling back to that OB.',
+     entry:['1. Identify the last 4H/Daily bearish candle before a strong bullish BOS (that is your bullish OB)','2. Mark the OB zone (high to low of that candle)','3. Wait for price to retrace INTO the OB zone','4. Look for 1H/4H confirmation: FVG formed, rejection wick, bullish engulfing','5. Enter at 50% of the OB on the 1H with stop below OB low','6. Target the next daily/weekly high or liquidity pool'],
+     exit:['First TP at previous structural high','Second TP at next liquidity pool','Final TP at weekly resistance','Stop to BE after first TP hit'],
+     risk:'HTF OBs that have been touched multiple times are weaker. Strongest OBs are PRISTINE (never retested). If price spends more than 3 candles inside the OB without reversing, the OB is likely broken.',
+     pros:['HTF setups have very high accuracy','Wide stop = more room to breathe','Combines with liquidity sweeps perfectly','Institutional-grade entry technique'],
+     cons:['Requires multi-timeframe analysis','Entries can be wide compared to scalps','Takes longer to reach targets']}
   ],
   Position:[
     {icon:'🏔',name:'Macro Accumulation',when:'Bear market bottom signals: fear index extreme, on-chain capitulation, macro reversal.',
@@ -1558,6 +1589,104 @@ const defaultStrategies = {
      risk:'Use on-chain as confirmation, not sole signal. Always combine with TA.',
      pros:['Smart money signals','Early entry potential','Data-backed'],
      cons:['Data can lag','Requires paid tools','Can be faked']}
+  ],
+  'ICT / SMC':[
+    {icon:'🟧',name:'Order Block (OB) Entry',
+     when:'Price has broken structure and is pulling back to the last opposing candle (OB) before the impulse move. Valid on 15m, 1H, 4H, 1D.',
+     entry:['1. Identify Break of Structure (BOS) or CHoCH on HTF (1H/4H)','2. Mark the last bearish candle before bullish impulse (for buys) — that is the OB','3. Wait for price to retrace INTO the OB zone','4. Look for confirmation: FVG, rejection wick, or engulfing candle inside OB','5. Enter at OB midpoint or 50% level with stop below the OB low','6. Target next liquidity pool or previous high/low'],
+     exit:['Scale 50% at 1:2 R:R','Move stop to BE after 1R reached','Full exit at next OB or liquidity pool','Exit if candle closes below OB on HTF'],
+     risk:'Risk max 1% per trade. OB is invalidated if price closes through it. Only trade OBs aligned with HTF trend.',
+     pros:['Very precise entries','High R:R potential','Works on all timeframes','Core ICT concept — widely used'],
+     cons:['Requires practice to identify correctly','Can have multiple OBs — choose the most recent','Fake-outs common in low liquidity']},
+
+    {icon:'🔲',name:'Fair Value Gap (FVG) Fill',
+     when:'A 3-candle imbalance (FVG/IFVG) exists on the chart where price moved too fast and left an inefficiency. Price tends to return to fill these gaps.',
+     entry:['1. Identify FVG: 3-candle pattern where candle 1 high and candle 3 low do not overlap (bullish FVG) or candle 1 low and candle 3 high dont overlap (bearish)','2. Mark the FVG zone (gap between C1 high and C3 low for bullish)','3. Wait for price to retrace back into the FVG','4. Enter at 50% of the FVG (equilibrium)','5. Stop loss below the FVG low (or above for shorts)','6. Target the next significant level or OB'],
+     exit:['First TP at opposite end of FVG','Second TP at next structural high/low','Trail stop after FVG is filled','Exit fully if HTF structure breaks'],
+     risk:'Only trade FVGs in the direction of the HTF trend. Stale FVGs (price already touched but not filled) are weaker. Fresh FVGs are strongest.',
+     pros:['Objective — easy to spot','Very common occurrence','Works beautifully with OBs as confluence','Great for entries after BOS'],
+     cons:['Not all FVGs get filled','Market can skip over them','Need HTF context to filter quality setups']},
+
+    {icon:'🏗',name:'Break of Structure (BOS) + CHoCH',
+     when:'Market is transitioning from one trend to another. BOS confirms continuation; CHoCH (Change of Character) signals potential reversal. Use on 15m–4H.',
+     entry:['1. Map out market structure: identify HH/HL (uptrend) or LH/LL (downtrend)','2. BOS = price breaks the LAST significant high (bullish continuation signal)','3. CHoCH = price breaks the LAST significant low in an uptrend (first warning of reversal)','4. After CHoCH, wait for first pullback and enter at OB or FVG','5. Stop below the CHoCH low (for longs after bullish CHoCH)'],
+     exit:['Target previous CHoCH point','Exit at HTF resistance','Scale out at each structural high','Full exit on confirmed opposing CHoCH'],
+     risk:'BOS alone is not an entry — wait for pullback. A single CHoCH is a warning, not a confirmed reversal. Require 2x CHoCH or OB retest for higher confidence.',
+     pros:['Reads market structure objectively','Foundation of SMC/ICT','Clear invalidation levels','Works on all assets'],
+     cons:['Can be subjective which highs/lows to use','Multiple CHoCH can create confusion','Choppy markets create false signals']},
+
+    {icon:'⚡',name:'Liquidity Sweep + Reversal',
+     when:'Price runs above a previous high (buy-side liquidity) or below a previous low (sell-side liquidity) and quickly reverses. Smart money triggers stop losses to fill their orders.',
+     entry:['1. Mark equal highs/lows, swing highs/lows, and previous day high/low — these are liquidity pools','2. Watch for price to spike through the level (wick)','3. Wait for a strong reversal candle (rejection wick or engulfing) after the sweep','4. Enter on the close of the reversal candle or retest of the sweep level','5. Stop beyond the wick extreme','6. Target the opposite liquidity pool'],
+     exit:['Target opposite side liquidity (equal lows if swept highs)','Scale at 1:2, trail the rest','Full exit before major news events','Exit if price returns above swept level'],
+     risk:'Sweeps that go too far (strong momentum candles, not wicks) are NOT liquidity grabs — skip them. Only trade sweeps that form a clear wick/spike with fast rejection.',
+     pros:['Extremely high R:R (often 1:5+)','Predictable — markets need liquidity','Works brilliantly on crypto','Combines well with OBs and FVGs'],
+     cons:['Timing is tricky','Can extend further before reversing','Requires experience reading price action','Miss the entry if waiting for confirmation']},
+
+    {icon:'📐',name:'OTE — Optimal Trade Entry (Fib 62–79%)',
+     when:'After a confirmed BOS on HTF, price pulls back into the 62–79% Fibonacci retracement zone (the "OTE zone"). This is where ICT looks for precision entries.',
+     entry:['1. Confirm HTF trend and BOS','2. Draw Fibonacci from the swing low to swing high (for bullish pullback)','3. Identify 62%, 70.5%, and 79% Fib levels — the OTE zone','4. Wait for price to enter the OTE zone','5. Look for confluence: OB, FVG, or order flow shift at OTE','6. Enter at 70.5% (midpoint of OTE) with stop below 79%'],
+     exit:['First target: -27% Fib extension (1:1 R:R)','Second target: -62% extension','Final target: -100% to -161.8% extension','Trail stop after 1:2 reached'],
+     risk:'Only valid after clear BOS. If price breaks 79% without reversing, the OTE is likely failed — cut. Works best on 15m–4H charts aligned with HTF direction.',
+     pros:['Extremely precise entry levels','Mathematical — removes subjectivity','Combines well with OB and FVG','Used by professional ICT traders'],
+     cons:['Requires clean swing structure','Multiple retracements can confuse the draw','Not every OTE reaches -161.8% target']},
+
+    {icon:'🕐',name:'NY Killzone / Power of 3 (PO3)',
+     when:'During specific high-activity ICT time windows: London (2–5am EST), NY (7–10am EST), London Close (10am–12pm EST). Price follows a Accumulate → Manipulate → Distribute (AMD) pattern.',
+     entry:['1. Mark the previous day high/low and Asian session range','2. At London/NY open watch for a liquidity sweep of Asian range','3. AMD: Price ACCUMULATES (ranges), MANIPULATES (sweeps liquidity), then DISTRIBUTES (trends)','4. Enter in the direction of the DISTRIBUTE phase after manipulation','5. Confirm with OB or FVG at manipulation point','6. Target the daily draw on liquidity'],
+     exit:['Target opposite session range','Exit before end of NY session (12pm EST)','Daily profit target: 1-3% of account','Mandatory exit at 10am EST if no momentum'],
+     risk:'Time-based — if setup does not develop in first 30 min of session, skip it. News events (CPI, FOMC) override PO3 patterns entirely.',
+     pros:['Highly predictable timing','Institutional-grade framework','Consistent daily setups','Removes guesswork on WHEN to trade'],
+     cons:['Must be awake at specific times','Timezone dependent','News can completely invalidate setup','Takes weeks to develop pattern recognition']},
+
+    {icon:'💧',name:'Inducement → Sweep → Entry (ISE)',
+     when:'Price creates an obvious swing point (inducement) to trap retail traders, sweeps it to grab liquidity, then makes the real move. Classic ICT manipulation sequence.',
+     entry:['1. Identify an obvious high or low that retail traders will place stops at','2. Watch for price to slowly build toward that level (inducement phase)','3. Price spikes through the level, triggering stops (sweep phase)','4. Look for immediate rejection + OB/FVG forming at the sweep point','5. Enter on rejection confirmation with tight stop beyond the sweep wick','6. Target the next draw on liquidity in the opposite direction'],
+     exit:['Scale 1/3 at 1:2 R:R','Scale 1/3 at structural target','Let remainder run with trail','Exit if price consolidates for 3+ candles at entry TF'],
+     risk:'The sweep must be decisive — a clear wick, not a gradual break. If price hangs above/below the swept level, it is NOT a sweep, it is a breakout. Skip it.',
+     pros:['Very high accuracy setups','Explains WHY price moves like it does','Combines all ICT concepts together','Natural stop placement keeps risk tight'],
+     cons:['Easy to misidentify inducement','Sweep can extend before reversing','Requires full context of higher timeframes']}
+  ],
+  'Fundamentals':[
+    {icon:'📊',name:'Tokenomics Deep Dive Checklist',
+     when:'Before entering any position larger than a scalp. ALWAYS do this for swing/position trades. Can prevent catastrophic losses from unlock events.',
+     entry:['1. CHECK SUPPLY: Total supply, circulating supply, and % already in circulation (higher = less inflation risk)','2. CHECK UNLOCKS: Go to tokenunlocks.app — any large unlock in next 30-90 days? Avoid or short if >5% supply unlocking','3. CHECK ALLOCATION: Team/VC allocation >30%? Red flag — they will dump eventually','4. CHECK VESTING: When do VC/team tokens unlock? Use Cryptorank or Messari','5. CHECK INFLATION: Annual emission rate >20%? Strong headwind for price','6. CHECK UTILITY: Is there real demand for the token? Staking, fees, governance?','7. CHECK FDV vs MCAP: If FDV is 10x+ the market cap, massive supply incoming'],
+     exit:['Exit before known large unlock events (1 week before)','Exit if team wallet moves tokens to exchange (monitor on-chain)','Set alerts on Nansen for whale movements'],
+     risk:'Never hold a token through a major unlock event without checking the vesting schedule. Even great projects dump 20-40% on unlock day.',
+     pros:['Prevents holding into unlock traps','Identifies best entry timing','Separates quality projects from garbage','Protects capital from fundamental risks'],
+     cons:['Time consuming','Data can be hard to find for new tokens','Does not predict short-term price action']},
+
+    {icon:'🔗',name:'On-Chain Analysis Routine',
+     when:'Daily check for position trades and weekly check for swing trades. Use before major entries to confirm smart money positioning.',
+     entry:['1. EXCHANGE FLOWS (CryptoQuant / Coinglass): Net outflows from exchanges = bullish (people withdrawing to hodl). Net inflows = bearish (preparing to sell)','2. FUNDING RATE (Coinglass): Positive funding = longs paying shorts = crowded long = potential squeeze. Negative = shorts crowded = potential squeeze up','3. OPEN INTEREST (Coinglass): Rising OI + rising price = strong trend. Rising OI + falling price = short squeeze loading','4. LONG/SHORT RATIO: Extreme readings (>70% one side) = contrarian signal','5. WHALE MOVEMENTS (Nansen / Whale Alert): Track large wallet activity and exchange deposits','6. NVTS/MVRV (Glassnode): MVRV >3 = historically overvalued. MVRV <1 = undervalued'],
+     exit:['Exit if exchange inflows spike sharply','Exit if funding turns extreme positive (>0.1%/8h)','Exit if whale wallets start consistent exchange deposits'],
+     risk:'On-chain is a CONFIRMATION tool, not a standalone signal. Always combine with TA. On-chain data can lag 1-2 hours on some platforms.',
+     pros:['Read what smart money is actually doing','Catch trend reversals early','Differentiate paper moves from real accumulation','Free or low-cost data available'],
+     cons:['Learning curve is steep','Data interpretation is subjective','CEX data is incomplete (DEX trades not shown)','Can lag intraday price action']},
+
+    {icon:'📰',name:'News & Catalyst Trading Framework',
+     when:'Around scheduled macro events (FOMC, CPI, NFP) and crypto-specific events (ETF news, protocol launches, regulatory announcements).',
+     entry:['1. CHECK MACRO CALENDAR: Use investing.com/economic-calendar — mark all red events for the week','2. CHECK CRYPTO CALENDAR: Use CoinMarketCal for token-specific events (listings, unlocks, mainnet launches)','3. BUY THE RUMOR: Enter 1-2 weeks before confirmed catalyst. Take profit ON the news day','4. SELL THE NEWS: Price often peaks exactly on the announcement day. Exit into the pump','5. FADE THE OVERREACTION: If price dumps -15%+ on bad news instantly, often a bounce trade opportunity within 24-48h','6. TRACK SENTIMENT: Check crypto Twitter/X, Crypto Fear & Greed Index (alternative.me)'],
+     exit:['Mandatory exit or partial profit on event day','Do NOT hold leveraged positions over FOMC','Reduce position size 50% in week of major macro events'],
+     risk:'Never hold max leverage over scheduled news. The right direction still gets stopped out by the spike. News trading requires fast execution. Have exit plan BEFORE the event.',
+     pros:['Predictable timing','Large moves = large profits','Can position weeks in advance','Clear invalidation after event'],
+     cons:['Gap risk on surprise news','Whipsaws around announcements','Requires fast execution for day-of trades','Market can price in news early']},
+
+    {icon:'🌐',name:'Essential Research Websites & Tools',
+     when:'Use these daily as part of your trading routine. Bookmark all of them. These are the most important free and paid tools used by professional crypto traders.',
+     entry:['📈 PRICE & CHARTS: TradingView (tradingview.com) — charts, ideas, screener | CoinGecko (coingecko.com) — market data, tokenomics | CoinMarketCap (coinmarketcap.com) — rankings, data','🔗 ON-CHAIN: Glassnode (glassnode.com) — Bitcoin/ETH on-chain metrics | CryptoQuant (cryptoquant.com) — exchange flows, miner data | Nansen (nansen.ai) — wallet labels, smart money | Dune Analytics (dune.com) — custom on-chain queries','💹 DERIVATIVES: Coinglass (coinglass.com) — OI, liquidations, funding rates | Velo Data (velodata.app) — professional derivatives data','📊 FUNDAMENTALS: Messari (messari.io) — research reports | DeFiLlama (defillama.com) — TVL, protocol revenue | Token Terminal (tokenterminal.com) — P/E ratios for crypto','🔓 UNLOCKS: Token Unlocks (tokenunlocks.app) — vesting schedules | Cryptorank (cryptorank.io) — fundraising, unlocks','📅 CALENDARS: CoinMarketCal (coinmarketcal.com) — crypto events | Investing.com — macro calendar','😱 SENTIMENT: Crypto Fear & Greed Index (alternative.me/crypto) | Santiment (santiment.net) — social sentiment','🐋 WHALES: Whale Alert (whale-alert.io) — large transactions | Lookonchain (lookonchain.com) — whale tracking'],
+     exit:['Check Glassnode MVRV and exchange flows weekly','Check Coinglass funding + OI before any leveraged trade','Check Token Unlocks before any swing entry'],
+     risk:'Information overload is real. Pick 3-5 tools and master them. Do not check 20 sources for every trade — it leads to paralysis and late entries.',
+     pros:['All the edge you need is free or cheap','Data-backed decisions outperform gut trades','Builds pattern recognition over time','Separates you from 95% of retail traders'],
+     cons:['Takes time to learn each tool','Paid tiers needed for real-time Glassnode/Nansen data','Can cause over-analysis and missed trades']},
+
+    {icon:'💰',name:'Fundamental Valuation Framework',
+     when:'Before entering any position trade or large swing trade. Ask: Is this asset fundamentally undervalued or overvalued at current price?',
+     entry:['1. REVENUE: Does the protocol generate real fees? Check Token Terminal for P/F (Price-to-Fees) ratio. Lower = cheaper','2. TVL vs MCAP: DeFiLlama — MCAP/TVL ratio below 1 = potentially undervalued (paying less than the locked value)','3. ACTIVE USERS: Growing unique wallets + transaction volume = real demand. Declining = dead ecosystem','4. DEVELOPER ACTIVITY: Check GitHub commits. Actively building = long-term conviction. No commits in months = red flag','5. COMPETITOR COMPARISON: Compare MCAP with closest competitor. Is there a valuation gap? Why?','6. NARRATIVE FIT: Is this project in a hot narrative (AI, RWA, LRT, L2)? Narratives drive 80% of altcoin performance','7. VC BACKING: Who funded it? Top-tier VCs (a16z, Multicoin, Paradigm) = more likely to get exchange listings and support'],
+     exit:['Exit when MCAP/TVL exceeds 3x historical average','Exit if core narrative loses momentum','Exit if key metrics (revenue, users) decline for 2+ consecutive months'],
+     risk:'Fundamentals can take 6-18 months to play out. Good fundamentals ≠ good short-term price action. Always combine with market cycle timing.',
+     pros:['Find gems before the crowd','High conviction = can hold drawdowns','Protects from investing in empty hype','Identifies when to accumulate vs distribute'],
+     cons:['Long time horizons required','Crypto fundamentals still immature','Market can ignore fundamentals for months','Requires deep research for each asset']}
   ]
 };
 
