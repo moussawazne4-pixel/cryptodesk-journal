@@ -581,6 +581,97 @@ textarea{resize:vertical;min-height:60px;}
 }
 .calc-row.has-val{color:var(--text);}
 
+/* ── PAGE 5: TA LIBRARY ── */
+.page5-body{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.talib-controls{
+  padding:14px 24px;border-bottom:1px solid var(--border);
+  background:var(--bg2);flex-shrink:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+}
+.talib-search{
+  flex:1;min-width:200px;max-width:320px;
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
+  color:var(--text);font-family:var(--sans);font-size:13px;padding:8px 14px;
+  outline:none;transition:all 0.18s;
+}
+.talib-search:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-dim);}
+.talib-search::placeholder{color:var(--text3);}
+.tab-group{display:flex;gap:4px;flex-wrap:wrap;}
+.tab-btn{
+  padding:7px 14px;border-radius:var(--radius2);border:1px solid var(--border);
+  background:var(--bg3);color:var(--text2);font-size:12px;font-weight:600;
+  cursor:pointer;transition:all 0.18s;font-family:var(--sans);white-space:nowrap;
+}
+.tab-btn:hover{background:var(--glass2);color:var(--text);}
+.tab-btn.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.35);}
+.talib-scroll{flex:1;overflow-y:auto;padding:20px 24px;}
+.talib-section{margin-bottom:32px;}
+.talib-section-title{
+  font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1.5px;
+  text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;
+}
+.talib-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.talib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+.talib-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;cursor:pointer;transition:all 0.18s;position:relative;overflow:hidden;
+}
+.talib-card:hover{border-color:var(--border2);transform:translateY(-1px);box-shadow:var(--shadow);}
+.talib-card::before{
+  content:'';position:absolute;top:0;right:0;width:80px;height:80px;border-radius:50%;
+  opacity:0.07;transform:translate(30px,-30px);
+}
+.talib-card.bullish::before{background:var(--green);}
+.talib-card.bearish::before{background:var(--red);}
+.talib-card.bilateral::before{background:var(--amber);}
+.talib-card.indicator::before{background:var(--indigo);}
+.talib-card.technique::before{background:var(--cyan);}
+.talib-card-header{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.talib-card-icon{
+  width:36px;height:36px;border-radius:9px;display:flex;align-items:center;
+  justify-content:center;font-size:17px;flex-shrink:0;
+}
+.talib-card-icon.bullish{background:var(--green-dim);}
+.talib-card-icon.bearish{background:var(--red-dim);}
+.talib-card-icon.bilateral{background:var(--amber-dim);}
+.talib-card-icon.indicator{background:var(--indigo-dim);}
+.talib-card-icon.technique{background:rgba(34,211,238,0.1);}
+.talib-card-meta{flex:1;}
+.talib-card-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.talib-card-badges{display:flex;gap:5px;flex-wrap:wrap;}
+.talib-badge{
+  font-size:10px;font-weight:700;letter-spacing:0.6px;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+}
+.talib-badge.bullish{background:var(--green-dim);color:var(--green);}
+.talib-badge.bearish{background:var(--red-dim);color:var(--red);}
+.talib-badge.bilateral{background:var(--amber-dim);color:var(--amber);}
+.talib-badge.indicator{background:var(--indigo-dim);color:var(--indigo);}
+.talib-badge.technique{background:rgba(34,211,238,0.1);color:var(--cyan);}
+.talib-badge.candlestick{background:rgba(139,92,246,0.15);color:var(--violet);}
+.talib-badge.chart{background:rgba(34,211,238,0.1);color:var(--cyan);}
+.talib-badge.continuation{background:rgba(251,191,36,0.1);color:var(--amber);}
+.talib-badge.reversal{background:rgba(248,113,113,0.1);color:var(--red);}
+.talib-card-desc{font-size:12.5px;color:var(--text2);line-height:1.6;margin-bottom:10px;}
+.talib-card-body{display:none;border-top:1px solid var(--border);padding-top:12px;margin-top:4px;}
+.talib-card.expanded .talib-card-body{display:block;}
+.talib-card-section{margin-bottom:10px;}
+.talib-card-section-label{
+  font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  color:var(--text3);margin-bottom:5px;
+}
+.talib-card-section-content{font-size:12.5px;color:var(--text2);line-height:1.7;}
+.talib-card-section-content ul{padding-left:16px;}
+.talib-card-section-content li{margin-bottom:3px;}
+.talib-card-expand{
+  font-size:11px;font-weight:600;color:var(--indigo);cursor:pointer;
+  display:flex;align-items:center;gap:4px;
+  background:none;border:none;font-family:var(--sans);padding:0;
+}
+.talib-card-expand:hover{color:var(--violet);}
+.talib-expand-arrow{transition:transform 0.2s;}
+.talib-card.expanded .talib-expand-arrow{transform:rotate(180deg);}
+.talib-empty{text-align:center;padding:60px;color:var(--text3);}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   #sidebar{width:60px;min-width:60px;}
@@ -638,6 +729,12 @@ textarea{resize:vertical;min-height:60px;}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
       </div>
       <span>Dashboard</span>
+    </div>
+    <div class="nav-item" onclick="switchPage('p5',this)">
+      <div class="nav-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <span>TA Library</span>
     </div>
   </div>
 
@@ -817,6 +914,27 @@ textarea{resize:vertical;min-height:60px;}
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 5: TA LIBRARY ══ -->
+  <div class="page" id="p5">
+    <div class="topbar">
+      <div class="topbar-title">TA Library <span>Patterns, indicators & techniques from your PDFs</span></div>
+    </div>
+    <div class="page5-body">
+      <div class="talib-controls">
+        <input class="talib-search" id="talib-search" type="text" placeholder="🔍  Search patterns, indicators…" oninput="renderTALib()">
+        <div class="tab-group" id="talib-tabs">
+          <button class="tab-btn active" data-filter="all" onclick="setTAFilter('all',this)">All</button>
+          <button class="tab-btn" data-filter="bullish" onclick="setTAFilter('bullish',this)">📈 Bullish</button>
+          <button class="tab-btn" data-filter="bearish" onclick="setTAFilter('bearish',this)">📉 Bearish</button>
+          <button class="tab-btn" data-filter="bilateral" onclick="setTAFilter('bilateral',this)">↕ Bilateral</button>
+          <button class="tab-btn" data-filter="indicator" onclick="setTAFilter('indicator',this)">📊 Indicators</button>
+          <button class="tab-btn" data-filter="technique" onclick="setTAFilter('technique',this)">⚙ Techniques</button>
+        </div>
+      </div>
+      <div class="talib-scroll" id="talib-scroll"></div>
     </div>
   </div>
 
@@ -2353,12 +2471,540 @@ document.addEventListener('keydown',e=>{
 });
 
 /* ══════════════════════════════════════════
+   TA LIBRARY
+══════════════════════════════════════════ */
+const TA_DATA = [
+  // ─── BULLISH CANDLESTICK PATTERNS ───
+  {id:'hammer',name:'Hammer',type:'bullish',sub:'candlestick',icon:'🔨',
+   desc:'Small body with a long lower wick, little to no upper wick. Appears at the bottom of a downtrend at support. Signals potential reversal to the upside — must be confirmed by next candle closing higher.',
+   signal:'Bullish reversal after downtrend',
+   entry:'Enter long on the next candle confirming above the hammer body. Look for close above open.',
+   exit:'Target next resistance level. Stop loss below the wick low.',
+   tips:['Must appear at support or after a price decline','Long lower wick = rejection of lower prices','Confirmation candle is mandatory before entry','Works best on daily/4H timeframes']},
+
+  {id:'morning-star',name:'Morning Star',type:'bullish',sub:'candlestick',icon:'⭐',
+   desc:'3-candle pattern: long red candle → small body (indecision doji/spinning top) → long green candle. Middle candle shows bears giving way to bulls. Third candle confirms reversal.',
+   signal:'Strong bullish reversal at downtrend bottom',
+   entry:'Enter long at the close of the third bullish candle.',
+   exit:'Target previous swing high. Stop below the low of the pattern.',
+   tips:['Middle candle can be red or green','Gap down into middle candle strengthens signal','Third candle should close well into first candle\'s body','Confirm with RSI oversold reading']},
+
+  {id:'morning-doji-star',name:'Morning Doji Star',type:'bullish',sub:'candlestick',icon:'⭐',
+   desc:'3-day bullish reversal pattern starting in a downtrend. Large red candle → Doji (opens lower, trades small range, closes at open) → bullish candle. The Doji gap down signals extreme indecision.',
+   signal:'Strong bullish reversal — more powerful than Morning Star due to Doji',
+   entry:'Enter at close of third bullish candle, confirmed by volume.',
+   exit:'Stop below pattern low. Target 1:2 R:R minimum.',
+   tips:['Doji must gap down from first candle','More reliable than regular Morning Star','Volume spike on third candle adds confidence','Best on daily/weekly charts']},
+
+  {id:'bullish-engulfing',name:'Bullish Engulfing',type:'bullish',sub:'candlestick',icon:'🟢',
+   desc:'2-candle pattern: small red body followed by a larger green candle that completely engulfs the first. Buying pressure overwhelms sellers, signalling reversal of downtrend.',
+   signal:'Bullish reversal — strong buying pressure',
+   entry:'Enter long at open of candle after the engulfing pattern.',
+   exit:'Stop below the low of the red candle. Target next resistance.',
+   tips:['Second candle must fully engulf first candle\'s body','Stronger at key support levels','Higher volume on green candle = stronger signal','Works on any timeframe']},
+
+  {id:'three-white-soldiers',name:'Three White Soldiers',type:'bullish',sub:'candlestick',icon:'🪖',
+   desc:'3 consecutive long green candles, each opening and closing higher than the previous. Strong bullish signal appearing after a downtrend. Confirm with RSI.',
+   signal:'Strong bullish reversal/continuation',
+   entry:'Enter at open of 4th candle after pattern completes.',
+   exit:'Trailing stop below each candle low. Target prior resistance.',
+   tips:['Each candle should have small or no upper wicks','Each candle opens within prior candle\'s body','Low volume = possible weak signal','Combine with RSI and volume confirmation']},
+
+  {id:'three-inside-up',name:'Three Inside Up',type:'bullish',sub:'candlestick',icon:'🔺',
+   desc:'Bullish reversal: large red candle → smaller green candle inside the red body (harami) → third green candle closing above the second. Confirms buyers taking control.',
+   signal:'Bullish reversal confirmation pattern',
+   entry:'Enter at close or open after the third candle.',
+   exit:'Stop below the low of the first large red candle.',
+   tips:['Third candle is the confirmation — wait for it','Most reliable in downtrends at support','Volume should increase on third candle']},
+
+  {id:'three-outside-up',name:'Three Outside Up',type:'bullish',sub:'candlestick',icon:'🔼',
+   desc:'Bullish reversal: red candle → white/green candle with long real body fully containing the first → third green candle with higher close. Market is in downtrend.',
+   signal:'Strong bullish reversal with engulfing confirmation',
+   entry:'Enter at close of third candle.',
+   exit:'Stop below the low of the entire pattern.',
+   tips:['Second candle fully contains first (bullish engulfing)','Third candle adds confirmation','Higher reliability than simple engulfing']},
+
+  {id:'three-line-strike-bull',name:'Three Line Strike (Bullish)',type:'bullish',sub:'candlestick',icon:'📊',
+   desc:'3 green candles in direction of uptrend followed by a large red candle that pulls back to the start point. Despite the red candle, this is a bullish continuation pattern.',
+   signal:'Bullish continuation — the pullback is a trap',
+   entry:'Enter long at close of the pullback candle or on next green close.',
+   exit:'Stop below the low of the pullback candle.',
+   tips:['The red candle is a fake-out', 'Strong trend context needed','Volume analysis key — watch for low volume on red candle']},
+
+  {id:'piercing-line',name:'Piercing Line',type:'bullish',sub:'candlestick',icon:'📍',
+   desc:'2-candle pattern: large black/red candle followed by white/green candle that opens below previous low but closes above midpoint of first candle. Bullish reversal signal.',
+   signal:'Bullish reversal — opposite of Dark Cloud Cover',
+   entry:'Enter long at close of second candle.',
+   exit:'Stop below the low of the pattern.',
+   tips:['Second candle must close above 50% of first candle body','Stronger the penetration, stronger the signal','Confirm with next candle or volume']},
+
+  // ─── BEARISH CANDLESTICK PATTERNS ───
+  {id:'hanging-man',name:'Hanging Man',type:'bearish',sub:'candlestick',icon:'🔻',
+   desc:'Small real body with long lower shadow, little to no upper shadow. Appears at the top of an uptrend. The long lower wick shows selling pressure that was resisted — but bears are stepping in.',
+   signal:'Bearish reversal warning at uptrend top',
+   entry:'Enter short after confirmation (next candle closes red below body).',
+   exit:'Stop above the hanging man high. Target previous support.',
+   tips:['Does NOT mean reversal alone — confirmation required','Longer the lower wick, stronger the signal','Red body slightly more bearish than green','Can break either direction — wait for confirmation']},
+
+  {id:'shooting-star',name:'Shooting Star',type:'bearish',sub:'candlestick',icon:'💫',
+   desc:'Red candle with short body and long upper shadow, little to no lower wick. Market gaps slightly higher on open, rallies, then closes near the open. Opposite of inverted hammer.',
+   signal:'Bearish reversal at uptrend top',
+   entry:'Enter short at next candle open after confirmation.',
+   exit:'Stop above the high of the shooting star. Target next support.',
+   tips:['Long upper wick = rejection of higher prices','Must appear after a price rise/uptrend','If price rises after, formation was false signal','Confirm with RSI overbought']},
+
+  {id:'bearish-engulfing',name:'Bearish Engulfing',type:'bearish',sub:'candlestick',icon:'🔴',
+   desc:'2-candle pattern: small green body followed by large red candle that completely engulfs the first. Occurs at end of an uptrend. Selling pressure overwhelms buyers.',
+   signal:'Bearish reversal at uptrend top',
+   entry:'Enter short at open after the engulfing candle.',
+   exit:'Stop above the high of the engulfing candle. Target next support.',
+   tips:['Bearish candle must open at or above previous close','Bearish candle must close below previous open','Larger the engulfing candle, stronger the signal','Can also signal reversal in pullbacks within a downtrend']},
+
+  {id:'evening-star',name:'Evening Star',type:'bearish',sub:'candlestick',icon:'🌙',
+   desc:'3-candle pattern: long green candle → small body (indecision) → large red candle. The inverse of Morning Star. Rare but reliable reversal signal at uptrend tops.',
+   signal:'Bearish reversal — equivalent of Morning Star',
+   entry:'Enter short at close of third red candle.',
+   exit:'Stop above the high of the first green candle.',
+   tips:['Star candle should have a small body','Third candle should close well into first candle body','Rare but highly reliable when it forms','Confirm with overbought RSI']},
+
+  {id:'evening-doji-star',name:'Evening Doji Star',type:'bearish',sub:'candlestick',icon:'🌙',
+   desc:'3-candle bearish reversal: long bullish candle → Doji that gaps up → bearish candle that gaps down and closes well within first candle body. More powerful than Evening Star due to Doji.',
+   signal:'Strong bearish reversal at uptrend top',
+   entry:'Short at close of third candle.',
+   exit:'Stop above the Doji high.',
+   tips:['Doji must gap up from first candle','More significant than regular Evening Star','Best on daily+ timeframes']},
+
+  {id:'three-black-crows',name:'Three Black Crows',type:'bearish',sub:'candlestick',icon:'🐦',
+   desc:'3 consecutive long red candles with short or no wicks. Each session opens near prior close and pushes lower. Opposite of Three White Soldiers. Strong bearish signal.',
+   signal:'Strong bearish reversal/continuation',
+   entry:'Enter short at open of 4th candle after pattern completes.',
+   exit:'Trailing stop above each candle high.',
+   tips:['Each candle should open within prior body','Little to no upper wicks strengthen the signal','Use RSI to confirm overbought reversal','High volume adds reliability']},
+
+  {id:'three-inside-down',name:'Three Inside Down',type:'bearish',sub:'candlestick',icon:'🔽',
+   desc:'Bearish reversal: large green candle → smaller red candle inside (harami) → third red candle closing below the second. Confirms sellers taking control.',
+   signal:'Bearish reversal confirmation',
+   entry:'Short at close or open after third candle.',
+   exit:'Stop above high of first large green candle.',
+   tips:['Wait for third candle confirmation','Volume should increase on third candle','Most reliable at resistance in uptrends']},
+
+  {id:'three-outside-down',name:'Three Outside Down',type:'bearish',sub:'candlestick',icon:'🔽',
+   desc:'Bearish reversal in uptrend: green candle → black candle with long body fully containing first → third red candle with lower close. Bearish engulfing + confirmation.',
+   signal:'Strong bearish reversal',
+   entry:'Short at close of third candle.',
+   exit:'Stop above high of the entire pattern.',
+   tips:['Second candle fully engulfs first (bearish engulfing)','Third candle is confirmation','Higher reliability than simple bearish engulfing']},
+
+  {id:'dark-cloud-cover',name:'Dark Cloud Cover',type:'bearish',sub:'candlestick',icon:'☁',
+   desc:'2-candle pattern: long green candle followed by red candle that opens above prior high but closes below midpoint of first candle. Bears overpowering bulls at resistance.',
+   signal:'Bearish reversal — opposite of Piercing Line',
+   entry:'Short at close of second candle or next open.',
+   exit:'Stop above the high of the pattern.',
+   tips:['Second candle must open above first candle high','Must close below 50% of first candle body','Stronger penetration = stronger signal','Confirm with volume or next candle']},
+
+  // ─── BILATERAL CANDLESTICK PATTERNS ───
+  {id:'doji',name:'Doji',type:'bilateral',sub:'candlestick',icon:'✚',
+   desc:'Open and close are virtually equal, creating a cross shape. Indicates market indecision — neither bulls nor bears in control. Does NOT mean reversal on its own, means indecision.',
+   signal:'Indecision — watch for confirmation in either direction',
+   entry:'Trade the breakout direction from the Doji range.',
+   exit:'Stop on opposite side of Doji. Target based on prior trend.',
+   tips:['Context matters — doji in downtrend is more bullish','Doji in uptrend is more bearish','Extremely common — use sparingly as standalone signal','Best used with support/resistance levels']},
+
+  {id:'spinning-top',name:'Spinning Top',type:'bilateral',sub:'candlestick',icon:'🌀',
+   desc:'Short real body vertically centered between long upper and lower wicks. Both buyers and sellers pushed price but neither could hold gains. Shows indecision — more sideways movement likely.',
+   signal:'Indecision — possible trend continuation or reversal',
+   entry:'Wait for next candle to confirm direction.',
+   exit:'Based on breakout direction from the pattern.',
+   tips:['Stronger signal in a trending market','Similar to Doji but has a visible body','Multiple spinning tops = consolidation zone','Combine with volume — low volume = weak signal']},
+
+  {id:'harami',name:'Harami',type:'bilateral',sub:'candlestick',icon:'🔲',
+   desc:'2-candle pattern: large body of either color followed by small body of opposite color completely within the first body (the small body is a spinning top). Can break either direction.',
+   signal:'Potential reversal or continuation — wait for confirmation',
+   entry:'Trade breakout from the pattern range.',
+   exit:'Stop outside the large first candle.',
+   tips:['Not reliably bullish OR bearish — confirmation needed','Harami Cross (with Doji) is equally average','Common pattern — use carefully','Size of inner candle matters: smaller = more indecision']},
+
+  {id:'inside-bar',name:'Inside Bar',type:'bilateral',sub:'candlestick',icon:'📦',
+   desc:'A bar (candle) whose range is completely contained within the range of the preceding bar. Signals decreasing volatility and potential breakout in either direction.',
+   signal:'Volatility squeeze — breakout coming',
+   entry:'Buy above inside bar high OR sell below inside bar low.',
+   exit:'Stop on opposite side of inside bar.',
+   tips:['New trends often begin from low volatility','Inside bars in strong trends = continuation likely','Multiple inside bars = bigger potential breakout','Best on daily timeframes']},
+
+  // ─── BULLISH CHART PATTERNS ───
+  {id:'bull-flag',name:'Bull Flag',type:'bullish',sub:'chart',icon:'🚩',
+   desc:'Strong upward move (flagpole) followed by a rectangular consolidation with parallel trendlines sloping slightly downward. Breakout occurs in the same direction as the initial move.',
+   signal:'Bullish continuation',entry:'Enter long on breakout above the upper flag boundary with volume.',
+   exit:'Target = flagpole height added to breakout point. Stop below flag low.',
+   tips:['Flag should slope slightly downward (counter-trend)','Volume drops during consolidation, spikes on breakout','Best viewed on daily/weekly timeframes','Tighter the flag, stronger the breakout']},
+
+  {id:'bull-pennant',name:'Bull Pennant',type:'bullish',sub:'chart',icon:'📐',
+   desc:'Strong upward move followed by a symmetrical triangle consolidation (converging trendlines). Similar to bull flag but with converging lines instead of parallel. Bullish continuation.',
+   signal:'Bullish continuation after strong move',
+   entry:'Enter on breakout above upper pennant trendline.',
+   exit:'Target = flagpole height added to breakout. Stop below pennant low.',
+   tips:['Pennant has converging lines (flag has parallel)','Breakout should come with volume surge','The longer the pole, the bigger the target']},
+
+  {id:'ascending-triangle',name:'Ascending Triangle',type:'bullish',sub:'chart',icon:'📈',
+   desc:'Horizontal resistance line with ascending support line. Bullish continuation pattern — price is making higher lows while testing the same resistance. Breakout typically upward.',
+   signal:'Bullish continuation (breakout expected upward)',
+   entry:'Enter on breakout above horizontal resistance with volume. Can retest before continuing.',
+   exit:'Target = pattern height added to breakout. Stop below most recent swing low.',
+   tips:['Horizontal line must be touched at least twice','Multiple resistance tests = stronger breakout when it comes','Can also break downward — wait for confirmation','Works on any timeframe including minutes']},
+
+  {id:'inv-head-shoulders',name:'Inverse Head & Shoulders',type:'bullish',sub:'chart',icon:'🔃',
+   desc:'Three troughs: left shoulder, lowest head, right shoulder — with a neckline connecting the highs between them. Breakout above neckline signals bullish reversal. Best on weekly/monthly.',
+   signal:'Bullish reversal pattern — one of the most reliable',
+   entry:'Enter long when price breaks above the neckline.',
+   exit:'Target = distance from head to neckline added to breakout. Stop below right shoulder.',
+   tips:['Pattern is not always perfectly symmetrical','Neckline breakout is the key trigger','Volume should increase on the breakout','Right shoulder shouldn\'t go below head']},
+
+  {id:'rounding-bottom',name:'Rounding Bottom',type:'bullish',sub:'chart',icon:'⌒',
+   desc:'U-shaped price action forming a gradual curve at the bottom of a downtrend. Similar to Cup & Handle but without the handle. Bullish reversal/continuation.',
+   signal:'Bullish reversal at bottom of trend',
+   entry:'Enter at breakout from the rim of the U-shape.',
+   exit:'Target = height of the cup added to breakout.',
+   tips:['Gradual curve, not sharp V-bottom','Best on hourly and daily timeframes','Volume typically low during base, high at breakout']},
+
+  {id:'cup-and-handle',name:'Cup and Handle',type:'bullish',sub:'chart',icon:'☕',
+   desc:'U-shaped cup followed by a slight downward drift handle (small consolidation). Pattern is bullish when price breaks above both lips. Handle resembles a mini flag/pennant.',
+   signal:'Bullish continuation — breakout above handle',
+   entry:'Enter on breakout above handle high. Stop slightly above upper handle trendline.',
+   exit:'Target = depth of cup added to breakout price.',
+   tips:['Handle must form in upper half of cup','Handle should drift downward, not upward','Volume drops in handle, surges on breakout','Rounding bottom = same but without handle']},
+
+  {id:'inverted-cup-handle',name:'Inverted Cup & Handle',type:'bearish',sub:'chart',icon:'🙃',
+   desc:'Upside-down cup and handle. Inverse U-shape followed by a slight upward drift handle. Bearish continuation pattern — signals price will continue downward.',
+   signal:'Bearish continuation',
+   entry:'Enter short on breakdown below handle low.',
+   exit:'Target = depth of cup subtracted from breakdown price.',
+   tips:['Opposite of bullish Cup & Handle','Handle drifts upward (counter to downtrend)','Volume should surge on breakdown']},
+
+  {id:'double-bottom',name:'Double Bottom',type:'bullish',sub:'chart',icon:'W',
+   desc:'Two roughly equal lows (W-shape) bouncing off support, followed by breakout above the middle peak (neckline). Price will usually retest the neckline before continuing higher.',
+   signal:'Bullish reversal at end of downtrend',
+   entry:'Enter on breakout above neckline. Wait for retest and bounce.',
+   exit:'Target = height from lows to neckline added to breakout.',
+   tips:['Expect price to retest neckline after breakout (unlike Triple Bottom)','Lows don\'t have to be exactly equal','Volume should be higher on second bottom rally','Best on hourly and daily timeframes']},
+
+  {id:'triple-bottom',name:'Triple Bottom',type:'bullish',sub:'chart',icon:'⩸',
+   desc:'Three roughly equal lows bouncing off support, followed by breakout above neckline. After breakout, price usually does NOT retest neckline (unlike Double Bottom).',
+   signal:'Strong bullish reversal',
+   entry:'Enter long after breakout above neckline.',
+   exit:'Target = pattern height added to breakout.',
+   tips:['Price usually does NOT retest after breakout','Three clear equal lows required','Volume should increase on each rally and on breakout','Best on hourly and daily timeframes']},
+
+  {id:'falling-wedge',name:'Falling Wedge',type:'bullish',sub:'chart',icon:'📉',
+   desc:'Price action narrows as it falls — both support and resistance lines slope downward, with support steeper. Despite looking bearish, breakout is typically upward. Continuation or reversal.',
+   signal:'Bullish continuation or reversal',
+   entry:'Enter long on breakout above upper resistance line with volume.',
+   exit:'Target = width at start of wedge added to breakout. Potential exit at start of pattern.',
+   tips:['Wider at top, narrows toward bottom','Buyers show up as it compresses — increasing demand','Must touch each trendline at least twice','Retracements very common after breakout']},
+
+  {id:'bull-rectangle',name:'Bullish Rectangle',type:'bullish',sub:'chart',icon:'▭',
+   desc:'Price pauses during a strong uptrend, bouncing between two parallel horizontal levels. Continuation pattern — the trend resumes after consolidation.',
+   signal:'Bullish continuation',
+   entry:'Enter long on breakout above upper resistance with volume.',
+   exit:'Target = rectangle height added to breakout.',
+   tips:['Watch for false breakouts — many occur in rectangles','A "shortfall" (price failing to reach support) often signals upcoming breakout direction','Confirm with volume on breakout']},
+
+  // ─── BEARISH CHART PATTERNS ───
+  {id:'bear-flag',name:'Bear Flag',type:'bearish',sub:'chart',icon:'🚩',
+   desc:'Sharp downward move (flagpole) followed by upward sloping rectangular consolidation. Bears use the consolidation to add to shorts. Breakdown resumes the downtrend.',
+   signal:'Bearish continuation',
+   entry:'Enter short on breakdown below lower flag boundary.',
+   exit:'Target = flagpole height subtracted from breakdown. Stop above flag high.',
+   tips:['Flag slopes upward (counter to downtrend)','Volume drops in flag, spikes on breakdown','The "relief rally" traps bulls before the next move down']},
+
+  {id:'bear-pennant',name:'Bear Pennant',type:'bearish',sub:'chart',icon:'📐',
+   desc:'Sharp downward move followed by symmetrical triangle consolidation. Bearish continuation — the pause before the next leg down. Opposite of bull pennant.',
+   signal:'Bearish continuation',
+   entry:'Enter short on breakdown from lower trendline.',
+   exit:'Target = flagpole height subtracted from breakdown.',
+   tips:['Volume drops during pennant, surges on breakdown','Shorter pennant = more powerful continuation']},
+
+  {id:'descending-triangle',name:'Descending Triangle',type:'bearish',sub:'chart',icon:'📉',
+   desc:'Horizontal support line with descending resistance. Price makes lower highs while testing same support. Breakout typically downward. Works on any timeframe.',
+   signal:'Bearish continuation (breakout expected downward)',
+   entry:'Enter short on breakdown below horizontal support.',
+   exit:'Target = pattern height subtracted from breakdown. Stop above most recent swing high.',
+   tips:['Horizontal support must be touched at least twice','Can also break upward — above average performance on upside','Price can retest broken support as resistance']},
+
+  {id:'double-top',name:'Double Top',type:'bearish',sub:'chart',icon:'M',
+   desc:'Two peaks at roughly the same price level (M-shape). Reversal pattern — confirmed when price breaks below the trough between the peaks (support line). Results in increased selling volume.',
+   signal:'Bearish reversal at end of uptrend',
+   entry:'Enter short on breakdown below support line. Can also short at second peak with tight stop.',
+   exit:'Target = height from peaks to trough subtracted from breakdown.',
+   tips:['Two peaks at roughly same resistance level','Break below neckline is the confirmation','Expect possible pullback to neckline as resistance after breakdown','Most reliable reversal pattern for tops']},
+
+  {id:'triple-top',name:'Triple Top',type:'bearish',sub:'chart',icon:'⩸',
+   desc:'Three peaks at same price level — buying weakness and supply at resistance. Reversal pattern. Enter short when price breaks below support (neckline) after three failed attempts.',
+   signal:'Strong bearish reversal',
+   entry:'Enter short after break below neckline/support.',
+   exit:'Target = pattern height subtracted from neckline.',
+   tips:['Three distinct peaks required','Price often makes a final push before breaking down','Volume should decrease on each peak attempt']},
+
+  {id:'head-shoulders',name:'Head & Shoulders',type:'bearish',sub:'chart',icon:'👤',
+   desc:'Three peaks: two equal shoulders and a higher head. Neckline connects the two troughs. Never in perfect formation. One of the lowest failure rates of any pattern. Bearish reversal.',
+   signal:'Bearish reversal — very reliable pattern',
+   entry:'Enter short on break below neckline.',
+   exit:'Target = distance from head to neckline projected from neckline downward. Stop above right shoulder.',
+   tips:['Shoulders should be roughly equal height','Neckline can be slightly sloped','Look for break below neckline to confirm','Pattern never forms perfectly — use judgment']},
+
+  {id:'rising-wedge',name:'Rising Wedge',type:'bearish',sub:'chart',icon:'📈',
+   desc:'Price moves upward with both support and resistance converging — higher highs and higher lows but range narrowing. Bearish reversal, often appears in bear markets. Often follows a bubble.',
+   signal:'Bearish reversal or continuation',
+   entry:'Enter short on breakdown below lower support trendline.',
+   exit:'Target = lowest trough in pattern. Retracements are very common.',
+   tips:['Must touch each trendline at least 5 times (3 on one, 2 on other)','Declining volume during the wedge is bearish','Often precedes sharp moves down','Throwbacks common after breakdown']},
+
+  {id:'bear-rectangle',name:'Bearish Rectangle',type:'bearish',sub:'chart',icon:'▭',
+   desc:'Price pauses during a strong downtrend, bouncing between two parallel horizontal levels before continuing lower. Continuation pattern — sellers use the consolidation to add shorts.',
+   signal:'Bearish continuation',
+   entry:'Enter short on breakdown below lower support level.',
+   exit:'Target = rectangle height subtracted from breakdown.',
+   tips:['False breakouts are common — wait for confirmation','Volume should be higher on breakdown than during range']},
+
+  // ─── BILATERAL CHART PATTERNS ───
+  {id:'sym-triangle',name:'Symmetrical Triangle',type:'bilateral',sub:'chart',icon:'△',
+   desc:'Downward sloping upper trendline + upward sloping lower trendline converging. Price gets squeezed and must break in one direction. Can be reversal or continuation. Many false breakouts.',
+   signal:'Breakout in either direction — above average performance on upside',
+   entry:'Enter in direction of breakout. Confirm before entering.',
+   exit:'Target = height of pattern added/subtracted from breakout point.',
+   tips:['Prices must touch each bound at least twice','Pattern can extend for weeks or months','Confirm breakout before entry — many false breakouts','Best performance: breakout upward']},
+
+  {id:'sym-expanding-triangle',name:'Symmetrical Expanding Triangle',type:'bilateral',sub:'chart',icon:'◁▷',
+   desc:'Opposite of symmetrical triangle — price range expands over time. Upper trendline rises, lower falls. Breakdown from lower = new bearish trend. Breakout above = new bullish trend.',
+   signal:'Neutral — watch for breakout from either side',
+   entry:'Trade the break from upper or lower trendline.',
+   exit:'Stop inside pattern on opposite side of breakout.',
+   tips:['Represents growing volatility and indecision','Rare pattern — high impact when it resolves','Wait for convincing breakout with volume']},
+
+  {id:'price-channel',name:'Price Channel',type:'bilateral',sub:'chart',icon:'↔',
+   desc:'Price slopes up or down between parallel trendlines. Upper = resistance, lower = support. Breakout in either direction ends the channel. In some cases price retests breakout.',
+   signal:'Trade within the channel or trade the breakout',
+   entry:'Buy at lower trendline (support), sell at upper (resistance). Or enter on breakout.',
+   exit:'Exit at opposite trendline or on breakout.',
+   tips:['Can be ascending, descending, or horizontal','Breakout is often strong — trade with direction','Risk/reward is clear within the channel']},
+
+  {id:'pipe-bottom',name:'Pipe Bottom (Two-Bar Reversal)',type:'bullish',sub:'chart',icon:'🔋',
+   desc:'Two bars at end of a large downtrend. First bar closes near its low, second bar closes in upper half of its range. Bars have larger ranges than preceding bars. More reliable on weekly data.',
+   signal:'Bullish reversal — action on breakout through second bar',
+   entry:'Enter long on break above the second bar high.',
+   exit:'Target = height of taller bar added to it.',
+   tips:['More reliable in weekly data','Both bars have larger ranges than preceding bars','Ideally first bar closes at its low']},
+
+  {id:'gap',name:'Gaps',type:'bilateral',sub:'chart',icon:'⬜',
+   desc:'No trading at specific prices between two sessions — price jumps from one close to next open. Can be gap up or gap down. Caused by significant supply/demand change. Generally profitable on breakouts.',
+   signal:'Momentum signal — trade direction of gap',
+   entry:'Explosion Gap Pivot: after gap, wait for throwback. If throwback stops (pivot low), place buy entry above high of gap bar.',
+   exit:'Initial stop at gap low, then move to below pivot low.',
+   tips:['Throwback covers gap = no trade','Throwback stops = strong signal (pivot low)','Gaps are generally profitable on breakouts from patterns','Common in crypto on news events or weekend trading']},
+
+  {id:'narrow-range',name:'Narrow Range (NR4/NR7)',type:'bilateral',sub:'chart',icon:'📏',
+   desc:'A bar with a narrower range than preceding bars. NR4 = 4th bar has smallest range of last 4. NR7 = smallest of last 7. Indicates decreasing volatility — breakout coming.',
+   signal:'Volatility squeeze — trade the breakout',
+   entry:'Buy on break above narrow range high. Sell on break below low.',
+   exit:'Stop on opposite side of narrow range bar.',
+   tips:['The tighter the range, the bigger the potential move','Multiple narrow range bars = even bigger potential','Works on any timeframe','Similar concept to Inside Bar']},
+
+  // ─── INDICATORS ───
+  {id:'sma',name:'Simple Moving Average (SMA)',type:'indicator',sub:'indicator',icon:'〰',
+   desc:'Average closing price over a specified period. Plotted as a line on the chart. Used to determine trend direction. 10, 50, and 200-day SMAs are most common. Use on DAILY timeframe.',
+   signal:'Trend direction — price above SMA = bullish, below = bearish',
+   entry:'Price crossing above SMA = buy signal. Price crossing below = sell signal.',
+   exit:'Exit when price crosses back below/above SMA or hits next SMA level.',
+   tips:['10/50/200 are the standard periods','Golden Cross: 50 SMA crosses above 200 SMA = bullish','Death Cross: 50 SMA crosses below 200 SMA = bearish','Lagging indicator — confirms trends, doesn\'t predict them']},
+
+  {id:'macd',name:'MACD',type:'indicator',sub:'indicator',icon:'📊',
+   desc:'Moving Average Convergence Divergence. Momentum indicator using moving averages to gauge trend strength. MACD line, Signal line, and Histogram. Cross above zero = bullish; below = bearish.',
+   signal:'Trend momentum — bullish when MACD crosses above signal line',
+   entry:'Buy when MACD line crosses above signal line. Sell when crosses below.',
+   exit:'Exit when signal reverses or MACD crosses zero.',
+   tips:['MACD crossing above zero = bullish momentum','MACD crossing below zero = bearish momentum','Histogram growing = increasing momentum','Divergence between MACD and price = potential reversal','Used alongside other indicators for confirmation']},
+
+  {id:'rsi',name:'RSI — Relative Strength Index',type:'indicator',sub:'indicator',icon:'⚡',
+   desc:'Momentum oscillator measuring speed and change of price movements. Oscillates between 0–100. Above 70 = overbought, below 30 = oversold. Used to confirm price action.',
+   signal:'Overbought (>70) = potential top; Oversold (<30) = potential bottom',
+   entry:'Enter long when RSI crosses above 30. Enter short when RSI crosses below 70.',
+   exit:'Exit long when RSI hits 70. Exit short when RSI hits 30.',
+   tips:['RSI divergence is very powerful — price makes new high but RSI doesn\'t = bearish','RSI above 50 = general bullish momentum','RSI below 50 = general bearish momentum','In strong trends, RSI can stay overbought/oversold for extended periods','Combine with candlestick patterns for high-probability entries']},
+
+  {id:'vwap',name:'VWAP — Volume Weighted Average Price',type:'indicator',sub:'indicator',icon:'💹',
+   desc:'Average price weighted by volume throughout the trading day. Used for support, resistance, entry and exit levels. INTRADAY ONLY — resets daily.',
+   signal:'Price above VWAP = bullish intraday bias; below = bearish',
+   entry:'Buy first close above VWAP as entry. Sell at predetermined point above VWAP.',
+   exit:'Price breaking below VWAP = exit long. Use as trailing reference.',
+   tips:['Only use on intraday timeframes','Institutional traders use VWAP as benchmark','First bounce off VWAP after open = high probability trade','Price frequently returns to VWAP — use as target and stop reference','Best combined with price action at key levels']},
+
+  {id:'bollinger-bands',name:'Bollinger Bands',type:'indicator',sub:'indicator',icon:'〰',
+   desc:'Three lines: SMA (middle) + upper and lower bands 2 standard deviations away. Bands widen when volatility increases, contract when decreasing. Breakouts from bands = strong signals.',
+   signal:'Squeeze = low volatility incoming move; Breakout above/below = momentum signal',
+   entry:'Buy breakout above upper band (strong momentum). Buy touch of lower band (mean reversion).',
+   exit:'Exit at middle band (SMA) or opposite band.',
+   tips:['Band squeeze (Bollinger Squeeze) = major move coming','Price can "walk the band" in strong trends','90% of price action occurs within the bands','Combine with RSI: price at lower band + oversold RSI = strong buy','Upper band touch ≠ sell in strong uptrend']},
+
+  {id:'ichimoku',name:'Ichimoku Cloud',type:'indicator',sub:'indicator',icon:'☁',
+   desc:'Collection of indicators showing support/resistance, momentum, and trend direction. Price above cloud = bullish. Price below cloud = bearish. Includes 5 lines: Tenkan (9), Kijun (26), Senkou Span A&B (52), and Chikou (lagging).',
+   signal:'Price above cloud = bullish; below cloud = bearish; inside cloud = neutral/consolidation',
+   entry:'Long when price breaks above cloud with bullish Tenkan/Kijun cross. Short when price breaks below.',
+   exit:'Use Kijun-sen as trailing stop in trends.',
+   tips:['Thick cloud = strong support/resistance','Thin cloud = easy to break through','Bullish TK cross above cloud = strong signal','Cloud color change = trend change preview','Best on 4H and daily timeframes']},
+
+  {id:'pivot-points',name:'Pivot Points',type:'indicator',sub:'indicator',icon:'📍',
+   desc:'Calculated from prior session High, Low, Close. Predicts support and resistance levels for current/upcoming session. Auto-plots 7 levels: P (pivot), R1, R2, R3, S1, S2, S3.',
+   signal:'Key levels for intraday support/resistance',
+   entry:'Buy at S1/S2 (support). Sell at R1/R2 (resistance). Trade breakouts of P.',
+   exit:'Target next level up (for longs) or next level down (for shorts).',
+   tips:['Floor traders still use pivot points actively','P level is the most important — controls intraday bias','Price above P = bullish day; below P = bearish day','Works best for intraday and swing trading','Can also use weekly/monthly pivot points']},
+
+  // ─── TRADING TECHNIQUES ───
+  {id:'breakout-entry',name:'Breakout Trading',type:'technique',sub:'technique',icon:'💥',
+   desc:'Entering a trade when price violates a trend line, support/resistance, or previous reversal point. Signals a change in buyer/seller behavior and the beginning or end of a trend.',
+   signal:'Trend change or acceleration',
+   entry:'Enter on confirmed breakout above resistance or below support. Use buy/sell stop orders.',
+   exit:'Target = pattern height projected from breakout point.',
+   tips:['Always use a confirmation filter to reduce false signals','Types: intrabar, multiple closes, time, percentage, or money filter','Volume should increase on legitimate breakouts','Gaps on breakout = very strong signal']},
+
+  {id:'false-breakout',name:'False & Failed Breakouts',type:'technique',sub:'technique',icon:'🪤',
+   desc:'False breakout: price breaks out but immediately returns back through the breakout price. Failed breakout: false breakout then breaks out in the OPPOSITE direction (trap).',
+   signal:'Counter-trend opportunity',
+   entry:'Enter on breakout → place protective stop outside bar in opposite direction → also place entry stop at same level (stop-and-reverse). Profit from trap move.',
+   exit:'Exit when move exhausts or at next level.',
+   tips:['False breakout is common — especially in rectangles','If price continues in breakout direction = profit from original entry','If breakout fails = profit from stop-and-reverse','Always have protective stops ready']},
+
+  {id:'protective-stops',name:'Protective Stops',type:'technique',sub:'technique',icon:'🛡',
+   desc:'Stop loss orders placed before entry to protect capital. Determine maximum risk before entering the trade. Place at trend line, support/resistance level, or percentage/point distance from entry.',
+   signal:'Risk management tool',
+   entry:'Determine stop location BEFORE entering the trade. Never move stop further away.',
+   exit:'Move stop to breakeven once in profit. Trail stop as trade moves in your favor.',
+   tips:['Always determine risk BEFORE entry','Types: filter-based, trendline, S/R level','Stop and reverse: same stop triggers exit AND new trade in opposite direction','Never average down by moving stop further away']},
+
+  {id:'retracements',name:'Retracements & Pullbacks',type:'technique',sub:'technique',icon:'↩',
+   desc:'Counter-trend correction after a breakout. Pullback on breakout down. Throwback on breakout up. Don\'t always occur — and when they do, waiting for them can hurt performance.',
+   signal:'Better entry opportunity after breakout',
+   entry:'Wait for retracement to prior breakout level. Enter when price resumes original direction.',
+   exit:'Stop below the retracement low (for longs).',
+   tips:['Not all breakouts retrace — don\'t always wait','Double bottom: price WILL usually retest neckline','Triple bottom: price usually does NOT retest','Throwback entry gives better R:R but lower hit rate','Fibonacci levels (38.2%, 50%, 61.8%) are common retracement zones']},
+
+  {id:'support-resistance',name:'Support & Resistance',type:'technique',sub:'technique',icon:'📐',
+   desc:'Key price levels where supply/demand create significant reactions. When price passes through resistance, it can become support (role reversal). The more times a level is tested, the stronger it gets.',
+   signal:'Key entry/exit zones',
+   entry:'Trade the Bounce: buy at support, sell at resistance. Trade the Break: buy breakout above resistance, sell breakdown below support.',
+   exit:'Exit at the opposite level.',
+   tips:['Need at least 2 price points to draw a level','Connect swing highs → resistance line; swing lows → support line','Role reversal: broken resistance becomes support','More tests of a level = stronger the eventual breakout','Round numbers often act as psychological S/R']},
+
+  {id:'confirmation-filters',name:'Confirmation Filters',type:'technique',sub:'technique',icon:'✅',
+   desc:'Methods to confirm a breakout is valid before entering. Reduces false signal trades but may miss some entries.',
+   signal:'Trade management tool',
+   entry:'Apply filter to breakout: wait for multiple closes, percentage move, specific time elapsed, or dollar amount.',
+   exit:'N/A — used for entry confirmation',
+   tips:['Types: Intrabar, Multiple closes, Time-based, Percentage/point, Money filter','More confirmation = fewer false entries but later entry price','Balance between confirmation and missing the move','Volume is often the best confirmation filter']},
+
+  {id:'target-calculation',name:'Price Target Calculation',type:'technique',sub:'technique',icon:'🎯',
+   desc:'Methods to estimate price targets from chart patterns. Most patterns use the measured move technique: height of pattern projected from breakout point.',
+   signal:'Trade management — know your target before entering',
+   entry:'Enter on pattern breakout.',
+   exit:'Calculate: Height of pattern (high to low) added to breakout for upside targets, subtracted for downside targets.',
+   tips:['Double Top target: height from peak to trough, subtract from breakdown','Double Bottom target: height from trough to peak, add to breakout','H&S target: head to neckline distance, project from neckline','Cup & Handle: cup depth added to breakout price','Symmetrical Triangle: pattern height added/subtracted from breakout','Pennant/Flag: flagpole height added to pennant low (for up)']},
+];
+
+let taFilter = 'all';
+
+function setTAFilter(f, el) {
+  taFilter = f;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderTALib();
+}
+
+function renderTALib() {
+  const q = (document.getElementById('talib-search').value || '').toLowerCase();
+  const container = document.getElementById('talib-scroll');
+
+  let items = TA_DATA.filter(d => {
+    const matchFilter = taFilter === 'all' || d.type === taFilter;
+    const matchSearch = !q || d.name.toLowerCase().includes(q) || d.desc.toLowerCase().includes(q) || d.sub.includes(q);
+    return matchFilter && matchSearch;
+  });
+
+  if (!items.length) {
+    container.innerHTML = '<div class="talib-empty">No patterns found. Try a different search or filter.</div>';
+    return;
+  }
+
+  const sections = [
+    {key:'bullish-candlestick', label:'Bullish Candlestick Patterns', filter: d => d.type==='bullish' && d.sub==='candlestick'},
+    {key:'bearish-candlestick', label:'Bearish Candlestick Patterns', filter: d => d.type==='bearish' && d.sub==='candlestick'},
+    {key:'bilateral-candlestick', label:'Bilateral / Neutral Candlestick Patterns', filter: d => d.type==='bilateral' && d.sub==='candlestick'},
+    {key:'bullish-chart', label:'Bullish Chart Patterns', filter: d => d.type==='bullish' && d.sub==='chart'},
+    {key:'bearish-chart', label:'Bearish Chart Patterns', filter: d => d.type==='bearish' && d.sub==='chart'},
+    {key:'bilateral-chart', label:'Bilateral Chart Patterns', filter: d => d.type==='bilateral' && d.sub==='chart'},
+    {key:'indicator', label:'Technical Indicators', filter: d => d.sub==='indicator'},
+    {key:'technique', label:'Trading Techniques & Rules', filter: d => d.sub==='technique'},
+  ];
+
+  let html = '';
+  sections.forEach(sec => {
+    const cards = items.filter(sec.filter);
+    if (!cards.length) return;
+    html += `<div class="talib-section">
+      <div class="talib-section-title">${sec.label}</div>
+      <div class="talib-grid">
+        ${cards.map(d => `
+          <div class="talib-card ${d.type}" id="tacard-${d.id}" onclick="toggleTACard('${d.id}')">
+            <div class="talib-card-header">
+              <div class="talib-card-icon ${d.type}">${d.icon}</div>
+              <div class="talib-card-meta">
+                <div class="talib-card-name">${d.name}</div>
+                <div class="talib-card-badges">
+                  <span class="talib-badge ${d.type}">${d.type}</span>
+                  <span class="talib-badge ${d.sub === 'candlestick' ? 'candlestick' : d.sub === 'chart' ? 'chart' : d.sub}">${d.sub}</span>
+                </div>
+              </div>
+            </div>
+            <div class="talib-card-desc">${d.desc}</div>
+            <button class="talib-card-expand">
+              See details <svg class="talib-expand-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="talib-card-body">
+              <div class="talib-card-section">
+                <div class="talib-card-section-label">Signal</div>
+                <div class="talib-card-section-content">${d.signal}</div>
+              </div>
+              <div class="talib-card-section">
+                <div class="talib-card-section-label">Entry</div>
+                <div class="talib-card-section-content">${d.entry}</div>
+              </div>
+              <div class="talib-card-section">
+                <div class="talib-card-section-label">Exit</div>
+                <div class="talib-card-section-content">${d.exit}</div>
+              </div>
+              <div class="talib-card-section">
+                <div class="talib-card-section-label">Tips</div>
+                <div class="talib-card-section-content"><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function toggleTACard(id) {
+  document.getElementById('tacard-' + id).classList.toggle('expanded');
+}
+
+/* ══════════════════════════════════════════
    INIT
 ══════════════════════════════════════════ */
 renderTable();
 updateStats();
 renderCard();
 renderStrategies();
+renderTALib();
 </script>
 </body>
 </html>
