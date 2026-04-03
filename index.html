@@ -671,6 +671,11 @@ textarea{resize:vertical;min-height:60px;}
 .talib-expand-arrow{transition:transform 0.2s;}
 .talib-card.expanded .talib-expand-arrow{transform:rotate(180deg);}
 .talib-empty{text-align:center;padding:60px;color:var(--text3);}
+.talib-card-img{
+  width:100%;border-radius:var(--radius2);margin-bottom:8px;
+  border:1px solid var(--border);display:block;
+  background:var(--bg3);
+}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -2909,6 +2914,54 @@ const TA_DATA = [
    tips:['Double Top target: height from peak to trough, subtract from breakdown','Double Bottom target: height from trough to peak, add to breakout','H&S target: head to neckline distance, project from neckline','Cup & Handle: cup depth added to breakout price','Symmetrical Triangle: pattern height added/subtracted from breakout','Pennant/Flag: flagpole height added to pennant low (for up)']},
 ];
 
+const TA_IMAGES = {
+  'hammer':'ta-images/pat-hammer.jpg',
+  'morning-star':'ta-images/pat-morning-star.jpg',
+  'morning-doji-star':'ta-images/pat-morning-doji-star.jpg',
+  'bullish-engulfing':'ta-images/pat-bullish-engulfing.jpg',
+  'three-white-soldiers':'ta-images/pat-three-white-soldiers.jpg',
+  'three-inside-up':'ta-images/pat-three-inside-up.jpg',
+  'three-outside-up':'ta-images/pat-three-outside-up.jpg',
+  'three-line-strike-bull':'ta-images/pat-three-line-strike-bull.jpg',
+  'hanging-man':'ta-images/pat-hanging-man.jpg',
+  'shooting-star':'ta-images/pat-shooting-star.jpg',
+  'bearish-engulfing':'ta-images/pat-bearish-engulfing.jpg',
+  'evening-star':'ta-images/pat-evening-star.jpg',
+  'evening-doji-star':'ta-images/pat-evening-doji-star.jpg',
+  'three-black-crows':'ta-images/pat-three-black-crows.jpg',
+  'three-inside-down':'ta-images/pat-three-inside-down.jpg',
+  'three-outside-down':'ta-images/pat-three-outside-down.jpg',
+  'doji':'ta-images/pat-doji.jpg',
+  'spinning-top':'ta-images/pat-spinning-top.jpg',
+  'bull-flag':'ta-images/pat-bull-flag.jpg',
+  'bull-pennant':'ta-images/pat-bull-pennant.jpg',
+  'ascending-triangle':'ta-images/pat-ascending-triangle.jpg',
+  'inv-head-shoulders':'ta-images/pat-inv-head-shoulders.jpg',
+  'rounding-bottom':'ta-images/pat-rounding-bottom.jpg',
+  'cup-and-handle':'ta-images/pat-cup-and-handle.jpg',
+  'inverted-cup-handle':'ta-images/pat-inverted-cup-handle.jpg',
+  'double-bottom':'ta-images/pat-double-bottom.jpg',
+  'triple-bottom':'ta-images/pat-triple-bottom.jpg',
+  'falling-wedge':'ta-images/pat-falling-wedge.jpg',
+  'bear-flag':'ta-images/pat-bear-flag.jpg',
+  'bear-pennant':'ta-images/pat-bear-pennant.jpg',
+  'descending-triangle':'ta-images/pat-descending-triangle.jpg',
+  'double-top':'ta-images/pat-double-top.jpg',
+  'triple-top':'ta-images/pat-triple-top.jpg',
+  'head-shoulders':'ta-images/pat-head-shoulders.jpg',
+  'rising-wedge':'ta-images/pat-rising-wedge.jpg',
+  'sym-triangle':'ta-images/pat-sym-triangle.jpg',
+  'price-channel':'ta-images/pat-price-channel.jpg',
+  'sma':'ta-images/pat-sma.jpg',
+  'macd':'ta-images/pat-macd.jpg',
+  'rsi':'ta-images/pat-rsi.jpg',
+  'vwap':'ta-images/pat-vwap.jpg',
+  'bollinger-bands':'ta-images/pat-bollinger-bands.jpg',
+  'ichimoku':'ta-images/pat-ichimoku.jpg',
+  'pivot-points':'ta-images/pat-pivot-points.jpg',
+  'support-resistance':'ta-images/pat-support-resistance-1.jpg',
+};
+
 let taFilter = 'all';
 
 function setTAFilter(f, el) {
@@ -2968,6 +3021,9 @@ function renderTALib() {
               See details <svg class="talib-expand-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
             <div class="talib-card-body">
+              ${TA_IMAGES[d.id] ? `<div class="talib-card-section">
+                <img src="${TA_IMAGES[d.id]}" alt="${d.name} diagram" class="talib-card-img" loading="lazy">
+              </div>` : ''}
               <div class="talib-card-section">
                 <div class="talib-card-section-label">Signal</div>
                 <div class="talib-card-section-content">${d.signal}</div>
