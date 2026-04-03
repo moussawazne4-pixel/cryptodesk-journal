@@ -741,6 +741,12 @@ textarea{resize:vertical;min-height:60px;}
       </div>
       <span>TA Library</span>
     </div>
+    <div class="nav-item" onclick="switchPage('p6',this)">
+      <div class="nav-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <span>Soulz Method</span>
+    </div>
   </div>
 
   <div class="sidebar-footer">
@@ -940,6 +946,28 @@ textarea{resize:vertical;min-height:60px;}
         </div>
       </div>
       <div class="talib-scroll" id="talib-scroll"></div>
+    </div>
+  </div>
+
+  <!-- ══ PAGE 6: SOULZ METHOD ══ -->
+  <div class="page" id="p6">
+    <div class="topbar">
+      <div class="topbar-title">Soulz Method <span>How to Master the Art of Trading — by Soulz (2025)</span></div>
+    </div>
+    <div class="talib-controls">
+      <input class="talib-search" id="soulz-search" type="text" placeholder="🔍  Search pages…" oninput="renderSoulz()">
+      <div class="tab-group" id="soulz-chapter-tabs">
+        <button class="tab-btn active" onclick="filterSoulzChapter('all',this)">All</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('01',this)">01 · Foundation</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('02',this)">02 · Price Action</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('03',this)">03 · Liquidity</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('04',this)">04 · Indicators</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('05',this)">05 · Cheat Sheets</button>
+        <button class="tab-btn" onclick="filterSoulzChapter('06',this)">06 · Smart Money</button>
+      </div>
+    </div>
+    <div class="talib-scroll" id="soulz-scroll">
+      <div id="soulz-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;"></div>
     </div>
   </div>
 
@@ -3054,6 +3082,236 @@ function toggleTACard(id) {
 }
 
 /* ══════════════════════════════════════════
+   SOULZ METHOD
+══════════════════════════════════════════ */
+const SOULZ_PAGES = [
+  {n:0,  chapter:'01', title:'Cover'},
+  {n:1,  chapter:'01', title:'Blank'},
+  {n:2,  chapter:'01', title:'Welcome Letter'},
+  {n:3,  chapter:'01', title:'Blank'},
+  {n:4,  chapter:'01', title:'Table of Contents'},
+  {n:5,  chapter:'01', title:'Table of Contents (cont.)'},
+  {n:6,  chapter:'01', title:'Table of Contents — Smart Money'},
+  {n:7,  chapter:'01', title:'Blank'},
+  {n:8,  chapter:'01', title:'The Trader\'s Foundation'},
+  {n:9,  chapter:'01', title:'What Is Crypto Trading?'},
+  {n:10, chapter:'01', title:'Understanding Exchanges & Market Structure'},
+  {n:11, chapter:'01', title:'The Mindset of a Successful Trader'},
+  {n:12, chapter:'02', title:'Mastering Price Action Trading'},
+  {n:13, chapter:'02', title:'What Is Price Action?'},
+  {n:14, chapter:'02', title:'Candlesticks: Bullish Candle'},
+  {n:15, chapter:'02', title:'Candlesticks: Bearish Candle'},
+  {n:16, chapter:'02', title:'Candlesticks: How to Read?'},
+  {n:17, chapter:'02', title:'Volume'},
+  {n:18, chapter:'02', title:'Volume — Uptrend vs Downtrend'},
+  {n:19, chapter:'02', title:'Volume — Decreasing Volume'},
+  {n:20, chapter:'02', title:'Volume — High Liquidity'},
+  {n:21, chapter:'02', title:'Volume — Low Liquidity'},
+  {n:22, chapter:'02', title:'Entry Confirmation'},
+  {n:23, chapter:'02', title:'Entry Confirmation (cont.)'},
+  {n:24, chapter:'02', title:'Entry Confirmation: Long Setup'},
+  {n:25, chapter:'02', title:'Entry Confirmation: Long Setup Steps'},
+  {n:26, chapter:'02', title:'Market Structure'},
+  {n:27, chapter:'02', title:'Market Structure: How to Trade It'},
+  {n:28, chapter:'02', title:'Break of Structure (BOS)'},
+  {n:29, chapter:'02', title:'BOS — Bullish & Bearish'},
+  {n:30, chapter:'02', title:'BOS — Bullish BOS Detail'},
+  {n:31, chapter:'02', title:'BOS — Bearish BOS Detail'},
+  {n:32, chapter:'02', title:'How to Identify a Trend'},
+  {n:33, chapter:'02', title:'How to Identify a Trend — HH/HL/LH/LL'},
+  {n:34, chapter:'02', title:'How to Identify a Trend — Sideways'},
+  {n:35, chapter:'02', title:'How to Chart from Start'},
+  {n:36, chapter:'02', title:'How to Chart from Start — Bullish Example'},
+  {n:37, chapter:'02', title:'How to Chart from Start — Steps'},
+  {n:38, chapter:'02', title:'How to Trade Between Ranges'},
+  {n:39, chapter:'02', title:'How to Trade Between Ranges — Example'},
+  {n:40, chapter:'02', title:'How to Open a Short Position'},
+  {n:41, chapter:'02', title:'Trendlines'},
+  {n:42, chapter:'02', title:'Trendlines — Examples'},
+  {n:43, chapter:'02', title:'How to Avoid Fakeouts'},
+  {n:44, chapter:'02', title:'How to Avoid Fakeouts — Examples'},
+  {n:45, chapter:'03', title:'Understanding Market Liquidity'},
+  {n:46, chapter:'03', title:'What Is Liquidity?'},
+  {n:47, chapter:'03', title:'What Are Market-Makers?'},
+  {n:48, chapter:'03', title:'Where Is Liquidity?'},
+  {n:49, chapter:'03', title:'Where Is Liquidity? (cont.)'},
+  {n:50, chapter:'03', title:'Types of Liquidity: BSL & SSL'},
+  {n:51, chapter:'03', title:'BSL & SSL — Examples'},
+  {n:52, chapter:'03', title:'BSL & SSL — More Examples'},
+  {n:53, chapter:'03', title:'Types of Liquidity: Other Tools'},
+  {n:54, chapter:'03', title:'Types of Liquidity: PDH & PDL'},
+  {n:55, chapter:'03', title:'Liquidation Heatmap'},
+  {n:56, chapter:'03', title:'Liquidation Heatmap — Usage'},
+  {n:57, chapter:'03', title:'How to Trade Using Heatmaps'},
+  {n:58, chapter:'03', title:'How to Trade Using Heatmaps (cont.)'},
+  {n:59, chapter:'03', title:'Heatmap Examples'},
+  {n:60, chapter:'03', title:'Heatmap Examples (cont.)'},
+  {n:61, chapter:'03', title:'Heatmap Examples (cont.)'},
+  {n:62, chapter:'03', title:'Fibonacci Levels'},
+  {n:63, chapter:'03', title:'Fibonacci Levels — How to Draw'},
+  {n:64, chapter:'03', title:'Fibonacci Levels — Examples'},
+  {n:65, chapter:'03', title:'Fibonacci Levels — Examples (cont.)'},
+  {n:66, chapter:'03', title:'Fibonacci Levels — Examples (cont.)'},
+  {n:67, chapter:'03', title:'Liquidity Sweep'},
+  {n:68, chapter:'03', title:'Liquidity Sweep — Examples'},
+  {n:69, chapter:'03', title:'Liquidity Grab'},
+  {n:70, chapter:'03', title:'Liquidity Grab — Examples'},
+  {n:71, chapter:'03', title:'IFVG'},
+  {n:72, chapter:'03', title:'Killzones'},
+  {n:73, chapter:'03', title:'Killzones — Sessions'},
+  {n:74, chapter:'03', title:'Killzones — Examples'},
+  {n:75, chapter:'03', title:'Killzones — Trading Tips'},
+  {n:76, chapter:'03', title:'Killzones — More Tips'},
+  {n:77, chapter:'03', title:'Killzones — Summary'},
+  {n:78, chapter:'03', title:'POI (Point of Interest)'},
+  {n:79, chapter:'03', title:'POI — Examples'},
+  {n:80, chapter:'03', title:'POI — More Examples'},
+  {n:81, chapter:'03', title:'Power of Three (PO3)'},
+  {n:82, chapter:'03', title:'PO3 — Examples'},
+  {n:83, chapter:'03', title:'Liquidation Levels'},
+  {n:84, chapter:'03', title:'Liquidation Levels — Examples'},
+  {n:85, chapter:'03', title:'Liquidation Levels — More Examples'},
+  {n:86, chapter:'03', title:'Order Blocks'},
+  {n:87, chapter:'03', title:'Order Blocks — Identification'},
+  {n:88, chapter:'03', title:'Order Blocks — Bullish'},
+  {n:89, chapter:'03', title:'Order Blocks — Bearish'},
+  {n:90, chapter:'03', title:'Order Flow'},
+  {n:91, chapter:'03', title:'Imbalances'},
+  {n:92, chapter:'03', title:'Imbalances — Examples'},
+  {n:93, chapter:'03', title:'Liquidity Voids'},
+  {n:94, chapter:'03', title:'Liquidity Voids — Examples'},
+  {n:95, chapter:'03', title:'Liquidity Voids — More Examples'},
+  {n:96, chapter:'03', title:'Liquidity Voids — Summary'},
+  {n:97, chapter:'04', title:'Using Indicators for Better Trade Decisions'},
+  {n:98, chapter:'04', title:'What Are Indicators?'},
+  {n:99, chapter:'04', title:'Relative Strength Index (RSI)'},
+  {n:100, chapter:'04', title:'RSI — How to Use'},
+  {n:101, chapter:'04', title:'RSI — Divergence'},
+  {n:102, chapter:'04', title:'RSI — Examples'},
+  {n:103, chapter:'04', title:'RSI — More Examples'},
+  {n:104, chapter:'04', title:'MACD'},
+  {n:105, chapter:'04', title:'MACD — How to Read'},
+  {n:106, chapter:'04', title:'MACD — Examples'},
+  {n:107, chapter:'04', title:'RSI + MACD Combined'},
+  {n:108, chapter:'04', title:'Moving Averages'},
+  {n:109, chapter:'04', title:'Moving Averages — EMA vs SMA'},
+  {n:110, chapter:'04', title:'Moving Averages — Examples'},
+  {n:111, chapter:'04', title:'Moving Averages — More Examples'},
+  {n:112, chapter:'04', title:'Bollinger Bands'},
+  {n:113, chapter:'04', title:'Bollinger Bands — How to Use'},
+  {n:114, chapter:'04', title:'Bollinger Bands — Examples'},
+  {n:115, chapter:'04', title:'Bollinger Bands — Squeeze'},
+  {n:116, chapter:'04', title:'Bollinger Bands — More Examples'},
+  {n:117, chapter:'04', title:'VWAP'},
+  {n:118, chapter:'04', title:'Ichimoku Cloud'},
+  {n:119, chapter:'04', title:'Volume Profile'},
+  {n:120, chapter:'04', title:'Volume Profile — Examples'},
+  {n:121, chapter:'04', title:'Volume Profile — More Examples'},
+  {n:122, chapter:'04', title:'Volume Profile — Summary'},
+  {n:123, chapter:'04', title:'Volume Profile — Bonus'},
+  {n:124, chapter:'05', title:'Trader\'s Toolkit: Cheat Sheets'},
+  {n:125, chapter:'05', title:'Best Timeframe Alignments'},
+  {n:126, chapter:'05', title:'Trading Plan #1'},
+  {n:127, chapter:'05', title:'Trading Plan #2'},
+  {n:128, chapter:'05', title:'Trading Plan #3'},
+  {n:129, chapter:'05', title:'Trading Plan #4'},
+  {n:130, chapter:'06', title:'Trading Liquidity Like Smart Money'},
+  {n:131, chapter:'06', title:'Liquidity Trading Strategy #1'},
+  {n:132, chapter:'06', title:'Liquidity Trading Strategy #2'},
+  {n:133, chapter:'06', title:'Liquidity Trading Strategy #3'},
+  {n:134, chapter:'06', title:'Strategy #3 — Examples'},
+  {n:135, chapter:'06', title:'Strategy #3 — More Examples'},
+  {n:136, chapter:'06', title:'Strategy Recap'},
+  {n:137, chapter:'06', title:'Final Page'},
+];
+
+let soulzChapterFilter = 'all';
+
+function filterSoulzChapter(ch, el) {
+  soulzChapterFilter = ch;
+  document.querySelectorAll('#soulz-chapter-tabs .tab-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderSoulz();
+}
+
+function filterSoulz(q) {
+  renderSoulz(q);
+}
+
+function renderSoulz(q) {
+  q = (q || document.getElementById('soulz-search').value || '').toLowerCase();
+  const chapterLabels = {'01':'Foundation','02':'Price Action','03':'Liquidity','04':'Indicators','05':'Cheat Sheets','06':'Smart Money'};
+  const chapterColors = {'01':'#6366F1','02':'#22D3EE','03':'#F59E0B','04':'#34D399','05':'#F87171','06':'#A78BFA'};
+
+  let pages = SOULZ_PAGES.filter(p => {
+    const matchCh = soulzChapterFilter === 'all' || p.chapter === soulzChapterFilter;
+    const matchQ = !q || p.title.toLowerCase().includes(q) || ('chapter ' + p.chapter).includes(q);
+    return matchCh && matchQ;
+  });
+
+  // Skip blank pages unless searching
+  if (!q && soulzChapterFilter === 'all') {
+    pages = pages.filter(p => p.title !== 'Blank');
+  }
+
+  const grid = document.getElementById('soulz-grid');
+  grid.innerHTML = pages.map(p => {
+    const color = chapterColors[p.chapter] || '#6366F1';
+    const label = chapterLabels[p.chapter] || '';
+    return `
+      <div onclick="openSoulzModal(${p.n})" style="
+        background:var(--card);border:1px solid var(--border);border-radius:12px;
+        overflow:hidden;cursor:pointer;transition:all 0.2s;
+        display:flex;flex-direction:column;
+      " onmouseover="this.style.borderColor='${color}';this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.3)'"
+         onmouseout="this.style.borderColor='';this.style.transform='';this.style.boxShadow=''">
+        <div style="position:relative;overflow:hidden;background:#111;aspect-ratio:3/4;">
+          <img src="ta-images/soulz-${String(p.n).padStart(3,'0')}.jpg" alt="${p.title}"
+            loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s;"
+            onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform=''">
+          <div style="position:absolute;top:8px;left:8px;background:${color};color:#fff;
+            font-size:10px;font-weight:700;letter-spacing:1px;padding:3px 8px;border-radius:20px;
+            font-family:var(--mono);">CH ${p.chapter}</div>
+        </div>
+        <div style="padding:12px 14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--text);line-height:1.3;">${p.title}</div>
+          <div style="font-size:10px;color:var(--text3);margin-top:4px;font-family:var(--mono);">pg ${p.n + 1} · ${label}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function openSoulzModal(n) {
+  const p = SOULZ_PAGES.find(x => x.n === n);
+  if (!p) return;
+  const overlay = document.createElement('div');
+  overlay.id = 'soulz-modal-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML = `
+    <div style="position:relative;max-width:680px;width:100%;max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+        <div style="color:#fff;font-size:15px;font-weight:700;">${p.title} <span style="color:rgba(255,255,255,0.4);font-size:12px;font-weight:400;">Page ${p.n + 1}</span></div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="navigateSoulz(${p.n},-1)" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="navigateSoulz(${p.n},1)" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">›</button>
+          <button onclick="document.getElementById('soulz-modal-overlay').remove()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;">✕</button>
+        </div>
+      </div>
+      <img src="ta-images/soulz-${String(p.n).padStart(3,'0')}.jpg" alt="${p.title}"
+        style="max-height:75vh;max-width:100%;object-fit:contain;border-radius:8px;box-shadow:0 24px 60px rgba(0,0,0,0.6);">
+    </div>`;
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+
+function navigateSoulz(currentN, dir) {
+  const overlay = document.getElementById('soulz-modal-overlay');
+  if (overlay) overlay.remove();
+  const newN = currentN + dir;
+  if (newN >= 0 && newN < SOULZ_PAGES.length) openSoulzModal(newN);
+}
+
+/* ══════════════════════════════════════════
    INIT
 ══════════════════════════════════════════ */
 renderTable();
@@ -3061,6 +3319,7 @@ updateStats();
 renderCard();
 renderStrategies();
 renderTALib();
+renderSoulz();
 </script>
 </body>
 </html>
