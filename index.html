@@ -236,6 +236,84 @@ textarea{resize:vertical;min-height:60px;}
 .res-btn.win.active{background:var(--green-dim);color:var(--green);border-color:rgba(52,211,153,0.3);}
 .res-btn.loss.active{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.3);}
 .res-btn.be.active{background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.3);}
+.res-btn.pending.active{background:rgba(99,102,241,0.12);color:var(--indigo);border-color:rgba(99,102,241,0.3);}
+.tag-pending{background:rgba(99,102,241,0.12);color:var(--indigo);}
+.settle-btn{
+  background:var(--indigo-dim);border:1px solid rgba(99,102,241,0.3);color:var(--indigo);
+  cursor:pointer;padding:4px 8px;border-radius:4px;transition:all 0.15s;
+  font-size:11px;font-weight:700;font-family:var(--sans);letter-spacing:0.5px;
+  margin-right:2px;
+}
+.settle-btn:hover{background:var(--indigo);color:#fff;}
+.notes-btn{
+  background:none;border:none;color:var(--text3);cursor:pointer;
+  padding:4px 6px;border-radius:4px;transition:all 0.15s;
+  display:inline-flex;align-items:center;justify-content:center;margin-right:2px;
+}
+.notes-btn:hover{color:var(--cyan);background:rgba(34,211,238,0.1);}
+.notes-btn.has-notes{color:var(--cyan);}
+/* Notes drawer */
+#notes-drawer{
+  position:fixed;top:0;right:-420px;width:420px;height:100vh;
+  background:var(--bg2);border-left:1px solid var(--border2);
+  z-index:600;transition:right 0.3s cubic-bezier(0.4,0,0.2,1);
+  display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,0.4);
+}
+#notes-drawer.open{right:0;}
+.drawer-header{
+  padding:20px 22px 18px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.drawer-title{font-size:16px;font-weight:800;flex:1;}
+.drawer-close{
+  background:var(--glass);border:1px solid var(--border);border-radius:6px;
+  color:var(--text2);width:28px;height:28px;display:flex;align-items:center;
+  justify-content:center;cursor:pointer;font-size:14px;transition:all 0.15s;
+}
+.drawer-close:hover{background:var(--red-dim);color:var(--red);}
+.drawer-body{flex:1;overflow-y:auto;padding:20px 22px;display:flex;flex-direction:column;gap:16px;}
+.drawer-trade-info{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;
+}
+.drawer-field{display:flex;flex-direction:column;gap:4px;}
+.drawer-field label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;}
+.drawer-field span{font-size:13px;font-weight:600;font-family:var(--mono);}
+.drawer-textarea-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:0.3px;margin-bottom:4px;}
+#drawer-rationale,#drawer-notes-text{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
+  color:var(--text);font-family:var(--sans);font-size:13px;padding:11px 14px;
+  outline:none;transition:all 0.18s;width:100%;resize:vertical;line-height:1.6;
+}
+#drawer-rationale{min-height:120px;}
+#drawer-notes-text{min-height:80px;}
+#drawer-rationale:focus,#drawer-notes-text:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-dim);}
+.drawer-footer{padding:16px 22px;border-top:1px solid var(--border);flex-shrink:0;}
+/* Settle modal */
+#settle-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);z-index:700;align-items:center;justify-content:center;
+}
+#settle-overlay.show{display:flex;}
+.settle-trade-info{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
+  padding:12px 16px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;
+}
+.settle-mode-toggle{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.settle-mode-btn{
+  padding:10px 6px;border:1px solid var(--border);border-radius:var(--radius2);
+  background:var(--bg3);cursor:pointer;font-size:12px;font-weight:700;
+  letter-spacing:0.5px;transition:all 0.18s;font-family:var(--sans);color:var(--text2);text-align:center;
+}
+.settle-mode-btn:hover{border-color:var(--border2);color:var(--text);}
+.settle-mode-btn.sl.active{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.3);}
+.settle-mode-btn.tp.active{background:var(--green-dim);color:var(--green);border-color:rgba(52,211,153,0.3);}
+.settle-mode-btn.manual.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.3);}
+.settle-result-display{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
+  padding:12px 14px;font-family:var(--mono);font-size:15px;font-weight:700;
+  text-align:center;margin-bottom:14px;min-height:44px;display:flex;align-items:center;justify-content:center;
+}
 
 /* Trade table */
 .table-wrap{flex:1;overflow-y:auto;padding:0 24px 24px;}
@@ -1013,9 +1091,19 @@ textarea{resize:vertical;min-height:60px;}
           <input type="number" id="f-entry" placeholder="0.00" step="any" oninput="calcPnl()">
         </div>
         <div class="form-group">
-          <label>Exit Price</label>
+          <label>Exit Price <span style="color:var(--text3);font-weight:400;font-size:10px">(optional)</span></label>
           <input type="number" id="f-exit" placeholder="0.00" step="any" oninput="calcPnl()">
         </div>
+        <div class="form-group">
+          <label>Stop Loss (SL)</label>
+          <input type="number" id="f-sl" placeholder="0.00" step="any" oninput="calcPnl()" style="border-color:rgba(248,113,113,0.3)">
+        </div>
+        <div class="form-group">
+          <label>Take Profit (TP)</label>
+          <input type="number" id="f-tp" placeholder="0.00" step="any" oninput="calcPnl()" style="border-color:rgba(52,211,153,0.2)">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div class="form-group">
           <label>Margin ($)</label>
           <input type="number" id="f-margin" placeholder="100" step="any" oninput="calcPnl()">
@@ -1025,7 +1113,7 @@ textarea{resize:vertical;min-height:60px;}
           <input type="number" id="f-leverage" placeholder="10" step="any" min="1" oninput="calcPnl()">
         </div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
         <div class="form-group">
           <label>Position Size (auto)</label>
           <div class="calc-row" id="f-size-display">—</div>
@@ -1035,6 +1123,10 @@ textarea{resize:vertical;min-height:60px;}
           <label>P&amp;L (auto)</label>
           <div class="calc-row" id="f-pnl-display">—</div>
           <input type="hidden" id="f-pnl">
+        </div>
+        <div class="form-group">
+          <label>SL Loss (auto)</label>
+          <div class="calc-row" id="f-sl-display" style="color:var(--red)">—</div>
         </div>
       </div>
 
@@ -1121,13 +1213,19 @@ textarea{resize:vertical;min-height:60px;}
         <div class="result-toggle">
           <button class="res-btn win active" id="rb-win" onclick="setResult('WIN')">✓ WIN</button>
           <button class="res-btn loss" id="rb-loss" onclick="setResult('LOSS')">✗ LOSS</button>
-          <button class="res-btn be" id="rb-be" onclick="setResult('BREAKEVEN')">— BREAKEVEN</button>
+          <button class="res-btn be" id="rb-be" onclick="setResult('BREAKEVEN')">— BE</button>
+          <button class="res-btn pending" id="rb-pending" onclick="setResult('PENDING')">⏳ PENDING</button>
         </div>
       </div>
 
       <div class="form-group">
+        <label>Trade Rationale <span style="color:var(--text3);font-weight:400;font-size:10px">Why did you take this trade?</span></label>
+        <textarea id="f-rationale" placeholder="e.g. BOS on 4H + OB retest + FVG fill, high probability setup aligned with daily bias…" rows="3"></textarea>
+      </div>
+
+      <div class="form-group">
         <label>Notes</label>
-        <textarea id="f-notes" placeholder="Setup notes, mistakes, lessons learned…" rows="3"></textarea>
+        <textarea id="f-notes" placeholder="Mistakes, lessons learned, post-trade thoughts…" rows="2"></textarea>
       </div>
 
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:4px;">
@@ -1140,6 +1238,63 @@ textarea{resize:vertical;min-height:60px;}
     </div>
   </div>
 </div>
+
+<!-- ═══ SETTLE MODAL ═══ -->
+<div id="settle-overlay">
+  <div class="modal-box" style="max-width:440px;">
+    <div class="modal-title">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--indigo)" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Settle Trade
+      <div class="modal-close" onclick="closeSettle()">✕</div>
+    </div>
+    <div id="settle-trade-info" class="settle-trade-info"></div>
+    <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;letter-spacing:0.3px;">How did it close?</div>
+    <div class="settle-mode-toggle">
+      <button class="settle-mode-btn sl" id="sm-sl" onclick="settleMode('sl')">🛑 Hit SL</button>
+      <button class="settle-mode-btn tp" id="sm-tp" onclick="settleMode('tp')">🎯 Hit TP</button>
+      <button class="settle-mode-btn manual" id="sm-manual" onclick="settleMode('manual')">✏️ Manual PnL</button>
+    </div>
+    <div id="settle-extra" style="margin-bottom:14px;display:none;">
+      <label style="font-size:11px;font-weight:600;color:var(--text2);" id="settle-extra-label">Exit Price</label>
+      <input type="number" id="settle-input" placeholder="0.00" step="any" oninput="calcSettleResult()" style="margin-top:5px;">
+    </div>
+    <div class="settle-result-display" id="settle-result-display" style="color:var(--text3);">Select how the trade closed</div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="btn btn-ghost" onclick="closeSettle()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmSettle()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NOTES DRAWER ═══ -->
+<div id="notes-drawer">
+  <div class="drawer-header">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    <div class="drawer-title">Trade Notes</div>
+    <button class="drawer-close" onclick="closeNotes()">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div id="drawer-trade-info" class="drawer-trade-info"></div>
+    <div>
+      <div class="drawer-textarea-label">📌 Trade Rationale <span style="color:var(--text3);font-weight:400;font-size:10px">— Why did you take this trade?</span></div>
+      <textarea id="drawer-rationale" placeholder="e.g. BOS on 4H + OB retest aligned with daily bias. Liquidity sweep at previous low confirmed entry…"></textarea>
+    </div>
+    <div>
+      <div class="drawer-textarea-label">🗒 Notes <span style="color:var(--text3);font-weight:400;font-size:10px">— Mistakes, lessons, thoughts</span></div>
+      <textarea id="drawer-notes-text" placeholder="What went well? What would you do differently?"></textarea>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary" style="width:100%" onclick="saveNotes()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+      Save Notes
+    </button>
+  </div>
+</div>
+<div id="notes-backdrop" onclick="closeNotes()" style="display:none;position:fixed;inset:0;z-index:599;background:rgba(0,0,0,0.3);backdrop-filter:blur(2px);"></div>
 
 <!-- ═══ TOAST ═══ -->
 <div id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
@@ -1349,6 +1504,16 @@ function openModal(){
   const dt = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
   document.getElementById('f-date').value = dt;
   document.getElementById('asset-logo-preview').style.display = 'none';
+  // clear all fields
+  ['f-asset','f-entry','f-exit','f-sl','f-tp','f-margin','f-leverage','f-rationale','f-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-size-display').textContent='—'; document.getElementById('f-size-display').classList.remove('has-val');
+  document.getElementById('f-pnl-display').textContent='—'; document.getElementById('f-pnl-display').classList.remove('has-val'); document.getElementById('f-pnl-display').style.color='';
+  document.getElementById('f-sl-display').textContent='—'; document.getElementById('f-sl-display').classList.remove('has-val');
+  currentEntryReasons=[]; currentExitReasons=[];
+  document.querySelectorAll('#entry-reason-chips .reason-chip, #exit-reason-chips .reason-chip').forEach(c=>c.classList.remove('active'));
+  setDir('BUY'); setResult('WIN');
+  document.querySelectorAll('#emotion-row .emo-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  currentEmo='😤 FOMO';
   document.getElementById('modal-overlay').classList.add('show');
   document.getElementById('f-asset').focus();
 }
@@ -1358,6 +1523,9 @@ function closeModal(){
 }
 document.getElementById('modal-overlay').addEventListener('click',e=>{
   if(e.target===document.getElementById('modal-overlay')) closeModal();
+});
+document.getElementById('settle-overlay').addEventListener('click',e=>{
+  if(e.target===document.getElementById('settle-overlay')) closeSettle();
 });
 
 /* ══════════════════════════════════════════
@@ -1378,17 +1546,19 @@ function setResult(r){
   document.getElementById('rb-win').classList.toggle('active',r==='WIN');
   document.getElementById('rb-loss').classList.toggle('active',r==='LOSS');
   document.getElementById('rb-be').classList.toggle('active',r==='BREAKEVEN');
+  document.getElementById('rb-pending').classList.toggle('active',r==='PENDING');
 }
 function calcPnl(){
   const entry    = parseFloat(document.getElementById('f-entry').value)||0;
   const exit     = parseFloat(document.getElementById('f-exit').value)||0;
+  const sl       = parseFloat(document.getElementById('f-sl').value)||0;
   const margin   = parseFloat(document.getElementById('f-margin').value)||0;
   const leverage = parseFloat(document.getElementById('f-leverage').value)||1;
 
-  // Position size (notional USD value) = Margin × Leverage
   const posSize = margin * leverage;
   const sizeDisplay = document.getElementById('f-size-display');
   const pnlDisplay  = document.getElementById('f-pnl-display');
+  const slDisplay   = document.getElementById('f-sl-display');
 
   if(margin > 0) {
     sizeDisplay.textContent = '$' + posSize.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
@@ -1401,8 +1571,6 @@ function calcPnl(){
   }
 
   if(entry > 0 && exit > 0 && posSize > 0) {
-    // Contracts = posSize / entry
-    // P&L = price_diff × contracts
     const contracts = posSize / entry;
     const pnl = (currentDir==='BUY' ? (exit - entry) : (entry - exit)) * contracts;
     const pnlPct = (pnl / margin * 100);
@@ -1416,6 +1584,21 @@ function calcPnl(){
     pnlDisplay.classList.remove('has-val');
     pnlDisplay.style.color = '';
     document.getElementById('f-pnl').value = '';
+  }
+
+  // SL loss preview
+  if(entry > 0 && sl > 0 && posSize > 0) {
+    const contracts = posSize / entry;
+    const slLoss = (currentDir==='BUY' ? (sl - entry) : (entry - sl)) * contracts;
+    const slPct = (slLoss / margin * 100);
+    const sign = slLoss >= 0 ? '+' : '';
+    slDisplay.textContent = `${sign}$${slLoss.toFixed(2)} (${sign}${slPct.toFixed(1)}%)`;
+    slDisplay.classList.add('has-val');
+    slDisplay.style.color = slLoss < 0 ? 'var(--red)' : 'var(--green)';
+  } else {
+    slDisplay.textContent = '—';
+    slDisplay.classList.remove('has-val');
+    slDisplay.style.color = 'var(--red)';
   }
 }
 
@@ -1445,16 +1628,19 @@ function editTrade(id){
   document.getElementById('modal-icon').innerHTML = '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>';
 
   // Fill basic fields
-  document.getElementById('f-asset').value    = t.asset||'';
+  document.getElementById('f-asset').value     = t.asset||'';
   setImgWithFallback(document.getElementById('asset-logo-preview'), t.asset||null);
-  document.getElementById('f-entry').value    = t.entry==='—'?'':t.entry;
-  document.getElementById('f-exit').value     = t.exit==='—'?'':t.exit;
-  document.getElementById('f-margin').value   = t.margin==='—'?'':t.margin||'';
-  document.getElementById('f-leverage').value = t.leverage||'';
-  document.getElementById('f-date').value     = t.date||'';
-  document.getElementById('f-tf').value       = t.tf||'1D';
-  document.getElementById('f-type').value     = t.type||'Scalp';
-  document.getElementById('f-notes').value    = t.notes||'';
+  document.getElementById('f-entry').value     = t.entry==='—'?'':t.entry;
+  document.getElementById('f-exit').value      = t.exit==='—'?'':t.exit;
+  document.getElementById('f-sl').value        = t.sl||'';
+  document.getElementById('f-tp').value        = t.tp||'';
+  document.getElementById('f-margin').value    = t.margin==='—'?'':t.margin||'';
+  document.getElementById('f-leverage').value  = t.leverage||'';
+  document.getElementById('f-date').value      = t.date||'';
+  document.getElementById('f-tf').value        = t.tf||'1D';
+  document.getElementById('f-type').value      = t.type||'Scalp';
+  document.getElementById('f-rationale').value = t.rationale||'';
+  document.getElementById('f-notes').value     = t.notes||'';
 
   // Direction
   setDir(t.dir||'BUY');
@@ -1499,6 +1685,8 @@ function saveTrade(){
     asset, dir: currentDir,
     entry:    document.getElementById('f-entry').value||'—',
     exit:     document.getElementById('f-exit').value||'—',
+    sl:       document.getElementById('f-sl').value||'',
+    tp:       document.getElementById('f-tp').value||'',
     margin:   document.getElementById('f-margin').value||'—',
     leverage: document.getElementById('f-leverage').value||'1',
     size:     document.getElementById('f-size').value||'—',
@@ -1510,28 +1698,28 @@ function saveTrade(){
     exitReasons:  [...currentExitReasons],
     entryReason: currentEntryReasons.join(', ')||'—',
     exitReason:  currentExitReasons.join(', ')||'—',
-    emotion: currentEmo,
-    result:  currentResult,
-    notes:   document.getElementById('f-notes').value
+    emotion:   currentEmo,
+    result:    currentResult,
+    rationale: document.getElementById('f-rationale').value,
+    notes:     document.getElementById('f-notes').value
   };
 
   if(editingTradeId){
-    // Update existing trade in-place
     const idx = trades.findIndex(x=>x.id===editingTradeId);
     if(idx !== -1) trades[idx] = tradeData;
     toast(`Trade updated: ${asset}`);
   } else {
     trades.unshift(tradeData);
-    toast(`Trade logged: ${asset} ${currentResult}`);
+    const label = currentResult==='PENDING' ? 'pending' : currentResult;
+    toast(`Trade logged: ${asset} — ${label}`);
   }
   editingTradeId = null;
   persist();
   renderTable();
   updateStats();
   closeModal();
-  toast(`Trade logged: ${asset} ${currentResult}`);
   // reset form
-  ['f-asset','f-entry','f-exit','f-margin','f-leverage','f-notes'].forEach(id=>document.getElementById(id).value='');
+  ['f-asset','f-entry','f-exit','f-sl','f-tp','f-margin','f-leverage','f-rationale','f-notes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('asset-logo-preview').style.display='none';
   closeSuggest();
   document.getElementById('f-size').value='';
@@ -1541,7 +1729,8 @@ function saveTrade(){
   document.getElementById('f-pnl-display').textContent='—';
   document.getElementById('f-pnl-display').classList.remove('has-val');
   document.getElementById('f-pnl-display').style.color='';
-  // reset reason chips
+  document.getElementById('f-sl-display').textContent='—';
+  document.getElementById('f-sl-display').classList.remove('has-val');
   currentEntryReasons=[]; currentExitReasons=[];
   document.querySelectorAll('#entry-reason-chips .reason-chip, #exit-reason-chips .reason-chip')
     .forEach(c=>c.classList.remove('active'));
@@ -1569,34 +1758,43 @@ function renderTable(){
     const pnl = parseFloat(t.pnl)||0;
     const pnlColor = pnl>0?'var(--green)':pnl<0?'var(--red)':'var(--text2)';
     const sign = pnl>0?'+':'';
-    const pnlStr = `${sign}$${pnl.toFixed(2)}`;
+    const pnlStr = t.result==='PENDING' ? '⏳' : `${sign}$${pnl.toFixed(2)}`;
     const leverage = t.leverage&&t.leverage!=='1'?`<span style="font-size:10px;color:var(--amber);background:var(--amber-dim);padding:1px 5px;border-radius:4px;margin-left:4px">${t.leverage}x</span>`:'';
     const marginStr = t.margin&&t.margin!=='—'?`$${parseFloat(t.margin).toFixed(0)}`:'—';
-    const pnlPct = t.margin&&t.margin!=='—'&&parseFloat(t.margin)>0 ? ` <span style="font-size:10px;color:${pnlColor}">(${sign}${(pnl/parseFloat(t.margin)*100).toFixed(1)}%)</span>` : '';
+    const pnlPct = t.result!=='PENDING'&&t.margin&&t.margin!=='—'&&parseFloat(t.margin)>0 ? ` <span style="font-size:10px;color:${pnlColor}">(${sign}${(pnl/parseFloat(t.margin)*100).toFixed(1)}%)</span>` : '';
     const dateStr = t.date ? new Date(t.date).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
-    // entry reasons — array or legacy string
     const entryReasons = Array.isArray(t.entryReasons)&&t.entryReasons.length
       ? t.entryReasons.map(r=>`<span style="font-size:10px;background:var(--indigo-dim);color:var(--indigo);padding:2px 6px;border-radius:10px;white-space:nowrap">${r}</span>`).join(' ')
       : (t.entryReason||'—');
-    return `<tr>
+    const resultTag = t.result==='PENDING'
+      ? `<span class="tag tag-pending">⏳ PENDING</span>`
+      : `<span class="tag tag-${t.result.toLowerCase()}">${t.result}</span>`;
+    const slBadge = t.sl ? `<span style="font-size:10px;color:var(--red);background:var(--red-dim);padding:1px 5px;border-radius:4px;margin-left:4px">SL ${t.sl}</span>` : '';
+    const hasNotes = !!(t.rationale||t.notes);
+    const rowStyle = t.result==='PENDING' ? 'background:rgba(99,102,241,0.03);' : '';
+    return `<tr style="${rowStyle}">
       <td style="white-space:nowrap">
         <img class="coin-logo-table" src="${getCoinLogoUrl(t.asset)}" alt="${t.asset}"
           onerror="this.src='${getCoinLogoUrlFallback(t.asset)}';this.onerror=function(){this.src='${getCoinLogoUrlFallback2(t.asset)}';this.onerror=function(){this.style.display='none'}}"
-        <b style="color:var(--text)">${t.asset}</b>${leverage}
+        ><b style="color:var(--text)">${t.asset}</b>${leverage}${slBadge}
       </td>
       <td><span class="tag tag-${t.dir.toLowerCase()}">${t.dir}</span></td>
       <td class="mono">${t.entry}</td>
-      <td class="mono">${t.exit}</td>
+      <td class="mono" style="color:var(--text3)">${t.exit==='—'||!t.exit?'—':t.exit}</td>
       <td class="mono" style="color:var(--text2)">${marginStr}</td>
-      <td class="mono" style="color:${pnlColor};font-weight:700">${pnlStr}${pnlPct}</td>
-      <td><span class="tag tag-${t.result.toLowerCase()}">${t.result}</span></td>
+      <td class="mono" style="color:${t.result==='PENDING'?'var(--indigo)':pnlColor};font-weight:700">${pnlStr}${pnlPct}</td>
+      <td>${resultTag}</td>
       <td style="color:var(--text2);font-size:12px">${t.type}</td>
       <td><span class="mono" style="color:var(--text3)">${t.tf}</span></td>
       <td style="font-size:13px">${t.emotion}</td>
       <td style="max-width:180px">${entryReasons}</td>
       <td style="font-size:11px;color:var(--text3);white-space:nowrap">${dateStr}</td>
-      <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--text3)">${t.notes||'—'}</td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:var(--text3)">${t.rationale||t.notes||'—'}</td>
       <td style="white-space:nowrap">
+        ${t.result==='PENDING'?`<button class="settle-btn" onclick="settleTrade(${t.id})" title="Settle trade">⚡ Settle</button>`:''}
+        <button class="notes-btn${hasNotes?' has-notes':''}" onclick="openNotes(${t.id})" title="View/edit notes">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+        </button>
         <button class="edit-row" onclick="editTrade(${t.id})" title="Edit trade">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
         </button>
@@ -1623,11 +1821,13 @@ function clearAll(){
    STATS
 ══════════════════════════════════════════ */
 function updateStats(){
-  const wins   = trades.filter(t=>t.result==='WIN').length;
-  const losses = trades.filter(t=>t.result==='LOSS').length;
-  const netPnl = trades.reduce((s,t)=>s+(parseFloat(t.pnl)||0),0);
-  const total  = trades.length;
-  const wr     = total ? ((wins/total)*100).toFixed(1) : 0;
+  const settled = trades.filter(t=>t.result!=='PENDING');
+  const pending = trades.filter(t=>t.result==='PENDING').length;
+  const wins    = settled.filter(t=>t.result==='WIN').length;
+  const losses  = settled.filter(t=>t.result==='LOSS').length;
+  const netPnl  = settled.reduce((s,t)=>s+(parseFloat(t.pnl)||0),0);
+  const total   = settled.length;
+  const wr      = total ? ((wins/total)*100).toFixed(1) : 0;
   document.getElementById('stat-wins').textContent = wins;
   document.getElementById('stat-losses').textContent = losses;
   document.getElementById('stat-wr').textContent = wr+'%';
@@ -1636,7 +1836,177 @@ function updateStats(){
   pnlEl.style.color = netPnl>0?'var(--green)':netPnl<0?'var(--red)':'var(--text)';
   document.getElementById('sidebar-pnl').textContent = (netPnl>=0?'+':'')+`$${netPnl.toFixed(2)}`;
   document.getElementById('sidebar-pnl').style.color = netPnl>0?'var(--green)':netPnl<0?'var(--red)':'var(--text)';
-  document.getElementById('sidebar-wr').textContent = `${total} trades · ${wr}% WR`;
+  const pendingLabel = pending ? ` · ${pending} pending` : '';
+  document.getElementById('sidebar-wr').textContent = `${trades.length} trades · ${wr}% WR${pendingLabel}`;
+}
+
+/* ══════════════════════════════════════════
+   SETTLE TRADE
+══════════════════════════════════════════ */
+let settlingTradeId = null;
+let currentSettleMode = null;
+
+function settleTrade(id){
+  const t = trades.find(x=>x.id===id);
+  if(!t) return;
+  settlingTradeId = id;
+  currentSettleMode = null;
+
+  // Reset mode buttons
+  document.querySelectorAll('.settle-mode-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('settle-extra').style.display='none';
+  document.getElementById('settle-input').value='';
+  document.getElementById('settle-result-display').textContent='Select how the trade closed';
+  document.getElementById('settle-result-display').style.color='var(--text3)';
+
+  // Populate trade info
+  const leverage = t.leverage&&t.leverage!=='1'?` ${t.leverage}x`:'';
+  const slInfo = t.sl ? `<div class="drawer-field"><label>SL</label><span style="color:var(--red)">${t.sl}</span></div>` : '';
+  const tpInfo = t.tp ? `<div class="drawer-field"><label>TP</label><span style="color:var(--green)">${t.tp}</span></div>` : '';
+  document.getElementById('settle-trade-info').innerHTML = `
+    <div class="drawer-field"><label>Asset</label><span style="color:var(--text)">${t.asset}</span></div>
+    <div class="drawer-field"><label>Dir</label><span class="tag tag-${t.dir.toLowerCase()}" style="font-size:11px">${t.dir}</span></div>
+    <div class="drawer-field"><label>Entry</label><span>${t.entry}</span></div>
+    <div class="drawer-field"><label>Margin</label><span>${t.margin!=='—'?'$'+t.margin:'—'}${leverage}</span></div>
+    ${slInfo}${tpInfo}
+  `;
+
+  document.getElementById('settle-overlay').classList.add('show');
+}
+
+function closeSettle(){
+  document.getElementById('settle-overlay').classList.remove('show');
+  settlingTradeId = null;
+  currentSettleMode = null;
+}
+
+function settleMode(mode){
+  currentSettleMode = mode;
+  document.querySelectorAll('.settle-mode-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`sm-${mode}`).classList.add('active');
+
+  const t = trades.find(x=>x.id===settlingTradeId);
+  const extra = document.getElementById('settle-extra');
+  const label = document.getElementById('settle-extra-label');
+  const input = document.getElementById('settle-input');
+
+  if(mode==='sl'){
+    // Auto-fill from SL if available
+    if(t&&t.sl){ input.value = t.sl; }
+    extra.style.display = 'block';
+    label.textContent = 'SL Price (confirm or edit)';
+    calcSettleResult();
+  } else if(mode==='tp'){
+    if(t&&t.tp){ input.value = t.tp; }
+    extra.style.display = 'block';
+    label.textContent = 'TP Price (confirm or edit)';
+    calcSettleResult();
+  } else if(mode==='manual'){
+    input.value = '';
+    extra.style.display = 'block';
+    label.textContent = 'PnL ($) — use negative for a loss';
+    document.getElementById('settle-result-display').textContent = 'Enter PnL directly';
+    document.getElementById('settle-result-display').style.color = 'var(--text3)';
+  }
+}
+
+function calcSettleResult(){
+  const t = trades.find(x=>x.id===settlingTradeId);
+  if(!t || !currentSettleMode || currentSettleMode==='manual') return;
+  const exitPrice = parseFloat(document.getElementById('settle-input').value)||0;
+  if(!exitPrice){ document.getElementById('settle-result-display').textContent='Enter a price'; return; }
+
+  const entry  = parseFloat(t.entry)||0;
+  const margin = parseFloat(t.margin)||0;
+  const lev    = parseFloat(t.leverage)||1;
+  const posSize = margin * lev;
+  if(!entry||!posSize){ document.getElementById('settle-result-display').textContent='Missing entry/margin data'; return; }
+
+  const contracts = posSize / entry;
+  const pnl = (t.dir==='BUY' ? (exitPrice - entry) : (entry - exitPrice)) * contracts;
+  const pnlPct = margin > 0 ? (pnl/margin*100) : 0;
+  const sign = pnl>=0?'+':'';
+  const display = document.getElementById('settle-result-display');
+  display.textContent = `${sign}$${pnl.toFixed(2)}  (${sign}${pnlPct.toFixed(1)}%)`;
+  display.style.color = pnl>0?'var(--green)':pnl<0?'var(--red)':'var(--text)';
+}
+
+function confirmSettle(){
+  if(!settlingTradeId||!currentSettleMode){ toast('Select a settlement method','error'); return; }
+  const t = trades.find(x=>x.id===settlingTradeId);
+  if(!t) return;
+
+  let pnl, result, exitPrice;
+
+  if(currentSettleMode==='manual'){
+    pnl = parseFloat(document.getElementById('settle-input').value);
+    if(isNaN(pnl)){ toast('Enter a PnL value','error'); return; }
+    result = pnl>0?'WIN':pnl<0?'LOSS':'BREAKEVEN';
+  } else {
+    exitPrice = parseFloat(document.getElementById('settle-input').value)||0;
+    if(!exitPrice){ toast('Enter a price','error'); return; }
+    const entry   = parseFloat(t.entry)||0;
+    const margin  = parseFloat(t.margin)||0;
+    const lev     = parseFloat(t.leverage)||1;
+    const posSize = margin * lev;
+    const contracts = posSize / entry;
+    pnl = (t.dir==='BUY' ? (exitPrice - entry) : (entry - exitPrice)) * contracts;
+    result = currentSettleMode==='sl' ? 'LOSS' : (pnl>=0?'WIN':'LOSS');
+  }
+
+  const idx = trades.findIndex(x=>x.id===settlingTradeId);
+  if(idx!==-1){
+    trades[idx].pnl    = pnl.toFixed(2);
+    trades[idx].result = result;
+    if(exitPrice) trades[idx].exit = exitPrice.toString();
+  }
+  persist(); renderTable(); updateStats();
+  closeSettle();
+  toast(`Trade settled: ${t.asset} → ${result}`);
+}
+
+/* ══════════════════════════════════════════
+   NOTES DRAWER
+══════════════════════════════════════════ */
+let notesTradeId = null;
+
+function openNotes(id){
+  const t = trades.find(x=>x.id===id);
+  if(!t) return;
+  notesTradeId = id;
+
+  const leverage = t.leverage&&t.leverage!=='1'?` ${t.leverage}x`:'';
+  const dateStr = t.date ? new Date(t.date).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '—';
+  document.getElementById('drawer-trade-info').innerHTML = `
+    <div class="drawer-field"><label>Asset</label><span style="color:var(--text)">${t.asset}</span></div>
+    <div class="drawer-field"><label>Direction</label><span class="tag tag-${t.dir.toLowerCase()}" style="font-size:11px">${t.dir}</span></div>
+    <div class="drawer-field"><label>Entry</label><span>${t.entry}</span></div>
+    <div class="drawer-field"><label>Result</label><span class="tag tag-${t.result.toLowerCase()}" style="font-size:11px">${t.result}</span></div>
+    <div class="drawer-field"><label>Date</label><span style="color:var(--text3)">${dateStr}</span></div>
+  `;
+  document.getElementById('drawer-rationale').value = t.rationale||'';
+  document.getElementById('drawer-notes-text').value = t.notes||'';
+
+  document.getElementById('notes-drawer').classList.add('open');
+  document.getElementById('notes-backdrop').style.display='block';
+  setTimeout(()=>document.getElementById('drawer-rationale').focus(),320);
+}
+
+function closeNotes(){
+  document.getElementById('notes-drawer').classList.remove('open');
+  document.getElementById('notes-backdrop').style.display='none';
+  notesTradeId = null;
+}
+
+function saveNotes(){
+  if(!notesTradeId) return;
+  const idx = trades.findIndex(x=>x.id===notesTradeId);
+  if(idx===-1) return;
+  trades[idx].rationale = document.getElementById('drawer-rationale').value;
+  trades[idx].notes     = document.getElementById('drawer-notes-text').value;
+  persist(); renderTable();
+  closeNotes();
+  toast('Notes saved');
 }
 
 /* ══════════════════════════════════════════
