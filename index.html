@@ -8,21 +8,21 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
-  --bg:        #0D1117;
-  --bg2:       #161B22;
-  --bg3:       #1C2333;
-  --card:      #1C2333;
-  --card2:     #212736;
-  --glass:     rgba(255,255,255,0.04);
-  --glass2:    rgba(255,255,255,0.07);
+  --bg:        #080808;
+  --bg2:       #0f0f0f;
+  --bg3:       #161616;
+  --card:      #141414;
+  --card2:     #1a1a1a;
+  --glass:     rgba(255,255,255,0.03);
+  --glass2:    rgba(255,255,255,0.06);
   --border:    rgba(255,255,255,0.07);
   --border2:   rgba(255,255,255,0.12);
 
-  --indigo:    #6366F1;
-  --violet:    #8B5CF6;
-  --cyan:      #22D3EE;
-  --indigo-glow: rgba(99,102,241,0.25);
-  --indigo-dim:  rgba(99,102,241,0.12);
+  --indigo:    #F97316;
+  --violet:    #EA580C;
+  --cyan:      #FB923C;
+  --indigo-glow: rgba(249,115,22,0.3);
+  --indigo-dim:  rgba(249,115,22,0.1);
 
   --green:     #34D399;
   --green-dim: rgba(52,211,153,0.12);
@@ -31,16 +31,16 @@
   --amber:     #FBBF24;
   --amber-dim: rgba(251,191,36,0.12);
 
-  --text:      #E2E8F0;
-  --text2:     #94A3B8;
-  --text3:     #475569;
+  --text:      #F1F1F1;
+  --text2:     #888888;
+  --text3:     #444444;
   --mono:      'JetBrains Mono', monospace;
   --sans:      'Plus Jakarta Sans', sans-serif;
 
   --radius:    12px;
   --radius2:   8px;
-  --shadow:    0 4px 24px rgba(0,0,0,0.4);
-  --shadow2:   0 8px 40px rgba(0,0,0,0.5);
+  --shadow:    0 4px 24px rgba(0,0,0,0.6);
+  --shadow2:   0 8px 40px rgba(0,0,0,0.7);
 
   /* ── Emil Kowalski easing curves ── */
   --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
@@ -54,7 +54,22 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.18);}
 
 /* ── APP SHELL ── */
-#app{display:flex;height:100vh;}
+#app{display:flex;height:100vh;position:relative;}
+/* Orange radial glow — fixed behind everything */
+#app::before{
+  content:'';position:fixed;
+  top:-10%;left:50%;transform:translateX(-50%);
+  width:900px;height:600px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(249,115,22,0.18) 0%,rgba(234,88,12,0.08) 40%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+#app::after{
+  content:'';position:fixed;
+  bottom:-20%;right:-10%;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(249,115,22,0.07) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
 
 /* ── SIDEBAR ── */
 #sidebar{
@@ -65,7 +80,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 #sidebar::before{
   content:'';position:absolute;top:-80px;left:-60px;
   width:260px;height:260px;border-radius:50%;
-  background:radial-gradient(circle,rgba(99,102,241,0.15) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(249,115,22,0.12) 0%,transparent 70%);
   pointer-events:none;
 }
 .sidebar-logo{
@@ -75,10 +90,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 }
 .logo-icon{
   width:34px;height:34px;border-radius:10px;
-  background:linear-gradient(135deg,var(--indigo),var(--violet));
+  background:linear-gradient(135deg,#F97316,#EA580C);
   display:flex;align-items:center;justify-content:center;
   font-size:15px;flex-shrink:0;
-  box-shadow:0 4px 12px rgba(99,102,241,0.4);
+  box-shadow:0 4px 16px rgba(249,115,22,0.5);
 }
 .logo-text{font-size:15px;font-weight:800;letter-spacing:0.5px;color:var(--text);}
 .logo-text span{color:var(--indigo);}
@@ -97,7 +112,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .nav-item:hover{background:var(--glass2);color:var(--text);border-color:var(--border);}
 .nav-item.active{
   background:var(--indigo-dim);color:var(--indigo);
-  border-color:rgba(99,102,241,0.25);
+  border-color:rgba(249,115,22,0.25);
 }
 .nav-item.active::before{
   content:'';position:absolute;left:-1px;top:50%;transform:translateY(-50%);
@@ -142,12 +157,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
   white-space:nowrap;
 }
 @media (hover:hover) and (pointer:fine){
-  .btn-primary:hover{background:#5254d1;box-shadow:0 4px 16px rgba(99,102,241,0.4);transform:translateY(-1px);}
+  .btn-primary:hover{background:#EA580C;box-shadow:0 4px 16px rgba(249,115,22,0.4);transform:translateY(-1px);}
   .btn-ghost:hover{background:var(--glass2);color:var(--text);border-color:var(--border2);}
   .btn-danger:hover{background:rgba(248,113,113,0.2);}
 }
 .btn:active{transform:scale(0.97);}
-.btn-primary{background:var(--indigo);color:#fff;}
+.btn-primary{background:linear-gradient(135deg,#F97316,#EA580C);color:#fff;box-shadow:0 2px 12px rgba(249,115,22,0.35);}
+.btn-primary:hover{background:linear-gradient(135deg,#FB923C,#F97316);box-shadow:0 4px 20px rgba(249,115,22,0.55);transform:translateY(-1px);}
 .btn-ghost{background:var(--glass);color:var(--text2);border:1px solid var(--border);}
 .btn-sm{padding:6px 12px;font-size:12px;}
 .btn-danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(248,113,113,0.2);}
@@ -200,7 +216,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .form-badge{
   font-size:10px;font-weight:700;letter-spacing:1px;
   background:var(--indigo-dim);color:var(--indigo);
-  border:1px solid rgba(99,102,241,0.25);
+  border:1px solid rgba(249,115,22,0.25);
   padding:3px 8px;border-radius:20px;text-transform:uppercase;
 }
 .form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
@@ -240,7 +256,7 @@ textarea{resize:vertical;min-height:60px;}
   font-family:var(--sans);
 }
 .emo-btn:hover{border-color:var(--border2);background:var(--glass2);color:var(--text);}
-.emo-btn.active{background:var(--indigo-dim);border-color:rgba(99,102,241,0.35);color:var(--indigo);}
+.emo-btn.active{background:var(--indigo-dim);border-color:rgba(249,115,22,0.35);color:var(--indigo);}
 .emo-btn:active{transform:scale(0.95);}
 
 /* Result toggle */
@@ -255,10 +271,10 @@ textarea{resize:vertical;min-height:60px;}
 .res-btn.win.active{background:var(--green-dim);color:var(--green);border-color:rgba(52,211,153,0.3);}
 .res-btn.loss.active{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.3);}
 .res-btn.be.active{background:var(--amber-dim);color:var(--amber);border-color:rgba(251,191,36,0.3);}
-.res-btn.pending.active{background:rgba(99,102,241,0.12);color:var(--indigo);border-color:rgba(99,102,241,0.3);}
-.tag-pending{background:rgba(99,102,241,0.12);color:var(--indigo);}
+.res-btn.pending.active{background:rgba(249,115,22,0.1);color:var(--indigo);border-color:rgba(249,115,22,0.3);}
+.tag-pending{background:rgba(249,115,22,0.1);color:var(--indigo);}
 .settle-btn{
-  background:var(--indigo-dim);border:1px solid rgba(99,102,241,0.3);color:var(--indigo);
+  background:var(--indigo-dim);border:1px solid rgba(249,115,22,0.3);color:var(--indigo);
   cursor:pointer;padding:4px 8px;border-radius:4px;transition:background 0.15s var(--ease-out), color 0.15s var(--ease-out), transform 0.15s var(--ease-out);
   font-size:11px;font-weight:700;font-family:var(--sans);letter-spacing:0.5px;
   margin-right:2px;
@@ -330,7 +346,7 @@ textarea{resize:vertical;min-height:60px;}
 .settle-mode-btn:active{transform:scale(0.97);}
 .settle-mode-btn.sl.active{background:var(--red-dim);color:var(--red);border-color:rgba(248,113,113,0.3);}
 .settle-mode-btn.tp.active{background:var(--green-dim);color:var(--green);border-color:rgba(52,211,153,0.3);}
-.settle-mode-btn.manual.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.3);}
+.settle-mode-btn.manual.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(249,115,22,0.3);}
 .settle-result-display{
   background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
   padding:12px 14px;font-family:var(--mono);font-size:15px;font-weight:700;
@@ -408,7 +424,7 @@ textarea{resize:vertical;min-height:60px;}
 }
 .vault-cat:hover{background:var(--glass2);color:var(--text);}
 .vault-cat:active{transform:scale(0.97);}
-.vault-cat.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.2);}
+.vault-cat.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(249,115,22,0.2);}
 .vault-cat-icon{font-size:16px;}
 
 .vault-main{flex:1;overflow-y:auto;padding:20px 24px;}
@@ -675,7 +691,7 @@ textarea{resize:vertical;min-height:60px;}
 }
 .reason-chip:hover{border-color:var(--border2);background:var(--glass2);color:var(--text);}
 .reason-chip:active{transform:scale(0.95);}
-.reason-chip.active{background:var(--indigo-dim);border-color:rgba(99,102,241,0.4);color:var(--indigo);font-weight:600;}
+.reason-chip.active{background:var(--indigo-dim);border-color:rgba(249,115,22,0.4);color:var(--indigo);font-weight:600;}
 .reason-chips-wrap{max-height:110px;overflow-y:auto;padding:2px 0;}
 .calc-row{
   background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius2);
@@ -706,7 +722,7 @@ textarea{resize:vertical;min-height:60px;}
 }
 .tab-btn:hover{background:var(--glass2);color:var(--text);}
 .tab-btn:active{transform:scale(0.95);}
-.tab-btn.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(99,102,241,0.35);}
+.tab-btn.active{background:var(--indigo-dim);color:var(--indigo);border-color:rgba(249,115,22,0.35);}
 .talib-scroll{flex:1;overflow-y:auto;padding:20px 24px;}
 .talib-section{margin-bottom:32px;}
 .talib-section-title{
@@ -1823,7 +1839,7 @@ function renderTable(){
       : `<span class="tag tag-${t.result.toLowerCase()}">${t.result}</span>`;
     const slBadge = t.sl ? `<span style="font-size:10px;color:var(--red);background:var(--red-dim);padding:1px 5px;border-radius:4px;margin-left:4px">SL ${t.sl}</span>` : '';
     const hasNotes = !!(t.rationale||t.notes);
-    const rowStyle = t.result==='PENDING' ? 'background:rgba(99,102,241,0.03);' : '';
+    const rowStyle = t.result==='PENDING' ? 'background:rgba(249,115,22,0.03);' : '';
     return `<tr style="${rowStyle}">
       <td style="white-space:nowrap">
         <img class="coin-logo-table" src="${getCoinLogoUrl(t.asset)}" alt="${t.asset}"
@@ -2390,8 +2406,8 @@ const _W=`<svg viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/s
 function gC(x,wt,bt,bb,wb){return `<line x1="${x}" y1="${wt}" x2="${x}" y2="${wb}" stroke="#34D399" stroke-width="1.5"/><rect x="${x-7}" y="${bt}" width="14" height="${bb-bt}" rx="0.5" fill="#34D399" fill-opacity="0.9"/>`;}
 function rC(x,wt,bt,bb,wb){return `<line x1="${x}" y1="${wt}" x2="${x}" y2="${wb}" stroke="#F87171" stroke-width="1.5"/><rect x="${x-7}" y="${bt}" width="14" height="${bb-bt}" rx="0.5" fill="#F87171" fill-opacity="0.9"/>`;}
 function dC(x,wt,mid,wb){return `<line x1="${x}" y1="${wt}" x2="${x}" y2="${wb}" stroke="#FBBF24" stroke-width="1.5"/><line x1="${x-7}" y1="${mid}" x2="${x+7}" y2="${mid}" stroke="#FBBF24" stroke-width="3"/>`;}
-function hl(x,wt,wb){return `<rect x="${x-10}" y="${wt-4}" width="20" height="${wb-wt+8}" rx="2" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>`;}
-function hl2(x1,x2,wt,wb){return `<rect x="${x1-10}" y="${wt-4}" width="${x2-x1+20}" height="${wb-wt+8}" rx="2" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>`;}
+function hl(x,wt,wb){return `<rect x="${x-10}" y="${wt-4}" width="20" height="${wb-wt+8}" rx="2" stroke="#F97316" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>`;}
+function hl2(x1,x2,wt,wb){return `<rect x="${x1-10}" y="${wt-4}" width="${x2-x1+20}" height="${wb-wt+8}" rx="2" stroke="#F97316" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>`;}
 function svg(inner){return _W+_BG+inner+`</svg>`;}
 
 const cards = [
@@ -2442,13 +2458,13 @@ const cards = [
    signal:'T-shape: tiny body at the top, very long lower wick. At the bottom of a downtrend — sellers pushed hard, but buyers completely recovered. Strong reversal.',
    tips:'Bullish when at support or bottom of downtrend. Higher volume = more significant. Confirm with next bullish candle.',
    timeframes:['1H','4H','1D'],
-   svg:svg(rC(22,28,38,56,64)+rC(44,34,44,62,70)+rC(66,40,52,70,78)+'<line x1="88" y1="68" x2="88" y2="128" stroke="#FBBF24" stroke-width="1.5"/><line x1="81" y1="68" x2="95" y2="68" stroke="#FBBF24" stroke-width="3"/>'+gC(110,62,68,82,88)+gC(132,54,60,75,81)+gC(154,46,52,68,74)+'<rect x="78" y="64" width="20" height="68" rx="2" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>')},
+   svg:svg(rC(22,28,38,56,64)+rC(44,34,44,62,70)+rC(66,40,52,70,78)+'<line x1="88" y1="68" x2="88" y2="128" stroke="#FBBF24" stroke-width="1.5"/><line x1="81" y1="68" x2="95" y2="68" stroke="#FBBF24" stroke-width="3"/>'+gC(110,62,68,82,88)+gC(132,54,60,75,81)+gC(154,46,52,68,74)+'<rect x="78" y="64" width="20" height="68" rx="2" stroke="#F97316" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>')},
 
   {name:'Gravestone Doji',cat:'Bearish',
    signal:'Inverted T-shape: tiny body at the bottom, very long upper wick. At the top of an uptrend — buyers pushed hard, but sellers completely recovered.',
    tips:'Bearish when at resistance or top of uptrend. Confirm with next bearish candle. Very effective at all-time highs or strong resistance.',
    timeframes:['1H','4H','1D'],
-   svg:svg(gC(22,95,99,113,117)+gC(44,83,87,102,106)+gC(66,72,76,91,95)+'<line x1="88" y1="22" x2="88" y2="92" stroke="#FBBF24" stroke-width="1.5"/><line x1="81" y1="92" x2="95" y2="92" stroke="#FBBF24" stroke-width="3"/>'+rC(110,78,84,100,106)+rC(132,84,90,108,114)+rC(154,90,96,115,121)+'<rect x="78" y="18" width="20" height="78" rx="2" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>')},
+   svg:svg(gC(22,95,99,113,117)+gC(44,83,87,102,106)+gC(66,72,76,91,95)+'<line x1="88" y1="22" x2="88" y2="92" stroke="#FBBF24" stroke-width="1.5"/><line x1="81" y1="92" x2="95" y2="92" stroke="#FBBF24" stroke-width="3"/>'+rC(110,78,84,100,106)+rC(132,84,90,108,114)+rC(154,90,96,115,121)+'<rect x="78" y="18" width="20" height="78" rx="2" stroke="#F97316" stroke-width="1.2" stroke-dasharray="3 2" fill="none"/>')},
 
   // ══ TWO-CANDLE ══
   {name:'Bullish Engulfing',cat:'Bullish',
@@ -2467,13 +2483,13 @@ const cards = [
    signal:'Red candle followed by a green that opens BELOW the prior low but closes ABOVE the 50% midpoint of the red body. Bulls pushed back strongly.',
    tips:'The deeper the green closes into the red body (ideally 2/3+), the stronger the signal. Needs bullish follow-through next candle.',
    timeframes:['4H','1D'],
-   svg:svg(rC(22,28,38,55,63)+rC(44,34,44,62,70)+rC(66,40,52,70,78)+rC(88,36,50,90,98)+gC(110,82,68,100,104)+gC(132,56,62,78,84)+gC(154,48,53,70,76)+'<line x1="80" y1="70" x2="120" y2="70" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><text x="122" y="73" font-size="7" fill="#6366F1" font-family="monospace">50%</text>')},
+   svg:svg(rC(22,28,38,55,63)+rC(44,34,44,62,70)+rC(66,40,52,70,78)+rC(88,36,50,90,98)+gC(110,82,68,100,104)+gC(132,56,62,78,84)+gC(154,48,53,70,76)+'<line x1="80" y1="70" x2="120" y2="70" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><text x="122" y="73" font-size="7" fill="#F97316" font-family="monospace">50%</text>')},
 
   {name:'Dark Cloud Cover',cat:'Bearish',
    signal:'Green candle followed by red that opens ABOVE the prior high but closes BELOW the 50% midpoint of the green body. Bears took control mid-session.',
    tips:'The deeper the red closes into the green body, the stronger. Best at resistance, after extended rally, or with overbought RSI.',
    timeframes:['4H','1D'],
-   svg:svg(gC(22,99,103,119,123)+gC(44,86,90,107,112)+gC(66,72,76,92,97)+gC(88,38,42,88,94)+rC(110,28,36,80,86)+rC(132,64,70,92,98)+rC(154,72,78,102,108)+'<line x1="80" y1="65" x2="120" y2="65" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><text x="122" y="68" font-size="7" fill="#6366F1" font-family="monospace">50%</text>')},
+   svg:svg(gC(22,99,103,119,123)+gC(44,86,90,107,112)+gC(66,72,76,92,97)+gC(88,38,42,88,94)+rC(110,28,36,80,86)+rC(132,64,70,92,98)+rC(154,72,78,102,108)+'<line x1="80" y1="65" x2="120" y2="65" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><text x="122" y="68" font-size="7" fill="#F97316" font-family="monospace">50%</text>')},
 
   {name:'Bullish Harami',cat:'Bullish',
    signal:'Small green candle contained within the prior large red candle. Selling momentum slowing — trend may be reversing. Indecision inside a downtrend.',
@@ -2529,61 +2545,61 @@ const cards = [
    signal:'Left shoulder → higher head → right shoulder ≈ left shoulder. Break below neckline confirms reversal. One of the most reliable bearish patterns.',
    tips:'Neckline break with volume = high confidence. Target = head height projected below neckline. Right shoulder lower = weaker bears.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,118 30,55 52,82 72,28 92,82 112,55 132,84 155,108 175,124" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="48" y1="82" x2="180" y2="82" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="30" cy="55" r="3.5" fill="#94A3B8"/><circle cx="72" cy="28" r="3.5" fill="#94A3B8"/><circle cx="112" cy="55" r="3.5" fill="#94A3B8"/><text x="22" y="50" font-size="8" fill="#94A3B8" font-family="monospace">LS</text><text x="68" y="23" font-size="8" fill="#F87171" font-family="monospace">HEAD</text><text x="104" y="50" font-size="8" fill="#94A3B8" font-family="monospace">RS</text><text x="140" y="79" font-size="7" fill="#6366F1" font-family="monospace">Neckline</text><line x1="155" y1="82" x2="155" y2="130" stroke="#F87171" stroke-width="1.5" stroke-dasharray="2 2"/><text x="157" y="118" font-size="9" fill="#F87171" font-family="monospace">↓</text>')},
+   svg:svg('<polyline points="10,118 30,55 52,82 72,28 92,82 112,55 132,84 155,108 175,124" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="48" y1="82" x2="180" y2="82" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="30" cy="55" r="3.5" fill="#94A3B8"/><circle cx="72" cy="28" r="3.5" fill="#94A3B8"/><circle cx="112" cy="55" r="3.5" fill="#94A3B8"/><text x="22" y="50" font-size="8" fill="#94A3B8" font-family="monospace">LS</text><text x="68" y="23" font-size="8" fill="#F87171" font-family="monospace">HEAD</text><text x="104" y="50" font-size="8" fill="#94A3B8" font-family="monospace">RS</text><text x="140" y="79" font-size="7" fill="#F97316" font-family="monospace">Neckline</text><line x1="155" y1="82" x2="155" y2="130" stroke="#F87171" stroke-width="1.5" stroke-dasharray="2 2"/><text x="157" y="118" font-size="9" fill="#F87171" font-family="monospace">↓</text>')},
 
   {name:'Inverse H&S',cat:'Bullish',
    signal:'Left shoulder → lower head → right shoulder ≈ left shoulder. Break above neckline confirms reversal. Highly reliable bullish reversal pattern.',
    tips:'Volume should be highest on the head and on the breakout. Target = head depth projected above neckline.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,28 30,90 52,62 72,118 92,62 112,90 132,60 155,38 175,22" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="48" y1="62" x2="180" y2="62" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="30" cy="90" r="3.5" fill="#94A3B8"/><circle cx="72" cy="118" r="3.5" fill="#94A3B8"/><circle cx="112" cy="90" r="3.5" fill="#94A3B8"/><text x="22" y="100" font-size="8" fill="#94A3B8" font-family="monospace">LS</text><text x="66" y="133" font-size="8" fill="#34D399" font-family="monospace">HEAD</text><text x="104" y="100" font-size="8" fill="#94A3B8" font-family="monospace">RS</text><text x="138" y="59" font-size="7" fill="#6366F1" font-family="monospace">Neckline</text><line x1="155" y1="62" x2="155" y2="15" stroke="#34D399" stroke-width="1.5" stroke-dasharray="2 2"/><text x="157" y="28" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
+   svg:svg('<polyline points="10,28 30,90 52,62 72,118 92,62 112,90 132,60 155,38 175,22" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="48" y1="62" x2="180" y2="62" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="30" cy="90" r="3.5" fill="#94A3B8"/><circle cx="72" cy="118" r="3.5" fill="#94A3B8"/><circle cx="112" cy="90" r="3.5" fill="#94A3B8"/><text x="22" y="100" font-size="8" fill="#94A3B8" font-family="monospace">LS</text><text x="66" y="133" font-size="8" fill="#34D399" font-family="monospace">HEAD</text><text x="104" y="100" font-size="8" fill="#94A3B8" font-family="monospace">RS</text><text x="138" y="59" font-size="7" fill="#F97316" font-family="monospace">Neckline</text><line x1="155" y1="62" x2="155" y2="15" stroke="#34D399" stroke-width="1.5" stroke-dasharray="2 2"/><text x="157" y="28" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
 
   {name:'Double Top',cat:'Bearish',
    signal:'Two peaks at equal height after an uptrend. Second peak fails to break higher → sellers rejecting that price level twice. Break below support = confirmed reversal.',
    tips:'Equal or lower second peak = bearish. Volume usually lower on second peak. Target = height of pattern projected below neckline.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,118 38,38 68,75 98,38 128,75 160,118" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="75" x2="192" y2="75" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="8" y1="38" x2="192" y2="38" stroke="#F87171" stroke-width="1" stroke-dasharray="3 2" stroke-opacity="0.6"/><circle cx="38" cy="38" r="4" fill="#F87171"/><circle cx="98" cy="38" r="4" fill="#F87171"/><text x="26" y="33" font-size="8" fill="#F87171" font-family="monospace">T1</text><text x="86" y="33" font-size="8" fill="#F87171" font-family="monospace">T2</text><text x="150" y="71" font-size="7" fill="#6366F1" font-family="monospace">Neck</text><text x="140" y="110" font-size="9" fill="#F87171" font-family="monospace">↓ Breakout</text>')},
+   svg:svg('<polyline points="10,118 38,38 68,75 98,38 128,75 160,118" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="75" x2="192" y2="75" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="8" y1="38" x2="192" y2="38" stroke="#F87171" stroke-width="1" stroke-dasharray="3 2" stroke-opacity="0.6"/><circle cx="38" cy="38" r="4" fill="#F87171"/><circle cx="98" cy="38" r="4" fill="#F87171"/><text x="26" y="33" font-size="8" fill="#F87171" font-family="monospace">T1</text><text x="86" y="33" font-size="8" fill="#F87171" font-family="monospace">T2</text><text x="150" y="71" font-size="7" fill="#F97316" font-family="monospace">Neck</text><text x="140" y="110" font-size="9" fill="#F87171" font-family="monospace">↓ Breakout</text>')},
 
   {name:'Double Bottom',cat:'Bullish',
    signal:'Two troughs at equal depth after a downtrend. Second trough fails to go lower → buyers defending that level twice. Break above resistance = confirmed reversal.',
    tips:'Equal or higher second bottom = bullish. Volume usually lower on second trough. Target = depth projected above neckline.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,28 38,108 68,65 98,108 128,65 160,28" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="65" x2="192" y2="65" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="8" y1="108" x2="192" y2="108" stroke="#34D399" stroke-width="1" stroke-dasharray="3 2" stroke-opacity="0.6"/><circle cx="38" cy="108" r="4" fill="#34D399"/><circle cx="98" cy="108" r="4" fill="#34D399"/><text x="26" y="122" font-size="8" fill="#34D399" font-family="monospace">B1</text><text x="86" y="122" font-size="8" fill="#34D399" font-family="monospace">B2</text><text x="150" y="62" font-size="7" fill="#6366F1" font-family="monospace">Neck</text><text x="140" y="38" font-size="9" fill="#34D399" font-family="monospace">↑ Breakout</text>')},
+   svg:svg('<polyline points="10,28 38,108 68,65 98,108 128,65 160,28" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="65" x2="192" y2="65" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="8" y1="108" x2="192" y2="108" stroke="#34D399" stroke-width="1" stroke-dasharray="3 2" stroke-opacity="0.6"/><circle cx="38" cy="108" r="4" fill="#34D399"/><circle cx="98" cy="108" r="4" fill="#34D399"/><text x="26" y="122" font-size="8" fill="#34D399" font-family="monospace">B1</text><text x="86" y="122" font-size="8" fill="#34D399" font-family="monospace">B2</text><text x="150" y="62" font-size="7" fill="#F97316" font-family="monospace">Neck</text><text x="140" y="38" font-size="9" fill="#34D399" font-family="monospace">↑ Breakout</text>')},
 
   {name:'Triple Top',cat:'Bearish',
    signal:'Three failed attempts to break the same resistance. Each failure weakens buyers. Break below support = high-probability reversal with volume.',
    tips:'The more equal and clear the three peaks, the stronger. Can span weeks. Volume typically declining across peaks.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,118 27,40 46,78 66,40 86,78 106,40 126,78 148,108 168,128" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="40" x2="192" y2="40" stroke="#F87171" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.8"/><line x1="8" y1="78" x2="192" y2="78" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="27" cy="40" r="3.5" fill="#F87171"/><circle cx="66" cy="40" r="3.5" fill="#F87171"/><circle cx="106" cy="40" r="3.5" fill="#F87171"/><text x="18" y="35" font-size="7" fill="#F87171" font-family="monospace">T1</text><text x="57" y="35" font-size="7" fill="#F87171" font-family="monospace">T2</text><text x="97" y="35" font-size="7" fill="#F87171" font-family="monospace">T3</text><text x="142" y="100" font-size="9" fill="#F87171" font-family="monospace">↓</text>')},
+   svg:svg('<polyline points="10,118 27,40 46,78 66,40 86,78 106,40 126,78 148,108 168,128" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="40" x2="192" y2="40" stroke="#F87171" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.8"/><line x1="8" y1="78" x2="192" y2="78" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="27" cy="40" r="3.5" fill="#F87171"/><circle cx="66" cy="40" r="3.5" fill="#F87171"/><circle cx="106" cy="40" r="3.5" fill="#F87171"/><text x="18" y="35" font-size="7" fill="#F87171" font-family="monospace">T1</text><text x="57" y="35" font-size="7" fill="#F87171" font-family="monospace">T2</text><text x="97" y="35" font-size="7" fill="#F87171" font-family="monospace">T3</text><text x="142" y="100" font-size="9" fill="#F87171" font-family="monospace">↓</text>')},
 
   {name:'Triple Bottom',cat:'Bullish',
    signal:'Three failed attempts to break support. Each failure builds buyers. Break above resistance = high-probability reversal — more reliable than double bottom.',
    tips:'Volume usually lowest on third bottom. Breakout volume should be high. Target = height of pattern projected above neckline.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,28 27,108 46,65 66,108 86,65 106,108 126,65 148,38 168,22" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="108" x2="192" y2="108" stroke="#34D399" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.8"/><line x1="8" y1="65" x2="192" y2="65" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="27" cy="108" r="3.5" fill="#34D399"/><circle cx="66" cy="108" r="3.5" fill="#34D399"/><circle cx="106" cy="108" r="3.5" fill="#34D399"/><text x="18" y="122" font-size="7" fill="#34D399" font-family="monospace">B1</text><text x="57" y="122" font-size="7" fill="#34D399" font-family="monospace">B2</text><text x="97" y="122" font-size="7" fill="#34D399" font-family="monospace">B3</text><text x="142" y="35" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
+   svg:svg('<polyline points="10,28 27,108 46,65 66,108 86,65 106,108 126,65 148,38 168,22" stroke="#94A3B8" stroke-width="1.8" fill="none" stroke-linejoin="round"/><line x1="8" y1="108" x2="192" y2="108" stroke="#34D399" stroke-width="1.2" stroke-dasharray="4 3" stroke-opacity="0.8"/><line x1="8" y1="65" x2="192" y2="65" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><circle cx="27" cy="108" r="3.5" fill="#34D399"/><circle cx="66" cy="108" r="3.5" fill="#34D399"/><circle cx="106" cy="108" r="3.5" fill="#34D399"/><text x="18" y="122" font-size="7" fill="#34D399" font-family="monospace">B1</text><text x="57" y="122" font-size="7" fill="#34D399" font-family="monospace">B2</text><text x="97" y="122" font-size="7" fill="#34D399" font-family="monospace">B3</text><text x="142" y="35" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
 
   {name:'Bull Flag',cat:'Bullish',
    signal:'Strong vertical rally (flagpole) + tight downward channel (flag) = continuation. The flag is a brief pullback before the next leg up.',
    tips:'Flag slope should be moderate, not steep. Volume drops during flag, spikes on breakout. Target = flagpole height from breakout.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg('<line x1="10" y1="125" x2="50" y2="25" stroke="#34D399" stroke-width="2.5"/><polyline points="50,25 65,38 80,32 95,44 110,37 125,50" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="50" y1="22" x2="125" y2="42" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="50" y1="38" x2="125" y2="58" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="125" y1="50" x2="175" y2="15" stroke="#34D399" stroke-width="2.5"/><circle cx="125" cy="50" r="4" fill="#34D399" fill-opacity="0.5" stroke="#34D399" stroke-width="1.5"/><text x="8" y="140" font-size="8" fill="#34D399" font-family="monospace">Pole</text><text x="78" y="64" font-size="8" fill="#6366F1" font-family="monospace">Flag</text><text x="150" y="25" font-size="8" fill="#34D399" font-family="monospace">↑</text>')},
+   svg:svg('<line x1="10" y1="125" x2="50" y2="25" stroke="#34D399" stroke-width="2.5"/><polyline points="50,25 65,38 80,32 95,44 110,37 125,50" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="50" y1="22" x2="125" y2="42" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="50" y1="38" x2="125" y2="58" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="125" y1="50" x2="175" y2="15" stroke="#34D399" stroke-width="2.5"/><circle cx="125" cy="50" r="4" fill="#34D399" fill-opacity="0.5" stroke="#34D399" stroke-width="1.5"/><text x="8" y="140" font-size="8" fill="#34D399" font-family="monospace">Pole</text><text x="78" y="64" font-size="8" fill="#F97316" font-family="monospace">Flag</text><text x="150" y="25" font-size="8" fill="#34D399" font-family="monospace">↑</text>')},
 
   {name:'Bear Flag',cat:'Bearish',
    signal:'Strong vertical drop (flagpole) + tight upward channel (flag) = continuation. Brief relief rally before sellers resume control.',
    tips:'Flag slope should be moderate. Volume contracts during flag, expands on breakdown. Target = flagpole height from breakdown.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg('<line x1="10" y1="22" x2="50" y2="115" stroke="#F87171" stroke-width="2.5"/><polyline points="50,115 65,102 80,108 95,95 110,103 125,90" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="50" y1="108" x2="125" y2="82" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="50" y1="122" x2="125" y2="96" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="125" y1="90" x2="175" y2="132" stroke="#F87171" stroke-width="2.5"/><circle cx="125" cy="90" r="4" fill="#F87171" fill-opacity="0.5" stroke="#F87171" stroke-width="1.5"/><text x="8" y="18" font-size="8" fill="#F87171" font-family="monospace">Pole</text><text x="78" y="80" font-size="8" fill="#6366F1" font-family="monospace">Flag</text><text x="150" y="145" font-size="8" fill="#F87171" font-family="monospace">↓</text>')},
+   svg:svg('<line x1="10" y1="22" x2="50" y2="115" stroke="#F87171" stroke-width="2.5"/><polyline points="50,115 65,102 80,108 95,95 110,103 125,90" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="50" y1="108" x2="125" y2="82" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="50" y1="122" x2="125" y2="96" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="125" y1="90" x2="175" y2="132" stroke="#F87171" stroke-width="2.5"/><circle cx="125" cy="90" r="4" fill="#F87171" fill-opacity="0.5" stroke="#F87171" stroke-width="1.5"/><text x="8" y="18" font-size="8" fill="#F87171" font-family="monospace">Pole</text><text x="78" y="80" font-size="8" fill="#F97316" font-family="monospace">Flag</text><text x="150" y="145" font-size="8" fill="#F87171" font-family="monospace">↓</text>')},
 
   {name:'Bullish Pennant',cat:'Bullish',
    signal:'Strong rally (pole) + converging triangle consolidation (pennant) + breakout up. Tighter consolidation than a flag — powerful continuation signal.',
    tips:'Volume dries up during pennant formation. Tight price coil = explosive breakout. Target = flagpole length from breakout point.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg('<line x1="10" y1="128" x2="48" y2="22" stroke="#34D399" stroke-width="2.5"/><polyline points="48,22 63,36 78,28 93,38 108,32 120,36" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="48" y1="22" x2="120" y2="36" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="48" y1="38" x2="120" y2="36" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="120" y1="36" x2="172" y2="12" stroke="#34D399" stroke-width="2.5"/><circle cx="120" cy="36" r="4" fill="#34D399" fill-opacity="0.5" stroke="#34D399" stroke-width="1.5"/><text x="8" y="144" font-size="8" fill="#34D399" font-family="monospace">Pole</text><text x="72" y="52" font-size="8" fill="#6366F1" font-family="monospace">Pennant</text>')},
+   svg:svg('<line x1="10" y1="128" x2="48" y2="22" stroke="#34D399" stroke-width="2.5"/><polyline points="48,22 63,36 78,28 93,38 108,32 120,36" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="48" y1="22" x2="120" y2="36" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="48" y1="38" x2="120" y2="36" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="120" y1="36" x2="172" y2="12" stroke="#34D399" stroke-width="2.5"/><circle cx="120" cy="36" r="4" fill="#34D399" fill-opacity="0.5" stroke="#34D399" stroke-width="1.5"/><text x="8" y="144" font-size="8" fill="#34D399" font-family="monospace">Pole</text><text x="72" y="52" font-size="8" fill="#F97316" font-family="monospace">Pennant</text>')},
 
   {name:'Bearish Pennant',cat:'Bearish',
    signal:'Sharp drop (pole) + converging triangle (pennant) + breakdown. Tighter consolidation before sellers resume. Very reliable continuation.',
    tips:'Pennant should not retrace more than 50% of the pole. Volume contraction in pennant = energy coiling for breakdown.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg('<line x1="10" y1="18" x2="48" y2="112" stroke="#F87171" stroke-width="2.5"/><polyline points="48,112 63,98 78,105 93,94 108,101 120,96" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="48" y1="112" x2="120" y2="96" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="48" y1="96" x2="120" y2="96" stroke="#6366F1" stroke-width="1" stroke-dasharray="3 2"/><line x1="120" y1="96" x2="170" y2="132" stroke="#F87171" stroke-width="2.5"/><circle cx="120" cy="96" r="4" fill="#F87171" fill-opacity="0.5" stroke="#F87171" stroke-width="1.5"/><text x="8" y="14" font-size="8" fill="#F87171" font-family="monospace">Pole</text><text x="64" y="82" font-size="8" fill="#6366F1" font-family="monospace">Pennant</text>')},
+   svg:svg('<line x1="10" y1="18" x2="48" y2="112" stroke="#F87171" stroke-width="2.5"/><polyline points="48,112 63,98 78,105 93,94 108,101 120,96" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="48" y1="112" x2="120" y2="96" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="48" y1="96" x2="120" y2="96" stroke="#F97316" stroke-width="1" stroke-dasharray="3 2"/><line x1="120" y1="96" x2="170" y2="132" stroke="#F87171" stroke-width="2.5"/><circle cx="120" cy="96" r="4" fill="#F87171" fill-opacity="0.5" stroke="#F87171" stroke-width="1.5"/><text x="8" y="14" font-size="8" fill="#F87171" font-family="monospace">Pole</text><text x="64" y="82" font-size="8" fill="#F97316" font-family="monospace">Pennant</text>')},
 
   {name:'Ascending Triangle',cat:'Bullish',
    signal:'Flat resistance top + rising support (higher lows). Buyers building strength against resistance. Breakout is typically bullish — 75%+ of the time.',
@@ -2607,7 +2623,7 @@ const cards = [
    signal:'Rounded U-shaped bottom (cup) followed by small pullback (handle) then breakout. Long-term bullish accumulation pattern — very high reliability on daily/weekly.',
    tips:'Cup should be smooth and round (not V-shaped). Handle should be less than 1/3 cup depth. Breakout at prior high with volume = buy.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,38 25,65 42,90 62,108 82,114 102,108 122,82 138,55 152,38" stroke="#94A3B8" stroke-width="1.5" fill="none" stroke-linejoin="round"/><polyline points="152,38 162,55 170,48 176,38" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="8" y1="38" x2="195" y2="38" stroke="#6366F1" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="176" y1="38" x2="195" y2="18" stroke="#34D399" stroke-width="2.5"/><text x="55" y="128" font-size="8" fill="#94A3B8" font-family="monospace">Cup</text><text x="155" y="70" font-size="8" fill="#94A3B8" font-family="monospace">Handle</text><text x="8" y="33" font-size="7" fill="#6366F1" font-family="monospace">Resistance</text><text x="178" y="18" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
+   svg:svg('<polyline points="10,38 25,65 42,90 62,108 82,114 102,108 122,82 138,55 152,38" stroke="#94A3B8" stroke-width="1.5" fill="none" stroke-linejoin="round"/><polyline points="152,38 162,55 170,48 176,38" stroke="#94A3B8" stroke-width="1.5" fill="none"/><line x1="8" y1="38" x2="195" y2="38" stroke="#F97316" stroke-width="1.2" stroke-dasharray="4 3"/><line x1="176" y1="38" x2="195" y2="18" stroke="#34D399" stroke-width="2.5"/><text x="55" y="128" font-size="8" fill="#94A3B8" font-family="monospace">Cup</text><text x="155" y="70" font-size="8" fill="#94A3B8" font-family="monospace">Handle</text><text x="8" y="33" font-size="7" fill="#F97316" font-family="monospace">Resistance</text><text x="178" y="18" font-size="9" fill="#34D399" font-family="monospace">↑</text>')},
 
   {name:'Rising Wedge',cat:'Bearish',
    signal:'Price rising but upper and lower trendlines converging upward. Shrinking momentum despite higher prices — bear trap. Typically breaks DOWN.',
@@ -2625,7 +2641,7 @@ const cards = [
    signal:'Price bouncing horizontally between parallel support and resistance. Accumulation (bullish) or distribution (bearish) — direction depends on breakout.',
    tips:'More bounces within the range = stronger breakout when it happens. Trade the breakout with volume confirmation. Stop inside range.',
    timeframes:['1H','4H','1D'],
-   svg:svg('<rect x="10" y="45" width="155" height="58" rx="2" fill="#6366F1" fill-opacity="0.06" stroke="#6366F1" stroke-width="1" stroke-dasharray="4 3"/><polyline points="10,70 28,45 45,48 62,103 78,98 95,46 112,50 128,103 145,100 162,46 182,22" stroke="#94A3B8" stroke-width="1.5" fill="none" stroke-linejoin="round"/><text x="14" y="42" font-size="7" fill="#F87171" font-family="monospace">Resistance</text><text x="14" y="114" font-size="7" fill="#34D399" font-family="monospace">Support</text><text x="168" y="20" font-size="9" fill="#34D399" font-family="monospace">↑ Break</text>')},
+   svg:svg('<rect x="10" y="45" width="155" height="58" rx="2" fill="#F97316" fill-opacity="0.06" stroke="#F97316" stroke-width="1" stroke-dasharray="4 3"/><polyline points="10,70 28,45 45,48 62,103 78,98 95,46 112,50 128,103 145,100 162,46 182,22" stroke="#94A3B8" stroke-width="1.5" fill="none" stroke-linejoin="round"/><text x="14" y="42" font-size="7" fill="#F87171" font-family="monospace">Resistance</text><text x="14" y="114" font-size="7" fill="#34D399" font-family="monospace">Support</text><text x="168" y="20" font-size="9" fill="#34D399" font-family="monospace">↑ Break</text>')},
 
   {name:'Broadening Formation',cat:'Bearish',
    signal:'Price swings getting WIDER — opposite of a triangle. Higher highs AND lower lows. Increased volatility = distribution. Usually breaks down.',
@@ -2644,13 +2660,13 @@ const cards = [
    signal:'The LAST bearish candle before a strong bullish impulse. Represents institutional sell orders being filled. Price returns to this zone as support.',
    tips:'OB zone = from candle open to candle close (full body). Enter when price returns to 50% of the OB. Target = top of impulse.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg(rC(22,30,36,58,64)+rC(44,36,44,65,72)+rC(66,42,52,72,80)+rC(88,48,60,82,88)+'<rect x="81" y="60" width="14" height="22" rx="0.5" fill="#6366F1" fill-opacity="0.5" stroke="#6366F1" stroke-width="1.5"/>'+gC(110,18,22,76,80)+gC(132,14,18,50,54)+gC(154,10,14,38,42)+'<rect x="78" y="56" width="70" height="30" fill="#34D399" fill-opacity="0.08" stroke="#34D399" stroke-width="1" stroke-dasharray="3 2"/><text x="80" y="54" font-size="7" fill="#34D399" font-family="monospace">OB Zone</text>')},
+   svg:svg(rC(22,30,36,58,64)+rC(44,36,44,65,72)+rC(66,42,52,72,80)+rC(88,48,60,82,88)+'<rect x="81" y="60" width="14" height="22" rx="0.5" fill="#F97316" fill-opacity="0.5" stroke="#F97316" stroke-width="1.5"/>'+gC(110,18,22,76,80)+gC(132,14,18,50,54)+gC(154,10,14,38,42)+'<rect x="78" y="56" width="70" height="30" fill="#34D399" fill-opacity="0.08" stroke="#34D399" stroke-width="1" stroke-dasharray="3 2"/><text x="80" y="54" font-size="7" fill="#34D399" font-family="monospace">OB Zone</text>')},
 
   {name:'Bearish Order Block',cat:'Bearish',
    signal:'The LAST bullish candle before a strong bearish impulse. Represents institutional buy orders. Price returns to this zone as resistance.',
    tips:'OB zone = body of the last green candle before the drop. Enter short when price returns to 50% of OB. Target = bottom of impulse.',
    timeframes:['15m','1H','4H','1D'],
-   svg:svg(gC(22,99,103,119,123)+gC(44,86,90,107,112)+gC(66,72,76,92,97)+gC(88,58,62,82,88)+'<rect x="81" y="62" width="14" height="20" rx="0.5" fill="#6366F1" fill-opacity="0.5" stroke="#6366F1" stroke-width="1.5"/>'+rC(110,50,56,90,96)+rC(132,70,76,108,114)+rC(154,88,94,124,130)+'<rect x="78" y="58" width="70" height="30" fill="#F87171" fill-opacity="0.08" stroke="#F87171" stroke-width="1" stroke-dasharray="3 2"/><text x="80" y="56" font-size="7" fill="#F87171" font-family="monospace">OB Zone</text>')},
+   svg:svg(gC(22,99,103,119,123)+gC(44,86,90,107,112)+gC(66,72,76,92,97)+gC(88,58,62,82,88)+'<rect x="81" y="62" width="14" height="20" rx="0.5" fill="#F97316" fill-opacity="0.5" stroke="#F97316" stroke-width="1.5"/>'+rC(110,50,56,90,96)+rC(132,70,76,108,114)+rC(154,88,94,124,130)+'<rect x="78" y="58" width="70" height="30" fill="#F87171" fill-opacity="0.08" stroke="#F87171" stroke-width="1" stroke-dasharray="3 2"/><text x="80" y="56" font-size="7" fill="#F87171" font-family="monospace">OB Zone</text>')},
 
   {name:'Break of Structure',cat:'Bullish',
    signal:'Price breaks ABOVE a previous swing high, creating a new Higher High. Confirms a shift from bearish to bullish market structure. Follow the BOS.',
@@ -2681,25 +2697,25 @@ const cards = [
    signal:'50-day MA crosses ABOVE 200-day MA. Major long-term bullish signal — institutional buyers entering. Often starts a sustained uptrend.',
    tips:'More reliable on daily/weekly. Price should be above both MAs at the cross. Can be lagging — use for bias, not exact entries.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,110 30,100 50,92 68,80 88,65 108,50 128,38 148,28 168,20 188,14" stroke="#94A3B8" stroke-width="1.5" fill="none"/><polyline points="10,128 30,122 50,115 68,108 88,98 108,85 128,70 148,56 168,44 188,34" stroke="#FBBF24" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/><polyline points="10,125 30,120 50,118 68,115 88,110 108,100 128,85 148,68 168,52 188,38" stroke="#6366F1" stroke-width="2" fill="none"/><circle cx="118" cy="88" r="6" stroke="#34D399" stroke-width="2" fill="none"/><text x="10" y="145" font-size="7" fill="#FBBF24" font-family="monospace">50 MA</text><text x="60" y="145" font-size="7" fill="#6366F1" font-family="monospace">200 MA</text><text x="110" y="145" font-size="8" fill="#34D399" font-family="monospace">↑ Golden Cross</text>')},
+   svg:svg('<polyline points="10,110 30,100 50,92 68,80 88,65 108,50 128,38 148,28 168,20 188,14" stroke="#94A3B8" stroke-width="1.5" fill="none"/><polyline points="10,128 30,122 50,115 68,108 88,98 108,85 128,70 148,56 168,44 188,34" stroke="#FBBF24" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/><polyline points="10,125 30,120 50,118 68,115 88,110 108,100 128,85 148,68 168,52 188,38" stroke="#F97316" stroke-width="2" fill="none"/><circle cx="118" cy="88" r="6" stroke="#34D399" stroke-width="2" fill="none"/><text x="10" y="145" font-size="7" fill="#FBBF24" font-family="monospace">50 MA</text><text x="60" y="145" font-size="7" fill="#F97316" font-family="monospace">200 MA</text><text x="110" y="145" font-size="8" fill="#34D399" font-family="monospace">↑ Golden Cross</text>')},
 
   {name:'Death Cross',cat:'Bearish',
    signal:'50-day MA crosses BELOW 200-day MA. Major long-term bearish signal — institutional sellers dominating. Often precedes extended downtrend.',
    tips:'Death cross on daily = significant. Price usually already declining before the cross. Use for trend bias not timing entries.',
    timeframes:['4H','1D','1W'],
-   svg:svg('<polyline points="10,18 30,26 50,35 68,46 88,60 108,76 128,90 148,104 168,116 188,126" stroke="#94A3B8" stroke-width="1.5" fill="none"/><polyline points="10,22 30,26 50,32 68,38 88,48 108,60 128,76 148,92 168,106 188,118" stroke="#FBBF24" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/><polyline points="10,20 30,22 50,24 68,28 88,34 108,46 128,66 148,84 168,100 188,112" stroke="#6366F1" stroke-width="2" fill="none"/><circle cx="108" cy="60" r="6" stroke="#F87171" stroke-width="2" fill="none"/><text x="10" y="145" font-size="7" fill="#FBBF24" font-family="monospace">50 MA</text><text x="60" y="145" font-size="7" fill="#6366F1" font-family="monospace">200 MA</text><text x="102" y="145" font-size="8" fill="#F87171" font-family="monospace">↓ Death Cross</text>')},
+   svg:svg('<polyline points="10,18 30,26 50,35 68,46 88,60 108,76 128,90 148,104 168,116 188,126" stroke="#94A3B8" stroke-width="1.5" fill="none"/><polyline points="10,22 30,26 50,32 68,38 88,48 108,60 128,76 148,92 168,106 188,118" stroke="#FBBF24" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/><polyline points="10,20 30,22 50,24 68,28 88,34 108,46 128,66 148,84 168,100 188,112" stroke="#F97316" stroke-width="2" fill="none"/><circle cx="108" cy="60" r="6" stroke="#F87171" stroke-width="2" fill="none"/><text x="10" y="145" font-size="7" fill="#FBBF24" font-family="monospace">50 MA</text><text x="60" y="145" font-size="7" fill="#F97316" font-family="monospace">200 MA</text><text x="102" y="145" font-size="8" fill="#F87171" font-family="monospace">↓ Death Cross</text>')},
 
   {name:'Bullish Divergence',cat:'Bullish',
    signal:'Price makes a LOWER LOW but RSI/MACD makes a HIGHER LOW. Bearish momentum weakening even as price drops. Accumulation — reversal likely.',
    tips:'Most reliable on 4H/daily at key support after an extended sell-off. Regular divergence = reversal. Hidden divergence = continuation.',
    timeframes:['1H','4H','1D'],
-   svg:svg('<text x="6" y="86" font-size="7" fill="#94A3B8" font-family="monospace">Price</text><polyline points="20,40 48,60 72,72 100,88 128,68" stroke="#94A3B8" stroke-width="1.5" fill="none"/><circle cx="72" cy="72" r="3" fill="#F87171"/><circle cx="100" cy="88" r="3" fill="#F87171"/><line x1="72" y1="72" x2="100" y2="88" stroke="#F87171" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="18" y1="95" x2="185" y2="95" stroke="#6366F1" stroke-width="0.5" stroke-opacity="0.4"/><text x="6" y="130" font-size="7" fill="#6366F1" font-family="monospace">RSI</text><polyline points="20,115 48,125 72,130 100,120 128,108" stroke="#6366F1" stroke-width="1.5" fill="none"/><circle cx="72" cy="130" r="3" fill="#34D399"/><circle cx="100" cy="120" r="3" fill="#34D399"/><line x1="72" y1="130" x2="100" y2="120" stroke="#34D399" stroke-width="1.5" stroke-dasharray="3 2"/><text x="95" y="100" font-size="8" fill="#34D399" font-family="monospace">↑ Bullish Div</text>')},
+   svg:svg('<text x="6" y="86" font-size="7" fill="#94A3B8" font-family="monospace">Price</text><polyline points="20,40 48,60 72,72 100,88 128,68" stroke="#94A3B8" stroke-width="1.5" fill="none"/><circle cx="72" cy="72" r="3" fill="#F87171"/><circle cx="100" cy="88" r="3" fill="#F87171"/><line x1="72" y1="72" x2="100" y2="88" stroke="#F87171" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="18" y1="95" x2="185" y2="95" stroke="#F97316" stroke-width="0.5" stroke-opacity="0.4"/><text x="6" y="130" font-size="7" fill="#F97316" font-family="monospace">RSI</text><polyline points="20,115 48,125 72,130 100,120 128,108" stroke="#F97316" stroke-width="1.5" fill="none"/><circle cx="72" cy="130" r="3" fill="#34D399"/><circle cx="100" cy="120" r="3" fill="#34D399"/><line x1="72" y1="130" x2="100" y2="120" stroke="#34D399" stroke-width="1.5" stroke-dasharray="3 2"/><text x="95" y="100" font-size="8" fill="#34D399" font-family="monospace">↑ Bullish Div</text>')},
 
   {name:'Bearish Divergence',cat:'Bearish',
    signal:'Price makes a HIGHER HIGH but RSI/MACD makes a LOWER HIGH. Bullish momentum weakening even as price rises. Distribution — reversal likely.',
    tips:'Most reliable on 4H/daily at key resistance after extended rally. Combine with bearish candle at resistance for high probability short.',
    timeframes:['1H','4H','1D'],
-   svg:svg('<text x="6" y="86" font-size="7" fill="#94A3B8" font-family="monospace">Price</text><polyline points="20,78 48,60 72,65 100,45 128,65" stroke="#94A3B8" stroke-width="1.5" fill="none"/><circle cx="72" cy="65" r="3" fill="#34D399"/><circle cx="100" cy="45" r="3" fill="#34D399"/><line x1="72" y1="65" x2="100" y2="45" stroke="#34D399" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="18" y1="95" x2="185" y2="95" stroke="#6366F1" stroke-width="0.5" stroke-opacity="0.4"/><text x="6" y="130" font-size="7" fill="#6366F1" font-family="monospace">RSI</text><polyline points="20,118 48,108 72,112 100,120 128,118" stroke="#6366F1" stroke-width="1.5" fill="none"/><circle cx="72" cy="112" r="3" fill="#F87171"/><circle cx="100" cy="120" r="3" fill="#F87171"/><line x1="72" y1="112" x2="100" y2="120" stroke="#F87171" stroke-width="1.5" stroke-dasharray="3 2"/><text x="90" y="42" font-size="8" fill="#F87171" font-family="monospace">↓ Bearish Div</text>')}
+   svg:svg('<text x="6" y="86" font-size="7" fill="#94A3B8" font-family="monospace">Price</text><polyline points="20,78 48,60 72,65 100,45 128,65" stroke="#94A3B8" stroke-width="1.5" fill="none"/><circle cx="72" cy="65" r="3" fill="#34D399"/><circle cx="100" cy="45" r="3" fill="#34D399"/><line x1="72" y1="65" x2="100" y2="45" stroke="#34D399" stroke-width="1.2" stroke-dasharray="3 2"/><line x1="18" y1="95" x2="185" y2="95" stroke="#F97316" stroke-width="0.5" stroke-opacity="0.4"/><text x="6" y="130" font-size="7" fill="#F97316" font-family="monospace">RSI</text><polyline points="20,118 48,108 72,112 100,120 128,118" stroke="#F97316" stroke-width="1.5" fill="none"/><circle cx="72" cy="112" r="3" fill="#F87171"/><circle cx="100" cy="120" r="3" fill="#F87171"/><line x1="72" y1="112" x2="100" y2="120" stroke="#F87171" stroke-width="1.5" stroke-dasharray="3 2"/><text x="90" y="42" font-size="8" fill="#F87171" font-family="monospace">↓ Bearish Div</text>')}
 ];
 
 /* ══════════════════════════════════════════
@@ -2817,8 +2833,8 @@ function renderCharts(){
     type:'line',
     data:{labels:lineLabels.length?lineLabels:['No data'],
       datasets:[{label:'Cumulative P&L',data:lineData.length?lineData:[0],
-        borderColor:'#6366F1',backgroundColor:'rgba(99,102,241,0.08)',
-        borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#6366F1',
+        borderColor:'#F97316',backgroundColor:'rgba(249,115,22,0.08)',
+        borderWidth:2.5,pointRadius:4,pointBackgroundColor:'#F97316',
         pointBorderColor:'#0D1117',pointBorderWidth:2,fill:true,tension:0.4}]},
     options:{responsive:true,maintainAspectRatio:false,...chartDefaults}
   });
@@ -3663,7 +3679,7 @@ function filterSoulz(q) {
 function renderSoulz(q) {
   q = (q || document.getElementById('soulz-search').value || '').toLowerCase();
   const chapterLabels = {'01':'Foundation','02':'Price Action','03':'Liquidity','04':'Indicators','05':'Cheat Sheets','06':'Smart Money'};
-  const chapterColors = {'01':'#6366F1','02':'#22D3EE','03':'#F59E0B','04':'#34D399','05':'#F87171','06':'#A78BFA'};
+  const chapterColors = {'01':'#F97316','02':'#22D3EE','03':'#F59E0B','04':'#34D399','05':'#F87171','06':'#A78BFA'};
 
   let pages = SOULZ_PAGES.filter(p => {
     const matchCh = soulzChapterFilter === 'all' || p.chapter === soulzChapterFilter;
@@ -3678,7 +3694,7 @@ function renderSoulz(q) {
 
   const grid = document.getElementById('soulz-grid');
   grid.innerHTML = pages.map(p => {
-    const color = chapterColors[p.chapter] || '#6366F1';
+    const color = chapterColors[p.chapter] || '#F97316';
     const label = chapterLabels[p.chapter] || '';
     return `
       <div onclick="openSoulzModal(${p.n})" style="
